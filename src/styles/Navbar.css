@@ -1,0 +1,38 @@
+#basic-navbar-nav {
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#become-nanny {
+    background-color: #3940c5;
+    border: transparent;
+}
+
+#become-nanny:hover {
+    background-color: hsl(237, 55%, 60%);
+
+}
+  
+#sign-up {
+    background-color: hsl(0, 0%, 0%);
+    border: transparent;
+    color: white;
+}
+
+#sign-up:hover {
+    background-color: hsl(0, 0%, 40%);
+}
+  
+#sign-in {
+    background-color: white;
+    color: blue;
+    border: black;
+}
+
+#sign-in:hover {
+    background-color: hsl(195, 53%, 49%);
+}
+
+#nav{
+    background-color: hsl(0, 0%, 86%);
+}

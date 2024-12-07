@@ -1,0 +1,13 @@
+#help-button {
+  background-color: #3940c5;
+  border-color: transparent;
+  position: fixed;
+  padding: 10px 20px;
+  bottom: 0;
+  right: 20px;
+  width: 200px;
+  z-index: 1;
+  font-weight: bold;
+  text-transform: none;
+}
+

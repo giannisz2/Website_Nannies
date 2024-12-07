@@ -1,0 +1,41 @@
+.nav{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.button{
+  background-color: #f8f9fa;
+  border: none;
+  color:black;
+}
+
+.button:hover{
+  background-color: hsl(210, 17%, 88%);
+  color:black;
+}
+
+.button:focus, 
+.button:active {
+  outline: none !important;
+  box-shadow: none !important;
+  background-color: hsl(210, 17%, 78%) !important;
+  color: inherit !important;
+}
+
+.dropdown-toggle:focus, 
+.dropdown-toggle:active {
+  outline: none !important; 
+  box-shadow: none !important; 
+  color: black;
+  background-color: hsl(210, 17%, 78%) !important;
+
+}
+
+#dropDownItems:hover,
+#dropDownItems:focus,
+#dropDownItems:active   {
+  background-color: hsl(210, 17%, 78%) !important;
+
+}
