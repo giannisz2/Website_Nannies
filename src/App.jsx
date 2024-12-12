@@ -6,7 +6,7 @@ import NannyHomepage from './pages/nannies/NannyHomepage';
 import ProfileEditNannies from './pages/nannies/ProfileEditNannies';
 import { Routes, Route, BrowserRouter} from 'react-router-dom';
 import FirstStep from './pages/nannies/FirstStep';
-import Login from './components/authentication/login/index.jsx'
+import Login from './components/authentication/Login'
 import Test from './pages/test.jsx';
 
 function App() {
