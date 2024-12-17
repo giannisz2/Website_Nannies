@@ -3,26 +3,14 @@ import Footer from '../../components/layout/Footer.jsx';
 import HelpButton from '../../components/buttons/HelpButton.jsx';
 import { Row, Col } from 'react-bootstrap';
 import { Select, MenuItem, TextField, InputLabel, FormControl } from '@mui/material';
-import '../../styles/FirstStep.css'
+import '../../styles/PersonalInfo.css'
 import Datepicker from '../../components/layout/Datepicker.jsx';
 
-export default function FirstStep() {
+export default function PersonalInfo() {
     return (
         <div className="profile-edit-nannies d-flex flex-column min-vh-100">
             <HelpButton />
             <Logo />
-            <div class="stepper">
-                <div class="step active">
-                    <div class="circle">1</div>
-                    <div class="label">ΣΤΟΙΧΕΙΑ</div>
-                </div>
-                <div class="step">
-                    <div class="circle">2</div>
-                </div>
-                <div class="step">
-                    <div class="circle">3</div>
-                </div>
-            </div>
             <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
                 <Row className="align-items-start justify-content-center g-5 m-0 w-100">
                     <Col
@@ -33,7 +21,7 @@ export default function FirstStep() {
                         <TextField fullWidth label="Όνομα" type="text" className="my-3" />
                         <TextField fullWidth label="Φύλο" type="text" className="my-3" />
                         <FormControl fullWidth className="my-3">
-                            <InputLabel>Εκπαίδευση</InputLabel>
+                            <InputLabel>Εκπαίδευση~</InputLabel>
                             <Select defaultValue="">
                                 <MenuItem value="Τριτοβάθμια εκπαίδευση">Τριτοβάθμια εκπαίδευση</MenuItem>
                                 <MenuItem value="Δευτεροβάθμια εκπαίδευση">Δευτεροβάθμια εκπαίδευση</MenuItem>
@@ -41,12 +29,12 @@ export default function FirstStep() {
                                 <MenuItem value="Άλλο">Άλλο</MenuItem>
                             </Select>
                         </FormControl>
-                        <TextField fullWidth label="Χρόνος απασχόλησης" type="text" className="my-3" />
-                        <TextField fullWidth label="Συστατικές επιστολές" type="text" className="my-3" />
-                        <TextField fullWidth label="Έτη προϋπηρεσίας" type="text" className="my-3" />
+                        <TextField fullWidth label="Χρόνος απασχόλησης~" type="text" className="my-3" />
+                        <TextField fullWidth label="Συστατικές επιστολές~" type="text" className="my-3" />
+                        <TextField fullWidth label="Έτη προϋπηρεσίας~" type="text" className="my-3" />
                         <TextField
                             fullWidth
-                            label="Μέχρι πόσα παιδιά μπορείτε να αναλάβετε ταυτόχρονα"
+                            label="Μέχρι πόσα παιδιά μπορείτε να αναλάβετε ταυτόχρονα~"
                             type="text"
                             className="my-3"
                         />
@@ -65,10 +53,10 @@ export default function FirstStep() {
                     >
                         <TextField fullWidth label="Επώνυμο" type="text" className="my-3" />
                         <Datepicker/>
-                        <TextField fullWidth label="Διαθεσιμότητα" type="text" className="my-3" />
-                        <TextField fullWidth label="Εμπειρία" type="text" className="my-3" />
-                        <TextField fullWidth label="Λίγα λόγια για εσάς" type="text" className="my-3" />
-                        <TextField fullWidth label="Τοποθεσία" type="text" className="my-3" />
+                        <TextField fullWidth label="Διαθεσιμότητα~" type="text" className="my-3" />
+                        <TextField fullWidth label="Εμπειρία~" type="text" className="my-3" />
+                        <TextField fullWidth label="Λίγα λόγια για εσάς~" type="text" className="about-me my-3" />
+                        <TextField fullWidth label="Τοποθεσία~" type="text" className="my-3" />
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Είστε διαθέσιμος να εργαστείτε σε σπίτι με κατοικίδια;</InputLabel>
                             <Select defaultValue="">
@@ -76,7 +64,11 @@ export default function FirstStep() {
                                 <MenuItem value="ΟΧΙ">ΟΧΙ</MenuItem>
                             </Select>
                         </FormControl>
-                        <button id="button-apply">Οριστική Υποβολή</button>
+                        <p>Όσα πεδία εχουν ~ μπορούν να αλλάξουν</p>
+                        <div className='buttons'>
+                            <button className="button-temp">Προσωρινή Αποθήκευση</button>
+                            <button className="button-apply">Υποβολή</button>
+                        </div>
                     </Col>
                 </Row>
             </div>

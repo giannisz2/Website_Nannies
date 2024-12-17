@@ -5,9 +5,10 @@ import TransactionHistory from './pages/nannies/TransactionHistory';
 import NannyHomepage from './pages/nannies/NannyHomepage';
 import ProfileEditNannies from './pages/nannies/ProfileEditNannies';
 import { Routes, Route, BrowserRouter} from 'react-router-dom';
-import FirstStep from './pages/nannies/FirstStep';
+import PersonalInfo from './pages/nannies/PersonalInfo';
 import Login from './components/authentication/Login'
 import Test from './pages/test.jsx';
+import FirstStep from "./pages/nannies/PersonalInfoDone.jsx"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route path="/TransactionHistory" element={<TransactionHistory/>}/>
           <Route path="/NannyHomepage" element={<NannyHomepage/>}/>
           <Route path="/ProfileEditNannies" element={<ProfileEditNannies/>}/>
+          <Route path="/PersonalInfo" element={<PersonalInfo/>}/>
           <Route path="/FirstStep" element={<FirstStep/>}/>
           <Route path="/test" element={<Test/>}/>
         </Routes>
