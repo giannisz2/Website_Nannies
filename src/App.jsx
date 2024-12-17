@@ -8,7 +8,8 @@ import { Routes, Route, BrowserRouter} from 'react-router-dom';
 import PersonalInfo from './pages/nannies/PersonalInfo';
 import Login from './components/authentication/Login'
 import Test from './pages/test.jsx';
-import FirstStep from "./pages/nannies/PersonalInfoDone.jsx"
+import FirstStep from "./pages/nannies/FirstStep.jsx"
+import PersonalInfoDone from './pages/nannies/PersonalInfoDone.jsx';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/NannyHomepage" element={<NannyHomepage/>}/>
           <Route path="/ProfileEditNannies" element={<ProfileEditNannies/>}/>
           <Route path="/PersonalInfo" element={<PersonalInfo/>}/>
+          <Route path="/PersonalInfoDone" element={<PersonalInfoDone/>}/>
           <Route path="/FirstStep" element={<FirstStep/>}/>
           <Route path="/test" element={<Test/>}/>
         </Routes>
