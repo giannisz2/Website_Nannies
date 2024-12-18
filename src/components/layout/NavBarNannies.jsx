@@ -1,11 +1,29 @@
 import { Container, Navbar, Nav, Button, Dropdown } from 'react-bootstrap';
 import '../../styles/NavBarNannies.css';
 
+import { useNavigate } from 'react-router-dom';
+
+
+
+  
+
 export default function NavBarNannies() {
+  const navigate = useNavigate();
+
+  const handleLogoClick = () => {
+    navigate('/');  //home page from logo
+  };
+
+
+  const goToTransactionHistory = () => {
+    navigate('/TransactionHistory');
+  };
+
+
   return (
     <Navbar className="nav" bg="light" expand="lg" variant="light">
       <Container fluid>
-        <Navbar.Brand href="#" className="ms-4 fw-bolder fs-3">
+        <Navbar.Brand className="ms-4 fw-bolder fs-3" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
           Nannies GR
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -23,7 +41,7 @@ export default function NavBarNannies() {
 
               <Dropdown.Menu>
                 <Dropdown.Item id="dropDownItem" href="#/Πληρωμών">Πληρωμών</Dropdown.Item>
-                <Dropdown.Item id="dropDownItem" href="#/Συμφωνητικών">Συμφωνητικών</Dropdown.Item>
+                <Dropdown.Item onClick={goToTransactionHistory}>Συμφωνητικών</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
 
