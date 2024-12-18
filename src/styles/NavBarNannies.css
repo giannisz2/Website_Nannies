@@ -38,4 +38,17 @@
 #dropDownItems:active   {
   background-color: hsl(210, 17%, 78%) !important;
 
+
+
+  
+
+.navbar-collapse {
+  justify-content: space-between;  /* Εξασφαλίζει ότι το Nav με το AccountCircleIcon θα πηγαίνει στο τέλος */
+}
+
+.icon-button {
+  margin-left: auto;  /* Ωθεί το IconButton δεξιά */
+}
+
+
 }
