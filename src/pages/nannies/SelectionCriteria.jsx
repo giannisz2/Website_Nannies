@@ -9,7 +9,17 @@ import NannyImage from '../../assets/images/nanny_cropped.jpg'
 import HelpButton from '../../components/buttons/HelpButton';
 import '../../styles/SelectionCriteria.css'
 
+import { useNavigate } from 'react-router-dom';
+
 export default function SelectionCriteria() {
+
+    const navigate = useNavigate();
+
+    const handleSignUp = () => {
+        navigate('/FirstStep'); // Ανακατευθύνει στη σελίδα FirstStep
+    };
+
+
     return(<div id="SelectionCriteria">
                 <NavBar/>
                 <HelpButton />
@@ -66,7 +76,7 @@ export default function SelectionCriteria() {
                 </div>
                 <div className='signIn'>
                     <p className='text1'>Γίνε μια από τις νταντάδες μας!</p>
-                    <button className='signInButton'>Εγγραφή!</button>
+                    <button className='signInButton' onClick={handleSignUp}>Εγγραφή!</button>
                 </div>
                 <Footer/>
             </div>
