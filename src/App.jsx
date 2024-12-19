@@ -10,6 +10,8 @@ import Login from './components/authentication/Login'
 import Test from './pages/test.jsx';
 import FirstStep from "./pages/nannies/FirstStep.jsx"
 import PersonalInfoDone from './pages/nannies/PersonalInfoDone.jsx';
+import SecondStep from './pages/nannies/SecondStep.jsx';
+import ThirdStep from './pages/nannies/ThirdStep.jsx';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
           <Route path="/PersonalInfoDone" element={<PersonalInfoDone/>}/>
           <Route path="/FirstStep" element={<FirstStep/>}/>
           <Route path="/test" element={<Test/>}/>
+          <Route path="/SecondStep" element={<SecondStep/>}/>
+          <Route path="/ThirdStep" element={<ThirdStep/>}/>
         </Routes>
       </BrowserRouter>
     </>

@@ -31,6 +31,7 @@ export default function FirstStep() {
                         <TextField fullWidth label="Φύλο" type="text" className="my-3" />
                         </Col>
                         <Col>
+                        <p>Ημερομηνία γέννησης:</p>
                         <Datepicker/>
                         </Col>
                         <FormControl fullWidth className="my-3">
