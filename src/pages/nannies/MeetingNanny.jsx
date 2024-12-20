@@ -55,9 +55,6 @@ export default function MeetingNanny() {
     <div className="MeetingNanny">
       <NavBarNannies className="nav-bar-nannies" />
       <HelpButton />
-      <div id="breadCrumb">
-        <Breadcrumb />
-      </div>
       <div>
         <p className="text4">
           Θα συμπληρώνονται αυτόματα ανάλογα το ραντεβού
