@@ -1,0 +1,54 @@
+.bullet {
+    background-color: red;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-top: 5px;
+}
+  
+.appointment-info {
+    margin-top: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: medium;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9; 
+}
+  
+.nav-bar-nannies {
+    padding: 70px;
+}
+  
+.text3 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: medium;
+}
+  
+.text2 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: small;
+}
+  
+.row {
+    margin: 150px;
+}
+  
+#breadCrumb {
+    margin-top: 30px;
+    margin-left: 50px;
+}
+  
+.content {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+  
+.form-section {
+    margin-top: 30px;
+    padding: 20px;
+}
+  

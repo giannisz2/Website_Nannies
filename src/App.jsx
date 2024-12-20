@@ -12,6 +12,10 @@ import FirstStep from "./pages/nannies/FirstStep.jsx"
 import PersonalInfoDone from './pages/nannies/PersonalInfoDone.jsx';
 import SecondStep from './pages/nannies/SecondStep.jsx';
 import ThirdStep from './pages/nannies/ThirdStep.jsx';
+import SelectionCriteriaGoneis from './pages/parents/SelectionCriteriaGoneis.jsx';
+import MeetingNanny from './pages/nannies/MeetingNanny.jsx';
+import React from 'react';
+import TestCalendar from './pages/nannies/TestCalendar.jsx';
 
 function App() {
   return (
@@ -29,6 +33,9 @@ function App() {
           <Route path="/test" element={<Test/>}/>
           <Route path="/SecondStep" element={<SecondStep/>}/>
           <Route path="/ThirdStep" element={<ThirdStep/>}/>
+          <Route path="/SelectionCriteriaGoneis" element={<SelectionCriteriaGoneis/>}/>
+          <Route path="/MeetingNanny" element={<MeetingNanny/>}/>
+          <Route path="/TestCalendar" element={<TestCalendar/>}/>
         </Routes>
       </BrowserRouter>
     </>
