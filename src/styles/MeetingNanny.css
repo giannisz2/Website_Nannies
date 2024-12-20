@@ -1,3 +1,7 @@
+#root{
+    width: 100%;
+}
+
 .bullet {
     background-color: red;
     width: 8px;
@@ -53,11 +57,11 @@
     margin-left: 50px;
 }
   
-.content {
+.my_callendar {
     margin-top: -170px;
     margin-right: 830px;
     display: flex;
-}
+} 
   
 .form-section {
     margin-top: 30px;

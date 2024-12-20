@@ -52,7 +52,7 @@ export default function MeetingNanny() {
   };
 
   return (
-    <div id="MeetingNanny">
+    <div className="MeetingNanny">
       <NavBarNannies className="nav-bar-nannies" />
       <HelpButton />
       <div id="breadCrumb">
@@ -73,7 +73,7 @@ export default function MeetingNanny() {
           <TextField fullWidth={false} label="Τοποθεσία (αν γίνει από κοντά ή link αν γίνει διαδικτυακά)" type="text" value={appointmentInfo3} className="my-3" disabled />
         </Row>
       </div>
-      <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
+      <div className="my_callendar flex-grow-1 d-flex align-items-center justify-content-center">
         <Calendar
           onClickDay={handleDateClick} // Χειριστής όταν επιλέγεται ημερομηνία
           tileContent={tileContent} 
