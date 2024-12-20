@@ -20,31 +20,43 @@
 .nav-bar-nannies {
     padding: 70px;
 }
+
   
 .text3 {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: medium;
+    margin-top: 10px; 
+    margin-left: 100px; 
 }
   
-.text2 {
+.text4 {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: small;
+    margin-top: 30px; 
+    margin-left: 940px; 
 }
   
 .row {
     margin: 150px;
 }
   
+
+.row2 {
+    width: 400px; 
+    height: 40px; 
+    margin-top: -60px;
+    margin-left: 900px;
+}
+
 #breadCrumb {
     margin-top: 30px;
     margin-left: 50px;
 }
   
 .content {
-    margin-top: 20px;
+    margin-top: -170px;
+    margin-right: 830px;
     display: flex;
-    justify-content: center;
-    align-items: center;
 }
   
 .form-section {

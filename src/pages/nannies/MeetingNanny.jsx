@@ -59,60 +59,26 @@ export default function MeetingNanny() {
         <Breadcrumb />
       </div>
       <div>
+        <p className="text4">
+          Θα συμπληρώνονται αυτόματα ανάλογα το ραντεβού
+        </p>
         <p className="text3">
           Πατήστε στις κουκκίδες για να δείτε τα στοιχεία του ραντεβού
         </p>
-        <p className="text2">
-          Θα συμπληρώνονται αυτόματα ανάλογα το ραντεβού
-        </p>
       </div>
-
+      <div className="form-section">
+        <Row className="row2">
+          <TextField fullWidth={false} label="Ονοματεπώνυμο κηδεμόνα" type="text" value={appointmentInfo1} className="my-3" disabled />
+          <TextField fullWidth={false} label="Ημέρα/Ώρα" type="text" value={appointmentInfo2} className="my-3" disabled />
+          <TextField fullWidth={false} label="Τοποθεσία (αν γίνει από κοντά ή link αν γίνει διαδικτυακά)" type="text" value={appointmentInfo3} className="my-3" disabled />
+        </Row>
+      </div>
       <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
-        {/* Εμφάνιση ημερολογίου */}
         <Calendar
           onClickDay={handleDateClick} // Χειριστής όταν επιλέγεται ημερομηνία
-          tileContent={tileContent} // Προσθήκη bullets
+          tileContent={tileContent} 
         />
       </div>
-
-      {/* Εμφάνιση πληροφοριών ραντεβού στο TextField */}
-      <div className="form-section">
-        <Row className="row">
-          <TextField
-            fullWidth
-            label="Ονοματεπώνυμο κηδεμόνα"
-            type="text"
-            value={appointmentInfo1} // Οι πληροφορίες του ραντεβού εμφανίζονται εδώ
-            className="my-3"
-            disabled // Κάνει το πεδίο μη επεξεργάσιμο
-          />
-        </Row>
-      </div>
-      <div className="form-section">
-        <Row className="row">
-          <TextField
-            fullWidth
-            label="Ημέρα/Ώρα"
-            type="text"
-            value={appointmentInfo2} // Οι πληροφορίες του ραντεβού εμφανίζονται εδώ
-            className="my-3"
-            disabled // Κάνει το πεδίο μη επεξεργάσιμο
-          />
-        </Row>
-      </div>
-      <div className="form-section">
-        <Row className="row">
-          <TextField
-            fullWidth
-            label="Τοποθεσία (αν γίνει από κοντά ή link αν γίνει διαδικτυακά)"
-            type="text"
-            value={appointmentInfo3} // Οι πληροφορίες του ραντεβού εμφανίζονται εδώ
-            className="my-3"
-            disabled // Κάνει το πεδίο μη επεξεργάσιμο
-          />
-        </Row>
-      </div>
-
       <Footer />
     </div>
   );

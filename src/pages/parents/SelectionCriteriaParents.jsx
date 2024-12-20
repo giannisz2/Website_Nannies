@@ -7,7 +7,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import WalletIcon from '@mui/icons-material/Wallet';
 import NannyImage from '../../assets/images/parents.jpg'
 import HelpButton from '../../components/buttons/HelpButton';
-import '../../styles/SelectionCriteriaGoneis.css'
+import '../../styles/SelectionCriteriaParents.css'
 
 import { useNavigate } from 'react-router-dom';
 
