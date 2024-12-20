@@ -6,7 +6,20 @@ import { Select, MenuItem, TextField, InputLabel, FormControl } from '@mui/mater
 import Datepicker from '../../components/layout/Datepicker.jsx';
 import '../../styles/SecondStep.css'
 
+
+import { useNavigate } from 'react-router-dom';
+
+
 export default function SecondStep() {
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        navigate('/ThirdStep');  
+    };
+
+
     return (
         <div className="profile-edit-nannies d-flex flex-column min-vh-100">
             <HelpButton />
@@ -69,7 +82,7 @@ export default function SecondStep() {
                         <TextField fullWidth label="Λίγα λόγια για εσάς..." type="text" className="my-3" />                     
                         <div className='buttons'>
                             <button className="button-temp">Προσωρινή Αποθήκευση</button>
-                            <button className="button-apply">Υποβολή</button>
+                            <button className='button-apply' onClick={handleSubmit}>Υποβολή</button>
                         </div>
                 </Row>
             </div>
