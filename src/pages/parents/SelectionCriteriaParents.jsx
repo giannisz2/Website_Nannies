@@ -11,7 +11,7 @@ import '../../styles/SelectionCriteriaParents.css'
 
 import { useNavigate } from 'react-router-dom';
 
-export default function SelectionCriteria() {
+export default function SelectionCriteriaParents() {
 
     const navigate = useNavigate();
 

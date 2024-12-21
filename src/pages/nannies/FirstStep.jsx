@@ -62,6 +62,13 @@ export default function FirstStep() {
         }
     };
 
+    const handleFileUploadChange = (event) => {
+        const file = event.target.files[0]; // Get the first selected file
+        setFormData({ ...formData, recommendationLetters: file }); // Update the formData state
+      };
+
+   
+
     return (
         <div className="profile-edit-nannies d-flex flex-column min-vh-100">
             <HelpButton />
@@ -84,7 +91,24 @@ export default function FirstStep() {
                         <TextField fullWidth label="Όνομα" name="name" value={formData.name} onChange={handleInputChange} className="my-3" error={formErrors.name} helperText={formErrors.name && "Το πεδίο Όνομα είναι υποχρεωτικό"} />
                         <TextField fullWidth label="Επώνυμο" name="surname" value={formData.surname} onChange={handleInputChange} className="my-3" error={formErrors.surname} helperText={formErrors.surname && "Το πεδίο Επώνυμο είναι υποχρεωτικό"} />
                         <Col>
-                            <TextField fullWidth label="Φύλο" name="gender" value={formData.gender} onChange={handleInputChange} className="my-3" error={formErrors.gender} helperText={formErrors.gender && "Το πεδίο Φύλο είναι υποχρεωτικό"} />
+                        <FormControl fullWidth className="my-3" error={formErrors.gender}>
+                            <InputLabel>Φύλο</InputLabel>
+                            <Select
+                                name="gender"
+                                value={formData.gender}
+                                onChange={handleInputChange}
+                                defaultValue=""
+                            >
+                                <MenuItem value="Άνδρας">Άνδρας</MenuItem>
+                                <MenuItem value="Γυναίκα">Γυναίκα</MenuItem>
+                                <MenuItem value="Άλλο">Άλλο</MenuItem>
+                            </Select>
+                            {formErrors.gender && (
+                                <span style={{ color: 'red', fontSize: '12px' }}>
+                                Το πεδίο Φύλο είναι υποχρεωτικό
+                                </span>
+                            )}
+                        </FormControl>
                         </Col>
                         <Col>
                             <p>Ημερομηνία γέννησης:</p>
@@ -101,7 +125,24 @@ export default function FirstStep() {
                             </Select>
                         </FormControl>
                         <TextField fullWidth label="Εμπειρία" name="experience" value={formData.experience} onChange={handleInputChange} className="my-3" error={formErrors.experience} helperText={formErrors.experience && "Το πεδίο Εμπειρία είναι υποχρεωτικό"} />
-                        <TextField fullWidth label="Συστατικές επιστολές~" name="recommendationLetters" value={formData.recommendationLetters} onChange={handleInputChange} className="my-3" error={formErrors.recommendationLetters} helperText={formErrors.recommendationLetters && "Το πεδίο Συστατικές επιστολές είναι υποχρεωτικό"} />
+                        <FormControl fullWidth className="my-3" error={formErrors.recommendationLetters}>
+                            <InputLabel shrink htmlFor="recommendationLettersUpload">
+                                Συστατικές επιστολές~
+                            </InputLabel>
+                            <input
+                                type="file"
+                                id="recommendationLettersUpload"
+                                name="recommendationLetters"
+                                onChange={handleFileUploadChange}
+                                className="form-control"
+                                style={{ marginTop: '8px' }}
+                            />
+                            {formErrors.recommendationLetters && (
+                                <span style={{ color: 'red', fontSize: '12px' }}>
+                                Το πεδίο Συστατικές επιστολές είναι υποχρεωτικό
+                                </span>
+                            )}
+                        </FormControl>
                         
                         <p className="paragraph">Τα υπόλοιπα στοιχεία θα συμπληρώνονται αυτόματα από το Taxisnet</p>
                         <div className='buttons'>

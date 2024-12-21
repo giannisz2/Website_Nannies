@@ -4,50 +4,62 @@ import HelpButton from '../../components/buttons/HelpButton.jsx';
 import { Row, Col } from 'react-bootstrap';
 import { Select, MenuItem, TextField, InputLabel, FormControl } from '@mui/material';
 import Datepicker from '../../components/layout/Datepicker.jsx';
-import '../../styles/SecondStep.css'
-
+import '../../styles/SecondStep.css';
 
 import { useNavigate } from 'react-router-dom';
-
+import React, { useState } from "react";
 
 export default function SecondStep() {
-
     const navigate = useNavigate();
+
+    const [bio, setBio] = useState("");
+    const [wordCount, setWordCount] = useState(0);
+    const maxWords = 200;
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        navigate('/ThirdStep');  
+        navigate('/ThirdStep');
     };
 
+    const handleInputChange = (event) => {
+        const input = event.target.value;
+        const words = input.split(/\s+/).filter((word) => word.length > 0);
+
+        if (words.length <= maxWords) {
+            setBio(input);
+            setWordCount(words.length);
+        }
+    };
 
     return (
         <div className="profile-edit-nannies d-flex flex-column min-vh-100">
             <HelpButton />
             <Logo />
-            <div class="stepper">
-                <div class="step">
-                    <div class="circle">1</div>
+            <div className="stepper">
+                <div className="step">
+                    <div className="circle">1</div>
                 </div>
-                <div class="step active">
-                    <div class="circle">2</div>
-                    <div class="label">ΔΗΜΙΟΥΡΓΙΑ ΑΓΓΕΛΙΑΣ & ΟΡΙΣΤΙΚΗ ΥΠΟΒΟΛΗ</div>
+                <div className="step active">
+                    <div className="circle">2</div>
+                    <div className="label">ΔΗΜΙΟΥΡΓΙΑ ΑΓΓΕΛΙΑΣ & ΟΡΙΣΤΙΚΗ ΥΠΟΒΟΛΗ</div>
                 </div>
-                <div class="step">
-                    <div class="circle">3</div>
+                <div className="step">
+                    <div className="circle">3</div>
                 </div>
             </div>
             <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
                 <Row className="row">
-                        <TextField fullWidth label="Διαθεσιμότητα" type="text" className="my-3" />
-                        <FormControl fullWidth className="my-3">
-                            <InputLabel>Χρόνος Απασχόλησης</InputLabel>
-                            <Select defaultValue="">
-                                <MenuItem value="Μερική">Μερική</MenuItem>
-                                <MenuItem value="Πλήρης">Πλήρης</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <TextField fullWidth label="Τοποθεσία" type="text" className="my-3" />
-                        <Col>
+                    <p>Διαθεσιμότητα:</p>
+                    <Datepicker />
+                    <FormControl fullWidth className="my-3">
+                        <InputLabel>Χρόνος Απασχόλησης</InputLabel>
+                        <Select defaultValue="">
+                            <MenuItem value="Μερική">Μερική</MenuItem>
+                            <MenuItem value="Πλήρης">Πλήρης</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <TextField fullWidth label="Τοποθεσία" type="text" className="my-3" />
+                    <Col>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Έτη προϋπηρεσίας</InputLabel>
                             <Select defaultValue="">
@@ -58,8 +70,8 @@ export default function SecondStep() {
                                 <MenuItem value="Άλλο">4+</MenuItem>
                             </Select>
                         </FormControl>
-                        </Col>
-                        <Col>
+                    </Col>
+                    <Col>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Μέχρι πόσα παιδια μπορείτε να αναλάβετε;</InputLabel>
                             <Select defaultValue="">
@@ -69,9 +81,9 @@ export default function SecondStep() {
                                 <MenuItem value="Άλλο">4+</MenuItem>
                             </Select>
                         </FormControl>
-                        </Col>
-                        <Row className='row'/>
-                        <Col>
+                    </Col>
+                    <Row className="row" />
+                    <Col>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Είστε διατεθειμένος να εργαστείτε σε σπίτι με κατοικίδια ζώα;</InputLabel>
                             <Select defaultValue="">
@@ -79,8 +91,8 @@ export default function SecondStep() {
                                 <MenuItem value="ΟΧΙ">OXI</MenuItem>
                             </Select>
                         </FormControl>
-                        </Col>
-                        <Col>
+                    </Col>
+                    <Col>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Είστε καπνιστής;</InputLabel>
                             <Select defaultValue="">
@@ -88,15 +100,26 @@ export default function SecondStep() {
                                 <MenuItem value="ΟΧΙ">OXI</MenuItem>
                             </Select>
                         </FormControl>
-                        </Col>
-                        <TextField fullWidth label="Λίγα λόγια για εσάς..." type="text" className="my-3" />                     
-                        <div className='buttons'>
-                            <button className="button-temp">Προσωρινή Αποθήκευση</button>
-                            <button className='button-apply' onClick={handleSubmit}>Υποβολή</button>
-                        </div>
+                    </Col>
+                    <TextField
+                        fullWidth
+                        label="Λίγα λόγια για εσάς..."
+                        type="text"
+                        className="my-3"
+                        value={bio}
+                        onChange={handleInputChange}
+                        multiline
+                        rows={4}
+                        helperText={`Words: ${wordCount}/${maxWords}`}
+                    />
+                    <div className="buttons">
+                        <button className="button-temp">Προσωρινή Αποθήκευση</button>
+                        <button className="button-apply" onClick={handleSubmit}>Υποβολή</button>
+                    </div>
                 </Row>
             </div>
             <Footer />
         </div>
     );
 }
+
