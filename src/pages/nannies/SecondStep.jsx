@@ -42,8 +42,8 @@ export default function SecondStep() {
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Χρόνος Απασχόλησης</InputLabel>
                             <Select defaultValue="">
-                                <MenuItem value="Μερική">Τριτοβάθμια εκπαίδευση</MenuItem>
-                                <MenuItem value="Πλήρης">Δευτεροβάθμια εκπαίδευση</MenuItem>
+                                <MenuItem value="Μερική">Μερική</MenuItem>
+                                <MenuItem value="Πλήρης">Πλήρης</MenuItem>
                             </Select>
                         </FormControl>
                         <TextField fullWidth label="Τοποθεσία" type="text" className="my-3" />
@@ -51,22 +51,32 @@ export default function SecondStep() {
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Έτη προϋπηρεσίας</InputLabel>
                             <Select defaultValue="">
-                                <MenuItem value="1">Τριτοβάθμια εκπαίδευση</MenuItem>
-                                <MenuItem value="2">Δευτεροβάθμια εκπαίδευση</MenuItem>
-                                <MenuItem value="Άλλο">Άλλο</MenuItem>
+                                <MenuItem value="1">0</MenuItem>
+                                <MenuItem value="2">1</MenuItem>
+                                <MenuItem value="2">2</MenuItem>
+                                <MenuItem value="2">3</MenuItem>
+                                <MenuItem value="Άλλο">4+</MenuItem>
                             </Select>
                         </FormControl>
                         </Col>
                         <Col>
-                        <TextField fullWidth label="Μέχρι πόσα παιδια μπορείτε να αναλάβετε ταυτόχρονα;" type="text" className="my-3" />
+                        <FormControl fullWidth className="my-3">
+                            <InputLabel>Μέχρι πόσα παιδια μπορείτε να αναλάβετε;</InputLabel>
+                            <Select defaultValue="">
+                                <MenuItem value="2">1</MenuItem>
+                                <MenuItem value="2">2</MenuItem>
+                                <MenuItem value="2">3</MenuItem>
+                                <MenuItem value="Άλλο">4+</MenuItem>
+                            </Select>
+                        </FormControl>
                         </Col>
                         <Row className='row'/>
                         <Col>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Είστε διατεθειμένος να εργαστείτε σε σπίτι με κατοικίδια ζώα;</InputLabel>
                             <Select defaultValue="">
-                                <MenuItem value="ΝΑΙ">Τριτοβάθμια εκπαίδευση</MenuItem>
-                                <MenuItem value="ΟΧΙ">Δευτεροβάθμια εκπαίδευση</MenuItem>
+                                <MenuItem value="ΝΑΙ">NAI</MenuItem>
+                                <MenuItem value="ΟΧΙ">OXI</MenuItem>
                             </Select>
                         </FormControl>
                         </Col>
@@ -74,8 +84,8 @@ export default function SecondStep() {
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Είστε καπνιστής;</InputLabel>
                             <Select defaultValue="">
-                                <MenuItem value="ΝΑΙ">Τριτοβάθμια εκπαίδευση</MenuItem>
-                                <MenuItem value="ΟΧΙ">Δευτεροβάθμια εκπαίδευση</MenuItem>
+                                <MenuItem value="ΝΑΙ">NAI</MenuItem>
+                                <MenuItem value="ΟΧΙ">OXI</MenuItem>
                             </Select>
                         </FormControl>
                         </Col>

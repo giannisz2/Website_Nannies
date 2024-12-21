@@ -28,7 +28,13 @@ export default function ThirdStep() {
             <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
                 <Row className="row">
                         <TextField fullWidth label="Κινητό" type="text" className="my-3" />
-                        <TextField fullWidth label="Επιτρέπω τη πρόσβαση στο κινητό μου τηλέφωνο σε:" type="text" className="my-3" />
+                        <FormControl fullWidth className="my-3">
+                            <InputLabel>Επιτρέπω τη πρόσβαση στο κινητό μου τηλέφωνο σε:</InputLabel>
+                            <Select defaultValue="">
+                                <MenuItem value="ΝΑΙ">Όλους τους ενδιαφερόμενους γονείς</MenuItem>
+                                <MenuItem value="ΟΧΙ">Σε αυτούς που επιλέγω εγώ</MenuItem>
+                            </Select>
+                        </FormControl>
                         <p>Ποιες μέρες/ώρες είσαι διαθέσιμος/η να σε καλέσουν;</p>
                         <Datepicker/>
                         <Timepicker/>                                                                   
