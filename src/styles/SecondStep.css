@@ -78,3 +78,11 @@
 .my-3{
     margin-right: 100px;
 }
+
+.button-apply{
+    background-color: black;
+}
+
+.button-temp{
+    background-color: orange;
+}
