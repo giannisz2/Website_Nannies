@@ -1,3 +1,4 @@
+import React from 'react';
 import HomePage from './pages/HomePage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SelectionCriteria from './pages/nannies/SelectionCriteria';
@@ -12,6 +13,9 @@ import FirstStep from "./pages/nannies/FirstStep.jsx"
 import PersonalInfoDone from './pages/nannies/PersonalInfoDone.jsx';
 import SecondStep from './pages/nannies/SecondStep.jsx';
 import ThirdStep from './pages/nannies/ThirdStep.jsx';
+import SelectionCriteriaParents from './pages/parents/SelectionCriteriaParents.jsx';
+import MeetingNanny from './pages/nannies/MeetingNanny.jsx';
+import Rates from './pages/nannies/Rates.jsx';
 
 function App() {
   return (
@@ -22,13 +26,16 @@ function App() {
           <Route path="/SelectionCriteria" element={<SelectionCriteria/>}/>
           <Route path="/TransactionHistory" element={<TransactionHistory/>}/>
           <Route path="/NannyHomepage" element={<NannyHomepage/>}/>
-          <Route path="/ProfileEditNannies" element={<ProfileEditNannies/>}/>
+          <Route path="/ProfileEditNannies" element={<ProfileEditNannies/>}/>   {/*tipota*/}
           <Route path="/PersonalInfo" element={<PersonalInfo/>}/>
           <Route path="/PersonalInfoDone" element={<PersonalInfoDone/>}/>
           <Route path="/FirstStep" element={<FirstStep/>}/>
-          <Route path="/test" element={<Test/>}/>
+          <Route path="/test" element={<Test/>}/>                 {/*tipota*/}
           <Route path="/SecondStep" element={<SecondStep/>}/>
           <Route path="/ThirdStep" element={<ThirdStep/>}/>
+          <Route path="/SelectionCriteriaParents" element={<SelectionCriteriaParents/>}/>
+          <Route path="/MeetingNanny" element={<MeetingNanny/>}/>
+          <Route path="/Rates" element={<Rates/>}/>
         </Routes>
       </BrowserRouter>
     </>

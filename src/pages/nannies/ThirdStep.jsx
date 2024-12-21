@@ -5,6 +5,7 @@ import { Row, Col } from 'react-bootstrap';
 import { Select, MenuItem, TextField, InputLabel, FormControl } from '@mui/material';
 import Datepicker from '../../components/layout/Datepicker.jsx';
 import '../../styles/ThirdStep.css'
+import Timepicker from '../../components/layout/Timepicker.jsx';
 
 export default function ThirdStep() {
     return (
@@ -29,7 +30,8 @@ export default function ThirdStep() {
                         <TextField fullWidth label="Κινητό" type="text" className="my-3" />
                         <TextField fullWidth label="Επιτρέπω τη πρόσβαση στο κινητό μου τηλέφωνο σε:" type="text" className="my-3" />
                         <p>Ποιες μέρες/ώρες είσαι διαθέσιμος/η να σε καλέσουν;</p>
-                        <Datepicker/>                                                                   
+                        <Datepicker/>
+                        <Timepicker/>                                                                   
                         <div className='buttons'>
                             <button className="button-apply">Υποβολή</button>
                         </div>

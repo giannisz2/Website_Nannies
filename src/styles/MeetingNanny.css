@@ -1,0 +1,70 @@
+#root{
+    width: 100%;
+}
+
+.bullet {
+    background-color: red;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin: 0 auto;
+    margin-top: 5px;
+}
+  
+.appointment-info {
+    margin-top: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: medium;
+    border: 1px solid #ccc;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: #f9f9f9; 
+}
+  
+.nav-bar-nannies {
+    padding: 70px;
+}
+
+  
+.text3 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: medium;
+    margin-top: 10px; 
+    margin-left: 100px; 
+}
+  
+.text4 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: small;
+    margin-top: 30px; 
+    margin-left: 940px; 
+}
+  
+.row {
+    margin: 150px;
+}
+  
+
+.row2 {
+    width: 400px; 
+    height: 40px; 
+    margin-top: -60px;
+    margin-left: 900px;
+}
+
+#breadCrumb {
+    margin-top: 30px;
+    margin-left: 50px;
+}
+  
+.my_callendar {
+    margin-top: -170px;
+    margin-right: 830px;
+    display: flex;
+} 
+  
+.form-section {
+    margin-top: 30px;
+    padding: 20px;
+}
+  
