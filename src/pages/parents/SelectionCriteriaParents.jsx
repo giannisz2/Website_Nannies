@@ -5,7 +5,7 @@ import Footer from '../../components/layout/Footer';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import WalletIcon from '@mui/icons-material/Wallet';
-import NannyImage from '../../assets/images/parents.jpg'
+import ParentImage from '../../assets/images/parents.jpeg'
 import HelpButton from '../../components/buttons/HelpButton';
 import '../../styles/SelectionCriteriaParents.css'
 
@@ -23,7 +23,7 @@ export default function SelectionCriteria() {
     return(<div id="SelectionCriteriaGoneis">
                 <NavBar/>
                 <HelpButton />
-                <img id="parentsImage" src={NannyImage} alt="Parents and kids"></img>
+                <img id="parentsImage" src={ParentImage} alt="Parents and kids"></img>
                 <div className='P'>
                     <Favorite id="icons"/>
                     <div>

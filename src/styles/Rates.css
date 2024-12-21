@@ -1,0 +1,66 @@
+#root {
+    width: 100%;
+}
+
+.nanny-rates {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;  /* Διασφαλίζει ότι το στοιχείο θα κεντραριστεί κάθετα και οριζόντια στην οθόνη */
+}
+
+.this_text {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+    font-weight: bold;
+    margin-top: 90px;
+    margin-left: 100px;
+}
+
+.rating-container {
+    display: flex;
+    flex-direction: column; 
+    margin-top: 50px; 
+    margin-left: 300px;
+    gap: 20px;
+}
+
+.rating-container2 {
+    display: flex;
+    flex-direction: column; 
+    margin-top: -300px; 
+    margin-left: 900px;
+    gap: 20px; 
+}
+
+.container-text {
+    display: flex;
+    flex-direction: column; 
+    margin-top: 200px; 
+    margin-left: 500px;
+    width: 400px;
+    gap: 20px;
+}
+
+
+.star-rating .filled {
+    font-size: 2rem; 
+    color: gold; 
+    padding: 0 5px; 
+}
+
+.star-rating .empty {
+    font-size: 2rem; 
+    color: #ccc; 
+    padding: 0 5px; 
+}
+
+
+.clickable-text {
+    color: blue;               
+    text-decoration: underline; 
+    font-size: small;        
+}
+  
+.clickable-text:hover {
+    cursor: pointer;  
+}
