@@ -23,12 +23,10 @@ export default function FirstStep() {
 
     const [formErrors, setFormErrors] = useState({});
 
-    const navigate = useNavigate();
-
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
-        setFormErrors({ ...formErrors, [name]: !value });
+        setFormErrors({ ...formErrors, [name]: !value }); // Set error to true if value is empty
     };
 
     const handleDateChange = (date) => {
@@ -48,6 +46,8 @@ export default function FirstStep() {
         setFormErrors(errors);
         return isValid;
     };
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -106,7 +106,7 @@ export default function FirstStep() {
                         <p className="paragraph">Τα υπόλοιπα στοιχεία θα συμπληρώνονται αυτόματα από το Taxisnet</p>
                         <div className='buttons'>
                             <button type="button" className="button-temp">Προσωρινή Αποθήκευση</button>
-                            <button className='button-apply' onClick={handleSubmit}>Υποβολή</button>
+                            <button type="submit" className='button-apply'>Υποβολή</button>
                         </div>
                     </Row>
                 </form>

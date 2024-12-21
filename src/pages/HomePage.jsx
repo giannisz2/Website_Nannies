@@ -17,7 +17,7 @@ export default function HomePage() {
         <input className="location" placeholder="Αναζητήστε περιοχή..." />
         <SearchIcon className="search-icon" />
       </div>
-      <p id="how-it-works">Πως δουλέυει...</p>
+      <p id="how-it-works">Πως δουλεύει...</p>
       <Row className="align-items-center g-5 m-0 text-center">
         <Col
           xs={12} /* Full width for small screens */
