@@ -39,12 +39,12 @@
 .text1{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
-    font-size: large;
+    font-size: medium;
 }
 
 .text2{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: medium;
+    font-size: small;
 }
 
 .signIn{
