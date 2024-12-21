@@ -21,7 +21,7 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.3",
     "dayjs": "^1.11.13",
-    "firebase": "^11.0.2",
+    "firebase": "^11.1.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.6",
     "react-dom": "^18.3.1",
@@ -40,7 +40,7 @@
     "globals": "^15.12.0",
     "lint-staged": "^15.2.10",
     "prettier": "^3.4.2",
-    "vite": "^6.0.1"
+    "vite": "^6.0.4"
   },
   "lint-staged": {
     "*.{jsx,css}": [
