@@ -16,6 +16,7 @@ import ThirdStep from './pages/nannies/ThirdStep.jsx';
 import SelectionCriteriaParents from './pages/parents/SelectionCriteriaParents.jsx';
 import MeetingNanny from './pages/nannies/MeetingNanny.jsx';
 import Rates from './pages/nannies/Rates.jsx';
+import SearchNannies from './pages/parents/SearchNannies.jsx';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/SelectionCriteriaParents" element={<SelectionCriteriaParents/>}/>
           <Route path="/MeetingNanny" element={<MeetingNanny/>}/>
           <Route path="/Rates" element={<Rates/>}/>
+          <Route path='/SearchNannies' element={<SearchNannies/>}/>
         </Routes>
       </BrowserRouter>
     </>
