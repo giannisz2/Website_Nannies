@@ -64,3 +64,8 @@
 .clickable-text:hover {
     cursor: pointer;  
 }
+
+.button-apply{
+    color: white;
+    background-color: black;
+}

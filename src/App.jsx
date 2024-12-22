@@ -21,6 +21,7 @@ import PersonalInfoParentsDone from './pages/parents/PersonalInfoParentsDone.jsx
 import PersonalInfoParents from './pages/parents/PersonalInfoParents.jsx';
 import ParentHomepage from './pages/parents/ParentHomepage.jsx';
 import TransactionHistoryParents from './pages/parents/TransactionHistoryParents.jsx';
+import RatesParents from './pages/parents/RatesParents.jsx'
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
           <Route path='/PersonalInfoParents' element={<PersonalInfoParents/>}/>
           <Route path='/ParentHomepage' element={<ParentHomepage/>}/>
           <Route path='/TransactionHistoryParents' element={<TransactionHistoryParents/>}/>
+          <Route path='/RatesParents' element={<RatesParents/>}/>
         </Routes>
       </BrowserRouter>
     </>
