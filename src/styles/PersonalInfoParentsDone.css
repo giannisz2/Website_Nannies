@@ -1,0 +1,9 @@
+.button-apply{
+  display: flex;
+  margin-top: 30px;
+  border-radius: 50px;
+  padding: 10px 150px;
+  background-color: black;
+  justify-content: center;
+}
+      

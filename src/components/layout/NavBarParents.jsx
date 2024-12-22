@@ -47,9 +47,16 @@ export default function NavBarParents() {
             <Button className="button mx-2" variant="primary">
               Ειδοποιήσεις
             </Button>
-            <Button className="button mx-2" variant="primary">
-              Συμφωνητικό
-            </Button>
+            <Dropdown className="d-inline mx-2">
+              <Dropdown.Toggle variant="primary" className="button">
+                Συμφωνητικό
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item>Λήξη Συνεργασίας</Dropdown.Item>
+                <Dropdown.Item>Νέο συμφωνητικό</Dropdown.Item>
+                <Dropdown.Item>Ανανέωση</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <Button className="button mx-2" variant="primary">
               Πληρωμή
             </Button>

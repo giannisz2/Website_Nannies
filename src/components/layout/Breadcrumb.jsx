@@ -3,13 +3,13 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
-import '../../styles/TransactionHistory.css'
+import '../../styles/AgreementHistory.css'
 
 function handleClick(event) {
   event.preventDefault();
 }
 
-export default function CustomSeparator() {
+export default function CustomSeparator({label = null}) {
   const breadcrumbs = [
     <Link
       underline="hover"
@@ -21,7 +21,7 @@ export default function CustomSeparator() {
     Ιστορικό
     </Link>,
     <Typography key="3" sx={{ color: 'text.primary' }}>
-    Συμφωνητικά
+    {label}
     </Typography>,
   ];
 

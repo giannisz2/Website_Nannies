@@ -3,14 +3,14 @@ import NavBarNannies from '../../components/layout/NavbarNannies';
 import HelpButton from '../../components/buttons/HelpButton';
 import Footer from '../../components/layout/Footer'
 import Breadcrumb from '../../components/layout/Breadcrumb';
-import '../../styles/TransactionHistory.css'
+import '../../styles/AgreementHistory.css'
 
-export default function TransactionHistory(){
+export default function AgreementHistory(){
   return (<div id="TransactionHistory">
             <NavBarNannies className="nav-bar-nannies" />
             <HelpButton/>
             <div id="breadCrumb">
-            <Breadcrumb/>
+            <Breadcrumb label="Συμφωνητικά"/>
             </div>
             <div className='transactionBox'>
               <p className='header'>Συμφωνητικό #4</p>

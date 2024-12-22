@@ -1,0 +1,29 @@
+#root{
+    width: 100%;
+  }
+  
+  .label {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: black;
+  }
+  
+  .buttons{
+    display: flex;
+    justify-content: center;
+    gap: 190px;
+  }
+  
+  .button-apply{
+    margin-top: 30px;
+    border-radius: 50px;
+    padding: 10px 150px;
+    background-color: black;
+  }
+  
+  .button-temp{
+    margin-top: 30px;
+    border-radius: 50px;
+    background-color: orange;
+    padding: 10px 50px;
+  }

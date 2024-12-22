@@ -2,7 +2,7 @@ import React from 'react';
 import HomePage from './pages/HomePage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SelectionCriteria from './pages/nannies/SelectionCriteria';
-import TransactionHistory from './pages/nannies/TransactionHistory';
+import AgreementHistory from './pages/nannies/AgreementHistory.jsx';
 import NannyHomepage from './pages/nannies/NannyHomepage';
 import ProfileEditNannies from './pages/nannies/ProfileEditNannies';
 import { Routes, Route, BrowserRouter} from 'react-router-dom';
@@ -17,6 +17,10 @@ import SelectionCriteriaParents from './pages/parents/SelectionCriteriaParents.j
 import MeetingNanny from './pages/nannies/MeetingNanny.jsx';
 import Rates from './pages/nannies/Rates.jsx';
 import SearchNannies from './pages/parents/SearchNannies.jsx';
+import PersonalInfoParentsDone from './pages/parents/PersonalInfoParentsDone.jsx';
+import PersonalInfoParents from './pages/parents/PersonalInfoParents.jsx';
+import ParentHomepage from './pages/parents/ParentHomepage.jsx';
+import TransactionHistoryParents from './pages/parents/TransactionHistoryParents.jsx';
 
 function App() {
   return (
@@ -25,7 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage/>}/>
           <Route path="/SelectionCriteria" element={<SelectionCriteria/>}/>
-          <Route path="/TransactionHistory" element={<TransactionHistory/>}/>
+          <Route path="/AgreementHistory" element={<AgreementHistory/>}/>
           <Route path="/NannyHomepage" element={<NannyHomepage/>}/>
           <Route path="/ProfileEditNannies" element={<ProfileEditNannies/>}/>   {/*tipota*/}
           <Route path="/PersonalInfo" element={<PersonalInfo/>}/>
@@ -38,6 +42,10 @@ function App() {
           <Route path="/MeetingNanny" element={<MeetingNanny/>}/>
           <Route path="/Rates" element={<Rates/>}/>
           <Route path='/SearchNannies' element={<SearchNannies/>}/>
+          <Route path='/PersonalInfoParentsDone' element={<PersonalInfoParentsDone/>}/>
+          <Route path='/PersonalInfoParents' element={<PersonalInfoParents/>}/>
+          <Route path='/ParentHomepage' element={<ParentHomepage/>}/>
+          <Route path='/TransactionHistoryParents' element={<TransactionHistoryParents/>}/>
         </Routes>
       </BrowserRouter>
     </>
