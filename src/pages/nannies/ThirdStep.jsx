@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Logo from '../../components/buttons/Logo.jsx';
 import Footer from '../../components/layout/Footer.jsx';
 import HelpButton from '../../components/buttons/HelpButton.jsx';
-import { Row, Col } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
 import { Select, MenuItem, TextField, InputLabel, FormControl } from '@mui/material';
 import Datepicker from '../../components/layout/Datepicker.jsx';
 import Timepicker from '../../components/layout/Timepicker.jsx';
@@ -12,14 +12,15 @@ import '../../styles/ThirdStep.css';
 export default function ThirdStep() {
     const navigate = useNavigate();
 
-    // Initialize all fields, including date/time, with null or empty strings
+    // Initialize form data state
     const [formData, setFormData] = useState({
         phone: '',
         phoneAccess: '',
-        availableDate: null, // Default to null for Datepicker
-        availableTime: null, // Default to null for Timepicker
+        availableDate: null,
+        availableTime: null,
     });
 
+    // Form error state
     const [formErrors, setFormErrors] = useState({
         phone: false,
         phoneAccess: false,
@@ -27,6 +28,7 @@ export default function ThirdStep() {
         availableTime: false,
     });
 
+    // Form validation
     const validateForm = () => {
         const errors = {
             phone: !formData.phone.trim(),
@@ -36,10 +38,10 @@ export default function ThirdStep() {
         };
 
         setFormErrors(errors);
-
         return !Object.values(errors).some((error) => error === true);
     };
 
+    // Handle submit
     const handleSubmit = () => {
         if (validateForm()) {
             navigate('/NannyHomepage');
@@ -48,6 +50,7 @@ export default function ThirdStep() {
         }
     };
 
+    // Handle input changes
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setFormData((prevState) => ({ ...prevState, [name]: value }));
@@ -71,6 +74,7 @@ export default function ThirdStep() {
             </div>
             <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
                 <Row className="row">
+                    {/* Phone Field */}
                     <TextField
                         fullWidth
                         label="Κινητό"
@@ -82,6 +86,8 @@ export default function ThirdStep() {
                         error={formErrors.phone}
                         helperText={formErrors.phone && "Το πεδίο είναι υποχρεωτικό"}
                     />
+
+                    {/* Phone Access Dropdown */}
                     <FormControl fullWidth className="my-3" error={formErrors.phoneAccess}>
                         <InputLabel>Επιτρέπω τη πρόσβαση στο κινητό μου τηλέφωνο σε:</InputLabel>
                         <Select
@@ -100,19 +106,19 @@ export default function ThirdStep() {
                             <p className="error-text">Το πεδίο είναι υποχρεωτικό</p>
                         )}
                     </FormControl>
+
+                    {/* Availability Fields */}
                     <p>Ποιες μέρες/ώρες είσαι διαθέσιμος/η να σε καλέσουν;</p>
-                    <Datepicker
-                        value={formData.availableDate}
-                        onChange={(date) => setFormData({ ...formData, availableDate: date })}
-                        error={formErrors.availableDate}
-                        helperText={formErrors.availableDate && "Η ημερομηνία είναι υποχρεωτική"}
+
+                    <Datepicker 
+                        value={formData.availableDate} 
+                        onChange={(date) => setFormData({ ...formData, availableDate: date })} 
                     />
-                    <Timepicker
-                        value={formData.availableTime}
-                        onChange={(time) => setFormData({ ...formData, availableTime: time })}
-                        error={formErrors.availableTime}
-                        helperText={formErrors.availableTime && "Η ώρα είναι υποχρεωτική"}
+                    <Timepicker 
+                        value={formData.availableTime} 
+                        onChange={(time) => setFormData({ ...formData, availableTime: time })} 
                     />
+                    {/* Submit Button */}
                     <div className="buttons">
                         <button
                             type="button"
