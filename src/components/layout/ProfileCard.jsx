@@ -1,25 +1,18 @@
-import React from 'react';
-import '../../styles/ProfileCard.css';
+import React from "react";
+import "../../styles/ProfileCard.css";
 
-export default function ProfileCard() {
+export default function ProfileCard({ nanny }) {
     return (
         <div className="profile-card">
-            <div className="profile-image">
-                {/* Placeholder for the image */}
-                <img
-                    src="https://via.placeholder.com/150"
-                    alt="Profile"
-                />
+            <div className="profile-image-placeholder">
+                <img src="/path/to/placeholder.png" alt={nanny.name} />
             </div>
             <div className="profile-details">
-                <h3 className="profile-name">Μαρία Μόμμου</h3>
-                <p className="profile-subtitle">Κυψέλη</p>
-                <p className="profile-description">
-                    Καλοκάγαθη και ευγενική.
-                    <br />
-                    Αγαπώ τα παιδιά και επιθυμώ συνεργασία μαζί με όποια οικογένεια θέλει.
-                    Μπορώ να κρατήσω μέχρι 3 παιδιά ταυτόχρονα.
-                </p>
+                <h3>{nanny.name}</h3>
+                <p><strong>Ηλικία:</strong> {nanny.age}</p>
+                <p><strong>Ειδίκευση:</strong> {nanny.specialization}</p>
+                <p><strong>Εμπειρία:</strong> {nanny.experience}</p>
+                <p>{nanny.description}</p>
             </div>
         </div>
     );

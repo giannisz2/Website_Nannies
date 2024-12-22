@@ -1,39 +1,43 @@
 .filters-container {
-    border: 1px solid #d5c3e6; /* Slightly darker border */
-    border-radius: 8px; /* Rounded corners */
-    padding: 16px; /* Inner padding for the container */
-    max-width: 250px; /* Adjust width as needed */
-    color: #6d4a9d; /* Purple text color */
+    border: 1px solid #d5c3e6;
+    border-radius: 8px;
+    padding: 16px;
+    max-width: 250px;
+    color: #6d4a9d;
 }
 
 .filters-title {
     font-size: 1.2rem;
     font-weight: bold;
-    margin-bottom: 16px; /* Space below the title */
+    margin-bottom: 16px;
     
 }
 
 .filter-item {
-    background-color: #ffffff; /* White background for filter items */
-    border-radius: 4px; /* Rounded corners */
-    padding: 8px 12px; /* Inner padding */
-    margin-bottom: 12px; /* Spacing between each item */
-    color: #6d4a9d; /* Purple text color */
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 8px 12px; 
+    margin-bottom: 12px; 
+    color: #6d4a9d;
     text-align: left;
-    cursor: pointer; /* Pointer cursor on hover */
-    font-size: 0.9rem; /* Slightly smaller font size */
+    cursor: pointer;
+    font-size: 0.9rem; 
 }
 
 .filter-item:last-child {
-    margin-bottom: 0; /* Remove bottom margin for last item */
+    margin-bottom: 0;
 }
 
 .filter-item:hover {
-    background-color: #e8dff4; /* Subtle purple hover effect */
-    border-color: #c6b4db; /* Darker purple border on hover */
+    background-color: #e8dff4;
+    border-color: #c6b4db;
 }
 
-/* Optional: Add a subtle shadow to the container */
 .filters-container:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.input{
+    background-color: white;
+    color: black;
 }
