@@ -74,7 +74,7 @@ export default function ThirdStep() {
             </div>
             <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
                 <Row className="row">
-                    {/* Phone Field */}
+                    
                     <TextField
                         fullWidth
                         label="Κινητό"
@@ -87,7 +87,7 @@ export default function ThirdStep() {
                         helperText={formErrors.phone && "Το πεδίο είναι υποχρεωτικό"}
                     />
 
-                    {/* Phone Access Dropdown */}
+                    
                     <FormControl fullWidth className="my-3" error={formErrors.phoneAccess}>
                         <InputLabel>Επιτρέπω τη πρόσβαση στο κινητό μου τηλέφωνο σε:</InputLabel>
                         <Select
@@ -107,7 +107,7 @@ export default function ThirdStep() {
                         )}
                     </FormControl>
 
-                    {/* Availability Fields */}
+                    
                     <p>Ποιες μέρες/ώρες είσαι διαθέσιμος/η να σε καλέσουν;</p>
 
                     <Datepicker 
@@ -118,7 +118,7 @@ export default function ThirdStep() {
                         value={formData.availableTime} 
                         onChange={(time) => setFormData({ ...formData, availableTime: time })} 
                     />
-                    {/* Submit Button */}
+                   
                     <div className="buttons">
                         <button
                             type="button"
