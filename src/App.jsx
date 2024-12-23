@@ -16,6 +16,8 @@ import ThirdStep from './pages/nannies/ThirdStep.jsx';
 import SelectionCriteriaParents from './pages/parents/SelectionCriteriaParents.jsx';
 import MeetingNanny from './pages/nannies/MeetingNanny.jsx';
 import Rates from './pages/nannies/Rates.jsx';
+import Agreement from './pages/nannies/Agreement.jsx';
+import Voucher from './pages/nannies/Voucher.jsx';
 import SearchNannies from './pages/parents/SearchNannies.jsx';
 import PersonalInfoParentsDone from './pages/parents/PersonalInfoParentsDone.jsx';
 import PersonalInfoParents from './pages/parents/PersonalInfoParents.jsx';
@@ -42,6 +44,8 @@ function App() {
           <Route path="/SelectionCriteriaParents" element={<SelectionCriteriaParents/>}/>
           <Route path="/MeetingNanny" element={<MeetingNanny/>}/>
           <Route path="/Rates" element={<Rates/>}/>
+          <Route path="/Agreement" element={<Agreement/>}/>
+          <Route path="/Voucher" element={<Voucher/>}/>
           <Route path='/SearchNannies' element={<SearchNannies/>}/>
           <Route path='/PersonalInfoParentsDone' element={<PersonalInfoParentsDone/>}/>
           <Route path='/PersonalInfoParents' element={<PersonalInfoParents/>}/>

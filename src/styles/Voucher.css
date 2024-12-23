@@ -1,0 +1,93 @@
+#root {
+    width: 100%;
+}
+
+#qr_code {
+    max-width: 300px;   /* Η εικόνα θα προσαρμοστεί στο μέγεθος του container */
+    max-height: 300px; /* Μέγιστο ύψος 300px */
+}
+  
+
+.nanny-agreement {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.this_text {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+    font-weight: bold;
+    margin-top: 90px;
+    margin-left: 100px;
+}
+
+
+.this_text-voucher {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+    font-weight: bold;
+    margin-top: 70px;
+    margin-left: 180px;
+}
+
+
+.content {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.row {
+    margin: 150px;
+}
+
+.centered-container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin-top: 50px; /* Προσθέτει απόσταση από το πάνω μέρος */
+}
+
+
+.text-voucher1 {
+    font-size: 1rem;
+    margin-top: 20px; /* Προσθέτει κενό κάτω από το πρώτο TextField */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.text-voucher2 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+    margin-top: 20px; /* Προσθέτει κενό κάτω από το πρώτο TextField */
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.text-agreement2 {
+    width: 400px; 
+    margin-right: 20px;
+    font-size: 1rem;
+    margin-top: 20px; /* Προσθέτει κενό κάτω από κάθε TextField */
+}
+
+.label {
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+    color: black;
+}
+
+.button-apply{
+    background-color: black;
+    justify-content: center;
+    align-items: center;
+    margin:auto;
+    width: 60%;
+}
+

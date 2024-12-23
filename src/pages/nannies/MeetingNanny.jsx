@@ -5,7 +5,7 @@ import NavBarNannies from '../../components/layout/NavbarNannies';
 import HelpButton from '../../components/buttons/HelpButton';
 import Footer from '../../components/layout/Footer';
 import Breadcrumb from '../../components/layout/Breadcrumb';
-import { Row } from 'react-bootstrap';
+import { Row,Col } from 'react-bootstrap';
 import TextField from '@mui/material/TextField';
 import '../../styles/MeetingNanny.css';
 
@@ -55,27 +55,28 @@ export default function MeetingNanny() {
     <div className="MeetingNanny">
       <NavBarNannies className="nav-bar-nannies" />
       <HelpButton />
-      <div>
-        <p className="text4">
-          Θα συμπληρώνονται αυτόματα ανάλογα το ραντεβού
-        </p>
-        <p className="text3">
-          Πατήστε στις κουκκίδες για να δείτε τα στοιχεία του ραντεβού
-        </p>
-      </div>
-      <div className="form-section">
-        <Row className="row2">
-          <TextField fullWidth={false} label="Ονοματεπώνυμο κηδεμόνα" type="text" value={appointmentInfo1} className="my-3" disabled />
-          <TextField fullWidth={false} label="Ημέρα/Ώρα" type="text" value={appointmentInfo2} className="my-3" disabled />
-          <TextField fullWidth={false} label="Τοποθεσία (αν γίνει από κοντά ή link αν γίνει διαδικτυακά)" type="text" value={appointmentInfo3} className="my-3" disabled />
-        </Row>
-      </div>
-      <div className="my_callendar flex-grow-1 d-flex align-items-center justify-content-center">
+      <p className="text3"> Πατήστε στις κουκκίδες για να δείτε τα στοιχεία του ραντεβού </p>
+      <Row className="row">
+        <Col
+          md={6}
+          xs={12}
+          className="d-flex flex-column align-items-center justify-content-center text-center"
+        >
         <Calendar
           onClickDay={handleDateClick} // Χειριστής όταν επιλέγεται ημερομηνία
           tileContent={tileContent} 
         />
-      </div>
+        </Col>
+        <Col
+          md={6}
+          xs={12}
+          className="d-flex flex-column align-items-center justify-content-center text-center"
+        >
+        <TextField fullWidth={false} label="Ονοματεπώνυμο κηδεμόνα" type="text" value={appointmentInfo1} className="my-3" disabled />
+        <TextField fullWidth={false} label="Ημέρα/Ώρα" type="text" value={appointmentInfo2} className="my-3" disabled />
+        <TextField fullWidth={false} label="Τοποθεσία (αν γίνει από κοντά ή link αν γίνει διαδικτυακά)" type="text" value={appointmentInfo3} className="my-3" disabled />
+        </Col>
+      </Row>
       <Footer />
     </div>
   );
