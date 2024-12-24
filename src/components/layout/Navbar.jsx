@@ -16,6 +16,10 @@ function NavBar() {
     navigate('/SelectionCriteria');  // Διαδρομή προς τη σελίδα SelectionCriteria
   };
 
+
+  const parents = () => {
+    navigate('/SelectionCriteriaParents');  
+  };
   return (
     <Navbar id="nav" expand="lg" variant="light">
       <Container fluid>
@@ -28,7 +32,7 @@ function NavBar() {
             <Button variant="primary" id="become-nanny" className="me-2 rounded-pill" onClick={handleBecomeNanny}>
               <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Γίνε Νταντά
             </Button>
-            <Button variant="primary" id="sign-up" className="me-2 rounded-pill">
+            <Button variant="primary" id="sign-up" className="me-2 rounded-pill"onClick={parents}>
               <FontAwesomeIcon icon={faUserPlus} className="me-1" /> Sign Up
             </Button>
             <Button variant="primary" id="sign-in" className="rounded-pill">

@@ -12,12 +12,21 @@ export default function NavBarParents() {
   };
 
   const goToTransactionHistory = () => {
-    navigate('/TransactionHistory');
+    navigate('/TransactionHistoryParents');
+  };
+
+
+  const search = () => {
+    navigate('/SearchNannies');  
+  };
+
+  const rates = () => {
+    navigate('/RatesParents');  
   };
 
 
   const handleProfileClick = () => {
-    navigate('/PersonalInfo');  // Navigate to PersonalInfo page
+    navigate('/PersonalInfo');  
   };
 
   return (<>
@@ -32,6 +41,9 @@ export default function NavBarParents() {
             <Button className="button" variant="primary">
               Αιτήσεις
             </Button>
+            <Button className="button mx-2" onClick={search}variant="primary">
+              Αναζήτηση
+            </Button>
             <Dropdown className="d-inline mx-2">
               <Dropdown.Toggle variant="primary" className="button">
                 Ιστορικό
@@ -41,9 +53,7 @@ export default function NavBarParents() {
                 <Dropdown.Item onClick={goToTransactionHistory}>Συμφωνητικών</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-            <Button className="button mx-2" variant="primary">
-              Αναζήτηση
-            </Button>
+           
             <Button className="button mx-2" variant="primary">
               Ειδοποιήσεις
             </Button>

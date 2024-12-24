@@ -27,9 +27,18 @@ export default function NavBarNannies() {
   };
 
 
+  const voucher = () => {
+    navigate('/Voucher');  
+  };
+
+
   
   const rates = () => {
     navigate('/Rates');  
+  };
+
+  const MeetingNanny = () => {
+    navigate('/MeetingNanny');  
   };
 
   return (
@@ -56,13 +65,13 @@ export default function NavBarNannies() {
             <Button className="button mx-2" variant="primary">
               Ειδοποιήσεις
             </Button>
-            <Button className="button mx-2" variant="primary">
+            <Button className="button mx-2" onClick={MeetingNanny}variant="primary">
               Συνάντηση
             </Button>
             <Button className="button mx-2" onClick={contract}variant="primary">
               Συμφωνητικό
             </Button>
-            <Button className="button mx-2" variant="primary">
+            <Button className="button mx-2" onClick={voucher}variant="primary">
               Voucher
             </Button>
           </Nav>
