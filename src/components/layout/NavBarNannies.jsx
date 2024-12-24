@@ -11,13 +11,25 @@ export default function NavBarNannies() {
     navigate('/');  // Home page from logo
   };
 
-  const goToTransactionHistory = () => {
-    navigate('/TransactionHistory');
+  const goToAgreementHistory = () => {
+    navigate('/AgreementHistory');
   };
 
 
   const handleProfileClick = () => {
     navigate('/PersonalInfo');  // Navigate to PersonalInfo page
+  };
+
+
+  
+  const contract = () => {
+    navigate('/Agreement');  
+  };
+
+
+  
+  const rates = () => {
+    navigate('/Rates');  
   };
 
   return (
@@ -29,7 +41,7 @@ export default function NavBarNannies() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Button className="button" variant="primary">
+            <Button className="button" variant="primary"onClick={rates}>
               Αξιολογήσεις
             </Button>
             <Dropdown className="d-inline mx-2">
@@ -38,7 +50,7 @@ export default function NavBarNannies() {
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item href="#/Πληρωμών">Πληρωμών</Dropdown.Item>
-                <Dropdown.Item onClick={goToTransactionHistory}>Συμφωνητικών</Dropdown.Item>
+                <Dropdown.Item onClick={goToAgreementHistory}>Συμφωνητικών</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
             <Button className="button mx-2" variant="primary">
@@ -47,7 +59,7 @@ export default function NavBarNannies() {
             <Button className="button mx-2" variant="primary">
               Συνάντηση
             </Button>
-            <Button className="button mx-2" variant="primary">
+            <Button className="button mx-2" onClick={contract}variant="primary">
               Συμφωνητικό
             </Button>
             <Button className="button mx-2" variant="primary">
