@@ -10,35 +10,36 @@ import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
+import { useFormContext } from '../../context/FormContext.jsx';
 
 import { Timestamp } from "firebase/firestore";
 
 
 
 export default function FirstStep() {
-    const [formData, setFormData] = useState({
-        name: '',
-        surname: '',
-        gender: '',
-        birthdate: null,
-        educationLevel: '',
-        experience: '',
-        recommendationLetters: ''
-    });
-
-    const [formErrors, setFormErrors] = useState({});
+    const { formData, setFormData } = useFormContext();
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
+        setFormData((prev) => ({ ...prev, [name]: value }));
         setFormErrors({ ...formErrors, [name]: !value }); // Set error to true if value is empty
     };
 
+    const [formErrors, setFormErrors] = useState({});
+
+    
+
     const handleDateChange = (date) => {
-        setFormData({ ...formData, birthdate: date });
-        setFormErrors({ ...formErrors, birthdate: !date });
+        setFormData((prev) => ({
+            ...prev,
+            birthdate: date, // Αποθήκευσε την ημερομηνία στο σωστό πεδίο
+        }));
+        setFormErrors((prev) => ({
+            ...prev,
+            birthdate: !date, // Ενημέρωσε τα errors αν η ημερομηνία είναι άκυρη
+        }));
     };
+    
 
     const checkFormValidity = () => {
         const errors = {};
@@ -83,19 +84,24 @@ export default function FirstStep() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        console.log("Submitting form...");
+        console.log("FormData:", formData);
+    
         if (!isOver18(formData.birthdate)) {
             handleSnackbarOpen('Πρέπει να είστε τουλάχιστον 18 ετών για να εγγραφείτε.');
             setFormErrors({ ...formErrors, birthdate: true });
             return;
         }
-        
+    
         if (checkFormValidity()) {
             try {
                 const preparedData = {
                     ...formData,
-                    birthdate: formData.birthdate ? Timestamp.fromDate(new Date(formData.birthdate)) : null
+                    birthdate: formData.birthdate ? Timestamp.fromDate(new Date(formData.birthdate)) : null,
                 };
-        
+    
+                console.log("Prepared Data:", preparedData);
+    
                 const docRef = await addDoc(collection(db, "users"), preparedData);
                 console.log("Document written with ID: ", docRef.id);
                 navigate('/SecondStep');
@@ -104,6 +110,8 @@ export default function FirstStep() {
             }
         }
     };
+    
+    
     
 
     const handleFileUploadChange = (event) => {
@@ -155,28 +163,28 @@ export default function FirstStep() {
                             onChange={handleInputChange}
                             className="my-3" 
                             helperText={formErrors.surname ? (
-                                <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Επώνυμο είναι υποχρεωτικό</span>
+                                <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Επ είναι υποχρεωτικό</span>
                             ) : null} 
                         />
                         <Col>
-                        <FormControl fullWidth className="my-3" error={formErrors.gender}>
+                        <FormControl fullWidth className="my-3">
                             <InputLabel>Φύλο</InputLabel>
                             <Select
                                 name="gender"
                                 value={formData.gender}
                                 onChange={handleInputChange}
-                                defaultValue=""
                             >
                                 <MenuItem value="Άνδρας">Άνδρας</MenuItem>
                                 <MenuItem value="Γυναίκα">Γυναίκα</MenuItem>
                                 <MenuItem value="Άλλο">Άλλο</MenuItem>
                             </Select>
                             {formErrors.gender && (
-                                <span style={{ color: 'red', fontSize: '12px' }}>
-                                Το πεδίο Φύλο είναι υποχρεωτικό
-                                </span>
+                                <p style={{ color: 'red', fontSize: '12px' }}>
+                                    Το πεδίο Φύλο είναι υποχρεωτικό
+                                </p>
                             )}
                         </FormControl>
+
                         </Col>
                         <Col>
                             <TextField fullWidth label="Ημερομηνία γέννησης" type="date" name="birthdate" value={formData.birthdate || ''}
@@ -188,17 +196,43 @@ export default function FirstStep() {
                                     <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Ημερομηνία γέννησης είναι υποχρεωτικό</span>
                                 ) : null}
                             />
+                            <p>Ημερομηνία γέννησης:</p>
+                            <Datepicker name="birthdate" 
+                            selected={formData.birthdate} 
+                            onChange={handleDateChange} />
+                            {formErrors.birthdate && <p className="error-text"><span style={{ color: 'red', fontSize: '12px' }}>To πεδίο Ημερομηνία γέννησης είναι υποχρεωτικό</span></p>}
                         </Col>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Επίπεδο σπουδών~</InputLabel>
-                            <Select name="educationLevel" value={formData.educationLevel} onChange={handleInputChange} defaultValue="" error={formErrors.educationLevel}>
+                            <Select 
+                                name="educationLevel" 
+                                value={formData.educationLevel} 
+                                onChange={handleInputChange}
+                            >
                                 <MenuItem value="Τριτοβάθμια εκπαίδευση">Τριτοβάθμια εκπαίδευση</MenuItem>
                                 <MenuItem value="Δευτεροβάθμια εκπαίδευση">Δευτεροβάθμια εκπαίδευση</MenuItem>
                                 <MenuItem value="Πρωτοβάθμια εκπαίδευση">Πρωτοβάθμια εκπαίδευση</MenuItem>
                                 <MenuItem value="Άλλο">Άλλο</MenuItem>
                             </Select>
+                            {formErrors.educationLevel && (
+                                <p style={{ color: 'red', fontSize: '12px' }}>
+                                    Το πεδίο Επίπεδο σπουδών είναι υποχρεωτικό
+                                </p>
+                            )}
                         </FormControl>
-                        <TextField fullWidth label="Εμπειρία" name="experience" value={formData.experience} onChange={handleInputChange} className="my-3" error={formErrors.experience} helperText={formErrors.experience && "Το πεδίο Εμπειρία είναι υποχρεωτικό"} />
+
+                        <TextField 
+                            fullWidth 
+                            label="Εμπειρία" 
+                            name="experience" 
+                            value={formData.experience} 
+                            onChange={handleInputChange} 
+                            className="my-3"
+                            helperText={
+                                formErrors.experience && 
+                                <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Εμπειρία είναι υποχρεωτικό</span>
+                            }
+                        />
                         <FormControl fullWidth className="my-3" error={formErrors.recommendationLetters}>
                             <InputLabel shrink htmlFor="recommendationLettersUpload">
                                 Συστατικές επιστολές~

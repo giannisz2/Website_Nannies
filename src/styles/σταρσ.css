@@ -1,0 +1,45 @@
+.nanny-rates{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    background-color: #f5f5f5;
+}
+
+.text {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+    margin-top: 50px;
+    margin-left: 70px;
+}
+
+/* Στυλ για το πλαίσιο αξιολόγησης */
+.star-rating {
+    display: flex;
+    flex-direction: row-reverse; /* Τα αστέρια εμφανίζονται από δεξιά προς τα αριστερά */
+    justify-content: center; /* Κεντράρουμε τα αστέρια */
+    margin-top: 20px; /* Απόσταση από το πάνω μέρος */
+}
+
+.star-rating input {
+    display: none; /* Κρύβουμε τα κουμπιά radio */
+}
+
+/* Στυλ για τα αστεράκια */
+.star-rating label {
+    font-size: 2rem; /* Μέγεθος αστεριών */
+    color: #ccc; /* Γκρι χρώμα για τα μη επιλεγμένα */
+    cursor: pointer; /* Χεράκι όταν περνάει το ποντίκι */
+    padding: 0 5px; /* Απόσταση μεταξύ των αστεριών */
+    transition: color 0.2s ease-in-out; /* Ομαλή αλλαγή χρώματος */
+}
+
+/* Όταν κάνουμε hover */
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+    color: #f5c518; /* Κίτρινο χρώμα */
+}
+
+/* Όταν επιλεγεί */
+.star-rating input:checked ~ label {
+    color: #f5c518; /* Κίτρινο χρώμα για επιλεγμένα */
+}
