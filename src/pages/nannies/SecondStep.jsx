@@ -51,21 +51,21 @@ export default function SecondStep() {
     const [wordCount, setWordCount] = useState(0);
     const maxWords = 200;
 
+    const [isSubmitted, setIsSubmitted] = useState(false);
+  
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
+        setIsSubmitted(true); // Ορίζει ότι η φόρμα έχει υποβληθεί
     
         const errors = {};
         let isValid = true;
     
-        
         ['availability', 'employmentTime', 'location', 'experienceYears', 'maxChildren', 'pets', 'smoker'].forEach((field) => {
-            if (!formData.availability) {
-                console.log("Availability:", formData.availability);
-
-                setFormErrors(prev => ({ ...prev, availability: true }));
+            if (!formData[field]) {
+                errors[field] = true;
                 isValid = false;
             }
-            
         });
     
         if (!bio.trim()) {
@@ -77,20 +77,17 @@ export default function SecondStep() {
     
         if (isValid) {
             try {
-                const preparedData = {
-                    ...formData,
-                    bio,
-                };
+                const preparedData = { ...formData, bio };
                 const docRef = await addDoc(collection(db, "users"), preparedData);
                 console.log("Document written with ID: ", docRef.id);
                 navigate('/ThirdStep');
             } catch (e) {
-                console.error("Error adding document: ", e.message); // Εμφανίζει το μήνυμα του σφάλματος
-                alert(`Σφάλμα κατά την αποθήκευση: ${e.message}`); // Ενημέρωση για τον χρήστη
+                console.error("Error adding document: ", e.message);
+                alert(`Σφάλμα κατά την αποθήκευση: ${e.message}`);
             }
-            
         }
     };
+    
     
     
     
@@ -174,6 +171,7 @@ export default function SecondStep() {
                                 </span>
                             )}
                     </FormControl>
+                    
                     <TextField
                         fullWidth
                         label="Τοποθεσία"
@@ -267,23 +265,24 @@ export default function SecondStep() {
                     </Col>
                    
                     <TextField
-                    fullWidth
-                    label="Λίγα λόγια για εσάς..."
-                    type="text"
-                    name="bio"
-                    value={bio}
-                    onChange={handleInputChange}
-                    className="my-3"
-                    multiline
-                    rows={4}
-                    InputProps={{
-                        style: { borderColor: formErrors.bio ? "initial" : "none" }, 
-                    }}
-                    error={false} 
-                    helperText={bio.trim() === "" ? (
-                        <span style={{ color: 'red', fontSize: '12px' }}>Αυτό το πεδίο είναι υποχρεωτικό</span>
-                    ) : `Characters: ${wordCount}/${maxWords}`} />
-                
+    fullWidth
+    label="Λίγα λόγια για εσάς..."
+    type="text"
+    name="bio"
+    value={bio}
+    onChange={handleInputChange}
+    className="my-3"
+    multiline
+    rows={4}
+    InputProps={{
+        style: { borderColor: formErrors.bio && isSubmitted ? "red" : "none" },
+    }}
+    error={formErrors.bio && isSubmitted}
+    helperText={isSubmitted && formErrors.bio ? (
+        <span style={{ color: 'red', fontSize: '12px' }}>Αυτό το πεδίο είναι υποχρεωτικό</span>
+    ) : `Characters: ${wordCount}/${maxWords}`}
+/>
+
 
 
 
