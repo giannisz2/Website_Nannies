@@ -10,6 +10,11 @@ import { db } from '../../providers/firebaseConfig';
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 
+
+import { Timestamp } from "firebase/firestore";
+
+
+
 export default function FirstStep() {
     const [formData, setFormData] = useState({
         name: '',
@@ -38,7 +43,7 @@ export default function FirstStep() {
         const errors = {};
         let isValid = true;
         ['name', 'surname', 'gender', 'birthdate', 'educationLevel', 'experience', 'recommendationLetters'].forEach(field => {
-            if (!formData[field] || formData[field].trim() === '') {
+            if (!formData[field] || (typeof formData[field] === 'string' && formData[field].trim() === '')) {
                 errors[field] = true;
                 isValid = false;
             }
@@ -46,6 +51,7 @@ export default function FirstStep() {
         setFormErrors(errors);
         return isValid;
     };
+    
 
     const navigate = useNavigate();
 
@@ -53,7 +59,13 @@ export default function FirstStep() {
         event.preventDefault();
         if (checkFormValidity()) {
             try {
-                const docRef = await addDoc(collection(db, "users"), formData);
+                // Μετατροπή ημερομηνίας γέννησης σε Timestamp
+                const preparedData = {
+                    ...formData,
+                    birthdate: formData.birthdate ? Timestamp.fromDate(new Date(formData.birthdate)) : null
+                };
+    
+                const docRef = await addDoc(collection(db, "users"), preparedData);
                 console.log("Document written with ID: ", docRef.id);
                 navigate('/SecondStep');
             } catch (e) {
