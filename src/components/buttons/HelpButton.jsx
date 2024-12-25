@@ -1,31 +1,73 @@
+import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
 import '../../styles/HelpButton.css';
 
 const HelpButton = () => {
-  const [message] = useState('');
-  const [showMessage, setShowMessage] = useState(false);
+  const [showChat, setShowChat] = useState(false);
+  const [message, setMessage] = useState('');
+  const [chatMessages, setChatMessages] = useState([]);
 
-  const handleClick = () => {
-    // setShowMessage(true);
-    // setTimeout(() => {
-    //     setShowMessage(false);
-    // }, 2000);
+  const handleButtonClick = () => {
+    setShowChat(!showChat); // Toggle chat visibility
+  };
+
+  const handleSendMessage = () => {
+    if (message.trim()) {
+      setChatMessages([...chatMessages, { sender: 'user', text: message }]);
+      setMessage('');
+      // Simulate a response
+      setTimeout(() => {
+        setChatMessages((prevMessages) => [
+          ...prevMessages,
+          { sender: 'bot', text: 'Σας ευχαριστούμε για την επικοινωνία! Θα απαντήσουμε σύντομα.' },
+        ]);
+      }, 1000);
+    }
   };
 
   return (
     <div>
-      {showMessage && <p>{message}</p>}
+      {/* Help Button */}
       <Button
         variant="primary"
         className="me-2"
         id="help-button"
-        onClick={handleClick}
+        onClick={handleButtonClick}
       >
         Θέλεις βοήθεια;
       </Button>
+
+      {/* Chat Interface */}
+      {showChat && (
+        <div className="chat-container">
+          <div className="chat-header">
+            <h5>Υποστήριξη</h5>
+            <button className="close-chat" onClick={() => setShowChat(false)}>×</button>
+          </div>
+          <div className="chat-messages">
+            {chatMessages.map((msg, index) => (
+              <div
+                key={index}
+                className={`chat-message ${msg.sender === 'user' ? 'user-message' : 'bot-message'}`}
+              >
+                {msg.text}
+              </div>
+            ))}
+          </div>
+          <div className="chat-input">
+            <input
+              type="text"
+              placeholder="Γράψτε το μήνυμά σας..."
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            />
+            <button onClick={handleSendMessage}>Αποστολή</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
 
 export default HelpButton;
+

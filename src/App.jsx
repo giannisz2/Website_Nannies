@@ -26,6 +26,7 @@ import TransactionHistoryParents from './pages/parents/TransactionHistoryParents
 import RatesParents from './pages/parents/RatesParents.jsx'
 
 function App() {
+  
   return (
     <>
       <BrowserRouter>

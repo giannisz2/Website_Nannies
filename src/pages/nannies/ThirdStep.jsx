@@ -114,6 +114,12 @@ export default function ThirdStep() {
                         value={formData.availableDate} 
                         onChange={(date) => setFormData({ ...formData, availableDate: date })} 
                     />
+                    Από:
+                    <Timepicker 
+                        value={formData.availableTime} 
+                        onChange={(time) => setFormData({ ...formData, availableTime: time })} 
+                    />
+                    Μέχρι:
                     <Timepicker 
                         value={formData.availableTime} 
                         onChange={(time) => setFormData({ ...formData, availableTime: time })} 
