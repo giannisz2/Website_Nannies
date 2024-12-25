@@ -7,11 +7,10 @@ import NannyHomepage from './pages/nannies/NannyHomepage';
 import ProfileEditNannies from './pages/nannies/ProfileEditNannies';
 import { Routes, Route, BrowserRouter} from 'react-router-dom';
 import PersonalInfo from './pages/nannies/PersonalInfo';
-import Login from './components/authentication/Login'
-import Test from './pages/test.jsx';
 import FirstStep from "./pages/nannies/FirstStep.jsx"
 import PersonalInfoDone from './pages/nannies/PersonalInfoDone.jsx';
 import SecondStep from './pages/nannies/SecondStep.jsx';
+import SecondStepDone from './pages/nannies/SecondStepDone.jsx';
 import ThirdStep from './pages/nannies/ThirdStep.jsx';
 import SelectionCriteriaParents from './pages/parents/SelectionCriteriaParents.jsx';
 import MeetingNanny from './pages/nannies/MeetingNanny.jsx';
@@ -39,8 +38,8 @@ function App() {
           <Route path="/PersonalInfo" element={<PersonalInfo/>}/>
           <Route path="/PersonalInfoDone" element={<PersonalInfoDone/>}/>
           <Route path="/FirstStep" element={<FirstStep/>}/>
-          <Route path="/test" element={<Test/>}/>                 {/*tipota*/}
           <Route path="/SecondStep" element={<SecondStep/>}/>
+          <Route path="/SecondStepDone" element={<SecondStepDone/>}/>
           <Route path="/ThirdStep" element={<ThirdStep/>}/>
           <Route path="/SelectionCriteriaParents" element={<SelectionCriteriaParents/>}/>
           <Route path="/MeetingNanny" element={<MeetingNanny/>}/>

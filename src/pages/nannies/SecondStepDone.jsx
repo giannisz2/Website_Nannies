@@ -263,15 +263,7 @@ export default function SecondStep() {
                             <span style={{ color: 'red', fontSize: '12px' }}>Αυτό το πεδίο είναι υποχρεωτικό</span>
                         ) : `Characters: ${wordCount}/${maxWords}`}
                     />
-
-
-
-
-
-                    <div className="buttons-pu">
-                        <button className="button-temp-pu">Προσωρινή Αποθήκευση</button>
-                        <button className="button-apply-pu" onClick={handleSubmit}>Υποβολή</button>
-                    </div>
+                    <button className="button-apply">Οριστική Υποβολή</button>
                 </Row>
             </div>
             <Footer />
