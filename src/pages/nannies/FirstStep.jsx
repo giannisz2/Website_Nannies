@@ -196,11 +196,6 @@ export default function FirstStep() {
                                     <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Ημερομηνία γέννησης είναι υποχρεωτικό</span>
                                 ) : null}
                             />
-                            <p>Ημερομηνία γέννησης:</p>
-                            <Datepicker name="birthdate" 
-                            selected={formData.birthdate} 
-                            onChange={handleDateChange} />
-                            {formErrors.birthdate && <p className="error-text"><span style={{ color: 'red', fontSize: '12px' }}>To πεδίο Ημερομηνία γέννησης είναι υποχρεωτικό</span></p>}
                         </Col>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Επίπεδο σπουδών~</InputLabel>

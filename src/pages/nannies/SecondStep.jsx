@@ -13,7 +13,6 @@ import { useNavigate } from 'react-router-dom';
 import React, { useState } from "react";
 
 
-
 export default function SecondStep() {
 
 
@@ -138,22 +137,6 @@ const handleSubmit = async (event) => {
                 <Row className="row">
                     <p>Διαθεσιμότητα: </p>
                     <HoursPicker /> 
-                    <p>Διαθεσιμότητα: (Πότε θα μπορούσατε να ξεκινήσετε;)</p>
-                    <Datepicker 
-                        name="availability" 
-                        selected={formData.availability ? new Date(formData.availability) : null} 
-                        onChange={(date) => {
-                            setFormData(prev => ({
-                                ...prev,
-                                availability: date ? date.toISOString() : null
-                            }));
-                            setFormErrors(prev => ({
-                                ...prev,
-                                availability: !date
-                            }));
-                        }}
-                        dateFormat="dd/MM/yyyy"
-                    />
                     {formErrors.availability && <p className="error-text"><span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Διαθεσιμότητα είναι υποχρεωτικό </span></p>}
                     <FormControl fullWidth className="my-3">
                         <InputLabel>Χρόνος Απασχόλησης</InputLabel>
@@ -171,7 +154,6 @@ const handleSubmit = async (event) => {
                                 </span>
                             )}
                     </FormControl>
-                    
                     <TextField
                         fullWidth
                         label="Τοποθεσία"
