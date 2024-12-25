@@ -9,6 +9,8 @@ import '../../styles/FirstStep.css';
 import { db } from '../../providers/firebaseConfig'; 
 import { collection, addDoc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 
 import { Timestamp } from "firebase/firestore";
@@ -52,19 +54,49 @@ export default function FirstStep() {
         return isValid;
     };
     
+    const isOver18 = (birthdate) => {
+        const today = new Date();
+        const birthDate = new Date(birthdate);
+        let age = today.getFullYear() - birthDate.getFullYear();  // Χρήση let αντί για const
+        const m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;  // Εδώ είναι εντάξει να μειώσουμε το age επειδή τώρα είναι let
+        }
+        return age >= 18;
+    };
+    
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+
+    const handleSnackbarOpen = (message) => {
+        setSnackbarMessage(message);
+        setSnackbarOpen(true);
+    };
+    
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
+    
+    
+
 
     const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
         event.preventDefault();
+        if (!isOver18(formData.birthdate)) {
+            handleSnackbarOpen('Πρέπει να είστε τουλάχιστον 18 ετών για να εγγραφείτε.');
+            setFormErrors({ ...formErrors, birthdate: true });
+            return;
+        }
+        
         if (checkFormValidity()) {
             try {
-                // Μετατροπή ημερομηνίας γέννησης σε Timestamp
                 const preparedData = {
                     ...formData,
                     birthdate: formData.birthdate ? Timestamp.fromDate(new Date(formData.birthdate)) : null
                 };
-    
+        
                 const docRef = await addDoc(collection(db, "users"), preparedData);
                 console.log("Document written with ID: ", docRef.id);
                 navigate('/SecondStep');
@@ -73,12 +105,15 @@ export default function FirstStep() {
             }
         }
     };
+    
 
     const handleFileUploadChange = (event) => {
         const file = event.target.files[0]; // Get the first selected file
-        setFormData({ ...formData, recommendationLetters: file }); // Update the formData state
-      };
-
+        if (file) {
+            setFormData({ ...formData, recommendationLetters: file.name }); // Update the formData state with the file name
+        }
+    };
+    
    
 
     return (
@@ -100,8 +135,30 @@ export default function FirstStep() {
             <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
                 <form onSubmit={handleSubmit}>
                     <Row className="row">
-                        <TextField fullWidth label="Όνομα" name="name" value={formData.name} onChange={handleInputChange} className="my-3" error={formErrors.name} helperText={formErrors.name && "Το πεδίο Όνομα είναι υποχρεωτικό"} />
-                        <TextField fullWidth label="Επώνυμο" name="surname" value={formData.surname} onChange={handleInputChange} className="my-3" error={formErrors.surname} helperText={formErrors.surname && "Το πεδίο Επώνυμο είναι υποχρεωτικό"} />
+                        <TextField 
+                        fullWidth 
+                        label="Όνομα" 
+                        type="text"
+                        name="name" 
+                        value={formData.name} 
+                        onChange={handleInputChange} 
+                        className="my-3" 
+                        helperText={formErrors.name ? (
+                            <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Όνομα είναι υποχρεωτικό</span>
+                        ) : null}
+                    />
+                        <TextField 
+                            fullWidth 
+                            label="Επώνυμο" 
+                            type="text"
+                            name="surname" 
+                            value={formData.surname}
+                            onChange={handleInputChange}
+                            className="my-3" 
+                            helperText={formErrors.surname ? (
+                                <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Επώνυμο είναι υποχρεωτικό</span>
+                            ) : null} 
+                        />
                         <Col>
                         <FormControl fullWidth className="my-3" error={formErrors.gender}>
                             <InputLabel>Φύλο</InputLabel>
@@ -125,7 +182,7 @@ export default function FirstStep() {
                         <Col>
                             <p>Ημερομηνία γέννησης:</p>
                             <Datepicker name="birthdate" selected={formData.birthdate} onChange={handleDateChange} />
-                            {formErrors.birthdate && <p className="error-text">Ημερομηνία γέννησης είναι υποχρεωτική</p>}
+                            {formErrors.birthdate && <p className="error-text"><span style={{ color: 'red', fontSize: '12px' }}>To πεδίο Ημερομηνία γέννησης είναι υποχρεωτικό</span></p>}
                         </Col>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Επίπεδο σπουδών~</InputLabel>
@@ -161,6 +218,12 @@ export default function FirstStep() {
                             <button type="button" className="button-temp">Προσωρινή Αποθήκευση</button>
                             <button type="submit" className='button-apply'>Υποβολή</button>
                         </div>
+                        <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+    <Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%' }}>
+        {snackbarMessage}
+    </Alert>
+</Snackbar>
+
                     </Row>
                 </form>
             </div>
