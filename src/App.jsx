@@ -38,10 +38,8 @@ function App() {
           <Route path="/ProfileEditNannies" element={<ProfileEditNannies/>}/>   {/*tipota*/}
           <Route path="/PersonalInfo" element={<PersonalInfo/>}/>
           <Route path="/PersonalInfoDone" element={<PersonalInfoDone/>}/>
-          <Route path="/FirstStep" element={<FirstStep/>}/>
-          
+          <Route path="/FirstStep" element={<FirstStep/>}/>          
           <Route path="/PreviewPage" element={<PreviewPage/>}/>
-
           <Route path="/SecondStep" element={<SecondStep/>}/>
           <Route path="/SecondStepDone" element={<SecondStepDone/>}/>
           <Route path="/ThirdStep" element={<ThirdStep/>}/>
