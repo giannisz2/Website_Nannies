@@ -25,7 +25,7 @@ export const FormProvider = ({ children }) => {
         smoker: '',
         phone: '',
         phoneAccess: '',
-        availableDate: null,
+        availableDate: [],
         availableTimeFrom: null,
         availableTimeTo: null,
     });
