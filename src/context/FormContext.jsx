@@ -24,6 +24,7 @@ export const FormProvider = ({ children }) => {
         pets: '',
         smoker: '',
         phone: '',
+        bio: ' ',
         phoneAccess: '',
         availableDate: [],
         availableTimeFrom: null,

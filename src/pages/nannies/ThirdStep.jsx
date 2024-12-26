@@ -11,6 +11,10 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
+import { collection, addDoc } from "firebase/firestore";
+import { db } from '../../providers/firebaseConfig';
+
+
 
 export default function ThirdStep() {
     const navigate = useNavigate();
@@ -22,9 +26,9 @@ export default function ThirdStep() {
         setFormData((prev) => ({
             ...prev,
             ...savedData,
-            availableDate: savedData.availableDate || [],
         }));
     }, [setFormData]);
+    
     
     useEffect(() => {
         localStorage.setItem('userData', JSON.stringify(formData));
@@ -36,24 +40,41 @@ export default function ThirdStep() {
             phone: !formData.phone?.trim(),
             phoneAccess: !formData.phoneAccess,
             availableDate: !formData.availableDate || formData.availableDate.length === 0,
-            startTime: !formData.startTime,
-            endTime: !formData.endTime || 
-                     (formData.startTime && dayjs(formData.endTime).isBefore(dayjs(formData.startTime))),
+            availableTimeFrom: !formData.availableTimeFrom,
+            availableTimeTo: !formData.availableTimeTo || 
+                             (formData.availableTimeFrom && dayjs(formData.availableTimeTo).isBefore(dayjs(formData.availableTimeFrom))),
         };
     
         setFormErrors(errors);
         return !Object.values(errors).some((error) => error === true);
     };
     
+    
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         if (validateForm()) {
-            localStorage.setItem('userData', JSON.stringify(formData));
-            navigate('/NannyHomepage');
+            try {
+                const preparedData = {
+                    ...formData,
+                    availableDate: formData.availableDate.map((date) => dayjs(date).toISOString()),
+                    availableTimeFrom: formData.availableTimeFrom ? dayjs(formData.availableTimeFrom).toISOString() : null,
+                    availableTimeTo: formData.availableTimeTo ? dayjs(formData.availableTimeTo).toISOString() : null,
+                };
+                console.log('Prepared Data:', preparedData);
+    
+                const docRef = await addDoc(collection(db, "users"), preparedData);
+                console.log("Document written with ID: ", docRef.id);
+    
+                navigate('/PreviewPage');
+            } catch (e) {
+                console.error("Error adding document: ", e);
+                alert(`Σφάλμα κατά την αποθήκευση: ${e.message}`);
+            }
         } else {
             console.log("Validation failed. Please complete all fields.");
         }
     };
+    
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -75,9 +96,10 @@ export default function ThirdStep() {
     const handleTimeChange = (name, value) => {
         setFormData((prev) => ({
             ...prev,
-            [name]: value ? value.toISOString() : null,
+            [name]: value ? dayjs(value).toISOString() : null,
         }));
     };
+    
     
 
     const removeDate = (index) => {
@@ -152,21 +174,18 @@ export default function ThirdStep() {
 
                         Από:
                         <TimePicker
-                            value={formData.startTime ? dayjs(formData.startTime) : null}
-                            onChange={(time) => handleTimeChange('startTime', time)}
+                            value={formData.availableTimeFrom ? dayjs(formData.availableTimeFrom) : null}
+                            onChange={(time) => handleTimeChange('availableTimeFrom', time)}
                         />
-                        {formErrors.startTime && <p style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>Το πεδίο είναι υποχρεωτικό</p>}
+                        {formErrors.availableTimeFrom && <p style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>Το πεδίο είναι υποχρεωτικό</p>}
 
                         Μέχρι:
                         <TimePicker
-                            value={formData.endTime ? dayjs(formData.endTime) : null}
-                            onChange={(time) => handleTimeChange('endTime', time)}
+                            value={formData.availableTimeTo ? dayjs(formData.availableTimeTo) : null}
+                            onChange={(time) => handleTimeChange('availableTimeTo', time)}
                         />
-                        {formErrors.endTime && (
-                        <p style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>
-                            Η ώρα λήξης πρέπει να είναι μεγαλύτερη από την ώρα έναρξης
-                        </p>
-                    )}
+                        {formErrors.availableTimeTo && <p style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>Η ώρα λήξης πρέπει να είναι μεγαλύτερη από την ώρα έναρξης</p>}
+
 
 
                         <div className="buttons">
