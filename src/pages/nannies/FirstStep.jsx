@@ -140,8 +140,12 @@ export default function FirstStep() {
                 </div>
             </div>
             <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
+                <div className="form-header">
+                
+                </div>
                 <form onSubmit={handleSubmit}>
                     <Row className="row">
+
                         <TextField 
                         fullWidth 
                         label="Όνομα" 
@@ -246,17 +250,20 @@ export default function FirstStep() {
                                 </span>
                             )}
                         </FormControl>
-                        
+                        <p>   </p>
+                        <p style={{ color: 'red', fontSize: '14px', marginBottom: '20px' }}>
+                            * Όλα τα πεδία είναι υποχρεωτικά
+                        </p>
                         <p className="paragraph">Τα υπόλοιπα στοιχεία θα συμπληρώνονται αυτόματα από το Taxisnet</p>
                         <div className='buttons-pu'>
                             <button type="button" className="button-temp-pu">Προσωρινή Αποθήκευση</button>
                             <button type="submit" className="button-apply-pu">Υποβολή</button>
                         </div>
                         <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
-    <Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%' }}>
-        {snackbarMessage}
-    </Alert>
-</Snackbar>
+                        <Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%' }}>
+                            {snackbarMessage}
+                        </Alert>
+                    </Snackbar>
 
                     </Row>
                 </form>

@@ -289,7 +289,10 @@ const handleSubmit = async (event) => {
                         ) : `Characters: ${wordCount}/${maxWords}`}
                     />
 
-
+                        <p>   </p>
+                        <p style={{ color: 'red', fontSize: '14px', marginBottom: '20px' }}>
+                            * Όλα τα πεδία είναι υποχρεωτικά
+                        </p>
 
 
 

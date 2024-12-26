@@ -150,7 +150,7 @@ export default function ThirdStep() {
                             </Select>
                             {formErrors.phoneAccess && <p style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>Το πεδίο είναι υποχρεωτικό</p>}
                         </FormControl>
-
+                        <p>   </p>
                         <p>Ποιες μέρες/ώρες είσαι διαθέσιμος/η να σε καλέσουν;</p>
                         <DatePicker
                             value={null}
@@ -186,7 +186,11 @@ export default function ThirdStep() {
                         />
                         {formErrors.availableTimeTo && <p style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>Η ώρα λήξης πρέπει να είναι μεγαλύτερη από την ώρα έναρξης</p>}
 
-
+                        <p>   </p>
+                        <p>   </p>
+                        <p style={{ color: 'red', fontSize: '14px', marginBottom: '20px' }}>
+                            * Όλα τα πεδία είναι υποχρεωτικά
+                        </p>
 
                         <div className="buttons">
                             <button type="button" className="button-apply" onClick={handleSubmit}>
