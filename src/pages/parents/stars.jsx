@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBarNannies from '../../components/layout/NavbarNannies';
 import Footer from '../../components/layout/Footer';
-import '../../styles/Stars.css';
+import '../../styles/Rates.css';
 
 export default function Rates() {
     return (
