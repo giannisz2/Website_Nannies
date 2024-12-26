@@ -10,7 +10,6 @@ export default function Rates() {
                 <NavBarNannies />
                 <p className="text">Αξιολογήσεις</p>
 
-                {/* Σύστημα Αξιολόγησης */}
                 <div className="star-rating">
                     {[...Array(5)].map((_, index) => (
                         <>
