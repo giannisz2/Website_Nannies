@@ -4,7 +4,6 @@ import Footer from '../../components/layout/Footer.jsx';
 import HelpButton from '../../components/buttons/HelpButton.jsx';
 import { Row, Col } from 'react-bootstrap';
 import { Select, MenuItem, TextField, InputLabel, FormControl, Button } from '@mui/material';
-import Datepicker from '../../components/layout/Datepicker.jsx';
 import '../../styles/FirstStep.css';
 import { db } from '../../providers/firebaseConfig'; 
 import { collection, addDoc } from "firebase/firestore";
@@ -188,11 +187,15 @@ export default function FirstStep() {
 
                         </Col>
                         <Col>
-                            <p>Ημερομηνία γέννησης:</p>
-                            <Datepicker name="birthdate" 
-                            selected={formData.birthdate} 
-                            onChange={handleDateChange} />
-                            {formErrors.birthdate && <p className="error-text"><span style={{ color: 'red', fontSize: '12px' }}>To πεδίο Ημερομηνία γέννησης είναι υποχρεωτικό</span></p>}
+                            <TextField fullWidth label="Ημερομηνία γέννησης" type="date" name="birthdate" value={formData.birthdate || ''}
+                                onChange={(e) => handleDateChange(e.target.value)} className="my-3"
+                                InputLabelProps={{
+                                    shrink: true, // Κάνει την ετικέτα να εμφανίζεται πάνω από το πεδίο
+                                }}
+                                helperText={formErrors.birthdate ? (
+                                    <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Ημερομηνία γέννησης είναι υποχρεωτικό</span>
+                                ) : null}
+                            />
                         </Col>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Επίπεδο σπουδών~</InputLabel>
@@ -245,9 +248,9 @@ export default function FirstStep() {
                         </FormControl>
                         
                         <p className="paragraph">Τα υπόλοιπα στοιχεία θα συμπληρώνονται αυτόματα από το Taxisnet</p>
-                        <div className='buttons'>
-                            <button type="button" className="button-temp">Προσωρινή Αποθήκευση</button>
-                            <button type="submit" className='button-apply'>Υποβολή</button>
+                        <div className='buttons-pu'>
+                            <button type="button" className="button-temp-pu">Προσωρινή Αποθήκευση</button>
+                            <button type="submit" className="button-apply-pu">Υποβολή</button>
                         </div>
                         <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
     <Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%' }}>

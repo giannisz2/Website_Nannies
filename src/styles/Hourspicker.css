@@ -1,0 +1,28 @@
+
+.hours-picker {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr); 
+    gap: 10px;
+    padding: 20px;
+}
+
+.hour-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.hour-box input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+.hour-box:hover {
+    background-color: #e0e0e0; 
+}

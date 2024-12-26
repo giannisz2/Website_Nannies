@@ -65,9 +65,9 @@ export default function PersonalInfo() {
                             </Select>
                         </FormControl>
                         <p>Όσα πεδία εχουν ~ μπορούν να αλλάξουν</p>
-                        <div className='buttons'>
-                            <button className="button-temp">Προσωρινή Αποθήκευση</button>
-                            <button className="button-apply">Υποβολή</button>
+                        <div className='buttons-pu'>
+                            <button className="button-temp-pu">Προσωρινή Αποθήκευση</button>
+                            <button className="button-apply-pu">Υποβολή</button>
                         </div>
                     </Col>
                 </Row>

@@ -7,16 +7,23 @@ import '../../styles/SecondStep.css';
 import { db } from '../../providers/firebaseConfig'; 
 import { collection, addDoc } from "firebase/firestore";
 import HoursPicker from "../Hourspicker.jsx"
-import { useFormContext } from '../../context/FormContext.jsx';
-import { Timestamp } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from "react";
+
 
 
 export default function SecondStep() {
 
 
-    const { formData, setFormData } = useFormContext();
+    const [formData, setFormData] = useState({
+            availability: '',
+            employmentTime: '',
+            location: '',
+            experienceYears: '',
+            maxChildren: '',
+            pets: '',
+            smoker: ''
+        });
     
         const [formErrors, setFormErrors] = useState({});
 
@@ -44,48 +51,39 @@ export default function SecondStep() {
     const [isSubmitted, setIsSubmitted] = useState(false);
   
     
-const handleSubmit = async (event) => {
-    event.preventDefault();
-    setIsSubmitted(true);
-
-    const errors = {};
-    let isValid = true;
-
-    ['availability', 'employmentTime', 'location', 'experienceYears', 'maxChildren', 'pets', 'smoker'].forEach((field) => {
-        if (!formData[field]) {
-            errors[field] = true;
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        setIsSubmitted(true); // Ορίζει ότι η φόρμα έχει υποβληθεί
+    
+        const errors = {};
+        let isValid = true;
+    
+        ['availability', 'employmentTime', 'location', 'experienceYears', 'maxChildren', 'pets', 'smoker'].forEach((field) => {
+            if (!formData[field]) {
+                errors[field] = true;
+                isValid = false;
+            }
+        });
+    
+        if (!bio.trim()) {
+            errors.bio = true; 
             isValid = false;
         }
-    });
-
-    if (!bio.trim()) {
-        errors.bio = true;
-        isValid = false;
-    }
-
-    setFormErrors(errors);
-
-    if (isValid) {
-        try {
-            // Μετατροπή της ημερομηνίας σε Timestamp
-            const preparedData = {
-                ...formData,
-                birthdate: formData.birthdate ? Timestamp.fromDate(new Date(formData.birthdate)) : null,
-                availability: formData.availability ? Timestamp.fromDate(new Date(formData.availability)) : null,
-                bio: bio.trim(),
-            };
-            
-
-            const docRef = await addDoc(collection(db, "users"), preparedData);
-            console.log("Document written with ID: ", docRef.id);
-            navigate('/ThirdStep');
-        } catch (e) {
-            console.error("Error adding document: ", e.message);
-            alert(`Σφάλμα κατά την αποθήκευση: ${e.message}`);
+    
+        setFormErrors(errors);
+    
+        if (isValid) {
+            try {
+                const preparedData = { ...formData, bio };
+                const docRef = await addDoc(collection(db, "users"), preparedData);
+                console.log("Document written with ID: ", docRef.id);
+                navigate('/ThirdStep');
+            } catch (e) {
+                console.error("Error adding document: ", e.message);
+                alert(`Σφάλμα κατά την αποθήκευση: ${e.message}`);
+            }
         }
-    }
-};
-
+    };
     
     
     
@@ -137,6 +135,7 @@ const handleSubmit = async (event) => {
                 <Row className="row">
                     <p>Διαθεσιμότητα: </p>
                     <HoursPicker /> 
+
                     {formErrors.availability && <p className="error-text"><span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Διαθεσιμότητα είναι υποχρεωτικό </span></p>}
                     <FormControl fullWidth className="my-3">
                         <InputLabel>Χρόνος Απασχόλησης</InputLabel>
@@ -154,6 +153,7 @@ const handleSubmit = async (event) => {
                                 </span>
                             )}
                     </FormControl>
+                    
                     <TextField
                         fullWidth
                         label="Τοποθεσία"
@@ -263,15 +263,7 @@ const handleSubmit = async (event) => {
                             <span style={{ color: 'red', fontSize: '12px' }}>Αυτό το πεδίο είναι υποχρεωτικό</span>
                         ) : `Characters: ${wordCount}/${maxWords}`}
                     />
-
-
-
-
-
-                    <div className="buttons-pu">
-                        <button className="button-temp-pu">Προσωρινή Αποθήκευση</button>
-                        <button className="button-apply-pu" onClick={handleSubmit}>Υποβολή</button>
-                    </div>
+                    <button className="button-apply">Οριστική Υποβολή</button>
                 </Row>
             </div>
             <Footer />

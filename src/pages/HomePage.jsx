@@ -25,7 +25,7 @@ export default function HomePage() {
           className="d-flex flex-column align-items-center justify-content-center"
         >
           <img id="user-icon" src={userIcon} alt="User Icon" className="mb-3"></img>
-          <p id="p1" className="fw-bold">Βρες τον/την νταντά του παιδιού σου</p>
+          <p className='this_text1'>Βρες τον/την νταντά του παιδιού σου</p>
           <p id="p2">
             Βρες τον/ην νταντά που θα φροντίσει το παιδάκι σου με αγάπη. Δες ποιος\α
             είναι κοντά σου, τι εμπειρία έχει, τι υπηρεσίες προσφέρει και επίλεξε τον/ην
@@ -39,7 +39,7 @@ export default function HomePage() {
           id="col-2"
         >
           <img id="calendar-icon" src={calendarIcon} alt="Calendar Icon" className="mb-3"></img>
-          <p id="p3" className="fw-bold">Επικοινώνησε μαζί του/της & πλήρωσε online</p>
+          <p className='this_text1'>Επικοινώνησε μαζί του/της & πλήρωσε online</p>
           <p id="p4">
             Απλά και εύκολα συνεννοήσου για τη συνάντηση, συμφώνησε και πλήρωσε με το
             voucher ηλεκτρονικά ώστε να απολαύσεις όλα τα προνόμια του ntantades.gov.
@@ -51,9 +51,7 @@ export default function HomePage() {
           className="d-flex flex-column align-items-center justify-content-center"
         >
           <img id="happy-face-icon" src={happyFaceIcon} alt="Happy Face" className="mb-3"></img>
-          <p id="p5" className="fw-bold">
-            Το παιδάκι σου απασχολείται δημιουργικά όσο εσύ δουλεύεις
-          </p>
+          <p className='this_text1'>Το παιδάκι σου απασχολείται δημιουργικά όσο εσύ δουλεύεις</p>
           <p id="p6">
             Ο/Η νταντά θα προσπαθήσει να φροντίσει το παιδάκι σου όπως εσύ. Είναι
             συστηματικά σε επικοινωνία μαζί σου.

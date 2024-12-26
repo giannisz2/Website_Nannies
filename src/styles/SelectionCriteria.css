@@ -16,6 +16,14 @@
     margin: 0;
 }
 
+.this_text1 {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+    font-weight: bold;
+    justify-content: center;
+}
+
+
 .P{
     display: flex;
     flex-direction: row;
