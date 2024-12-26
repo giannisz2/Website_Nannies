@@ -32,14 +32,14 @@ export default function NavBarNannies() {
   };
 
   const handleProfileEdit = () => {
-    navigate('/PersonalInfo'); // Navigate to PersonalInfo page for editing
+    navigate('/PersonalInfo'); 
   };
 
   const handleDeactivateAccount = () => {
     handleSnackbarOpen('Ο λογαριασμός απενεργοποιήθηκε!', 'info');
     setTimeout(() => {
-      navigate('/'); // Navigate back to homepage or login page
-    }, 2000); // Wait for 2 seconds before navigation
+      navigate('/'); 
+    }, 2000); 
   };
 
   const contract = () => {
