@@ -16,7 +16,9 @@ import SelectionCriteriaParents from './pages/parents/SelectionCriteriaParents.j
 import MeetingNanny from './pages/nannies/MeetingNanny.jsx';
 import Rates from './pages/nannies/Rates.jsx';
 import Agreement from './pages/nannies/Agreement.jsx';
+import TransactionHistory from './pages/nannies/TransactionHistory.jsx';
 import Voucher from './pages/nannies/Voucher.jsx';
+import Message from './pages/nannies/Message.jsx';
 import SearchNannies from './pages/parents/SearchNannies.jsx';
 import PersonalInfoParentsDone from './pages/parents/PersonalInfoParentsDone.jsx';
 import PersonalInfoParents from './pages/parents/PersonalInfoParents.jsx';
@@ -33,7 +35,9 @@ function App() {
           <Route path="/" element={<HomePage/>}/>
           <Route path="/SelectionCriteria" element={<SelectionCriteria/>}/>
           <Route path="/AgreementHistory" element={<AgreementHistory/>}/>
+          <Route path="/TransactionHistory" element={<TransactionHistory/>}/>
           <Route path="/NannyHomepage" element={<NannyHomepage/>}/>
+          <Route path="/Message" element={<Message/>}/>
           <Route path="/ProfileEditNannies" element={<ProfileEditNannies/>}/>   {/*tipota*/}
           <Route path="/PersonalInfo" element={<PersonalInfo/>}/>
           <Route path="/PersonalInfoDone" element={<PersonalInfoDone/>}/>

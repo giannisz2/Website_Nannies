@@ -18,7 +18,7 @@ export default function Voucher() {
                 <NavBarNannies />
                 <p className="this_text">Voucher</p>
                 <p className="this_text-voucher" style={{ display: 'inline-block', marginRight: '10px' }}>Το ποσό που σου αντιστοιχεί είναι: </p>
-                <p className="text-voucher2" style={{ display: 'inline-block' }}>800 ευρώ </p>
+                <p className="text-voucher2" style={{ display: 'inline-block' }}>800 € </p>
                 <p className="text-voucher1">Μπορείς να λάβεις τα χρήματα είτε γράφοντας το IBAN σου και να περιμένεις 5 εργάσιμες μέρες
                                         είτε σκανάροντας το QR-Code </p>
                 <div className="content flex-grow-1 d-flex align-items-center justify-content-center"> 
