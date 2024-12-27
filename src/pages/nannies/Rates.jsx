@@ -61,19 +61,24 @@ export default function Rates() {
                     </div>
                 </div>
                 <div className="container-text">
-                    <TextField fullWidth={false} label="Σχόλια" type="text" value="Πολύ καλή στη δουλειά της" className="nanny_rates_text" disabled />
+                  <TextField fullWidth={false} label="Σχόλια" type="text" value="Πολύ καλή στη δουλειά της" className="nanny_rates_text" disabled/>
+                {!showMore && (
                     <p>
-                        <span 
-                            className="clickable-text" 
-                            onClick={handleClick} 
-                            style={{ cursor: 'pointer' }} 
-                        >
-                            Δείτε περισσότερα...
-                        </span>
+                    <span
+                        className="clickable-text"
+                        onClick={handleClick}
+                        style={{ cursor: 'pointer', color: 'blue', textDecoration: 'underline' }}
+                    >
+                        Δείτε περισσότερα...
+                    </span>
                     </p>
-                    {showMore && <p>Έμαθε στα παιδιά μας να είναι ευγενικοί άνθρωποι και να διασκεδάζουν χωρίς σταματιμό.</p>}
-                </div>
-                <Footer />
+                )}
+                {showMore && (
+                <p>
+                    Έμαθε στα παιδιά μας να είναι ευγενικοί άνθρωποι και να διασκεδάζουν χωρίς σταματιμό.
+                </p>
+                )}
+                </div>                <Footer />
             </div>
         </>
     );
