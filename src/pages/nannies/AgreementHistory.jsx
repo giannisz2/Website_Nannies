@@ -6,7 +6,7 @@ import Breadcrumb from '../../components/layout/Breadcrumb';
 import '../../styles/AgreementHistory.css'
 
 export default function AgreementHistory(){
-  return (<div id="TransactionHistory">
+  return (<div id="AgreementHistory">
             <NavBarNannies className="nav-bar-nannies" />
             <HelpButton/>
             <div id="breadCrumb">
