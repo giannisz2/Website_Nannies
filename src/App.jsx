@@ -5,6 +5,7 @@ import SelectionCriteria from './pages/nannies/SelectionCriteria';
 import AgreementHistory from './pages/nannies/AgreementHistory.jsx';
 import NannyHomepage from './pages/nannies/NannyHomepage';
 import ProfileEditNannies from './pages/nannies/ProfileEditNannies';
+import PreviewPage from './pages/nannies/PreviewPage.jsx';
 import { Routes, Route, BrowserRouter} from 'react-router-dom';
 import PersonalInfo from './pages/nannies/PersonalInfo';
 import FirstStep from "./pages/nannies/FirstStep.jsx"
@@ -25,6 +26,7 @@ import PersonalInfoParents from './pages/parents/PersonalInfoParents.jsx';
 import ParentHomepage from './pages/parents/ParentHomepage.jsx';
 import TransactionHistoryParents from './pages/parents/TransactionHistoryParents.jsx';
 import RatesParents from './pages/parents/RatesParents.jsx'
+import Stars from './pages/parents/stars.jsx'
 
 function App() {
   
@@ -41,7 +43,8 @@ function App() {
           <Route path="/ProfileEditNannies" element={<ProfileEditNannies/>}/>   {/*tipota*/}
           <Route path="/PersonalInfo" element={<PersonalInfo/>}/>
           <Route path="/PersonalInfoDone" element={<PersonalInfoDone/>}/>
-          <Route path="/FirstStep" element={<FirstStep/>}/>
+          <Route path="/FirstStep" element={<FirstStep/>}/>          
+          <Route path="/PreviewPage" element={<PreviewPage/>}/>
           <Route path="/SecondStep" element={<SecondStep/>}/>
           <Route path="/SecondStepDone" element={<SecondStepDone/>}/>
           <Route path="/ThirdStep" element={<ThirdStep/>}/>
@@ -56,6 +59,7 @@ function App() {
           <Route path='/ParentHomepage' element={<ParentHomepage/>}/>
           <Route path='/TransactionHistoryParents' element={<TransactionHistoryParents/>}/>
           <Route path='/RatesParents' element={<RatesParents/>}/>
+          <Route path='/Stars' element={<Stars/>}/>
         </Routes>
       </BrowserRouter>
     </>

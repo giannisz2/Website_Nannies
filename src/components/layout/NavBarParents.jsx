@@ -3,13 +3,43 @@ import '../../styles/NavBarNannies.css';
 import { useNavigate } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+import React, { useState } from 'react';
 
 export default function NavBarParents() {
   const navigate = useNavigate();
 
+  const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+  
+    const handleSnackbarOpen = (message, severity) => {
+      setSnackbarMessage(message);
+      setSnackbarSeverity(severity);
+      setSnackbarOpen(true);
+    };
+  
+    const handleSnackbarClose = () => {
+      setSnackbarOpen(false);
+    };
+
+
   const handleLogoClick = () => {
     navigate('/');  // Home page from logo
   };
+
+  const handleProfileEdit = () => {
+    navigate('/PersonalInfoParents'); 
+  };
+  
+  const handleDeactivateAccount = () => {
+    handleSnackbarOpen('Ο λογαριασμός απενεργοποιήθηκε!', 'info');
+    setTimeout(() => {
+      navigate('/'); 
+    }, 2000); 
+  };
+
 
   const goToTransactionHistory = () => {
     navigate('/TransactionHistoryParents');
@@ -72,12 +102,30 @@ export default function NavBarParents() {
             </Button>
           </Nav>
           <Nav>
-            <IconButton aria-label="account of current user" color="inherit" onClick={handleProfileClick}>
-              <AccountCircleIcon />
-            </IconButton>
-          </Nav>
-        </Navbar.Collapse>
-      </Container>
-    </Navbar>
-  </>);
+          <Dropdown>
+                <Dropdown.Toggle as={IconButton} aria-label="account of current user" color="inherit">
+                  <AccountCircleIcon />
+                </Dropdown.Toggle>
+                <Dropdown.Menu align="end">
+                  <Dropdown.Item onClick={handleProfileEdit}>Επεξεργασία Προφίλ</Dropdown.Item>
+                  <Dropdown.Item onClick={handleDeactivateAccount}>Απενεργοποίηση</Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </Nav>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
+
+    <Snackbar
+            open={snackbarOpen}
+            autoHideDuration={3000}
+            onClose={handleSnackbarClose}
+            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+          >
+            <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+              {snackbarMessage}
+            </Alert>
+          </Snackbar>
+        </>
+  );
 }

@@ -3,14 +3,18 @@ import Footer from '../../components/layout/Footer.jsx';
 import HelpButton from '../../components/buttons/HelpButton.jsx';
 import { Row, Col } from 'react-bootstrap';
 import { Select, MenuItem, TextField, InputLabel, FormControl } from '@mui/material';
+import Datepicker from '../../components/layout/Datepicker.jsx';
 import '../../styles/SecondStep.css';
 import { db } from '../../providers/firebaseConfig'; 
 import { collection, addDoc } from "firebase/firestore";
-import HoursPicker from "../Hourspicker.jsx"
 import { useFormContext } from '../../context/FormContext.jsx';
 import { Timestamp } from "firebase/firestore";
+
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from "react";
+
+
+
 
 
 export default function SecondStep() {
@@ -70,11 +74,10 @@ const handleSubmit = async (event) => {
             // Μετατροπή της ημερομηνίας σε Timestamp
             const preparedData = {
                 ...formData,
-                birthdate: formData.birthdate ? Timestamp.fromDate(new Date(formData.birthdate)) : null,
+                birthdate: formData.birthdate ? Timestamp.fromDate(new Date(formData.birthdate)) : null, // Μετατροπή ημερομηνίας
                 availability: formData.availability ? Timestamp.fromDate(new Date(formData.availability)) : null,
                 bio: bio.trim(),
             };
-            
 
             const docRef = await addDoc(collection(db, "users"), preparedData);
             console.log("Document written with ID: ", docRef.id);
@@ -93,6 +96,11 @@ const handleSubmit = async (event) => {
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+
         if (name === "bio") {
             const charCount = value.length; 
     
@@ -135,8 +143,25 @@ const handleSubmit = async (event) => {
             </div>
             <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
                 <Row className="row">
-                    <p>Διαθεσιμότητα: </p>
-                    <HoursPicker /> 
+                    <p>Διαθεσιμότητα: (Πότε θα μπορούσατε να ξεκινήσετε;)</p>
+                    <Datepicker 
+                        name="availability" 
+                        selected={formData.availability ? new Date(formData.availability) : null} 
+                        onChange={(date) => {
+                            setFormData(prev => ({
+                                ...prev,
+                                availability: date ? date.toISOString() : null
+                            }));
+                            setFormErrors(prev => ({
+                                ...prev,
+                                availability: !date
+                            }));
+                        }}
+                        dateFormat="dd/MM/yyyy"
+                    />
+
+
+
                     {formErrors.availability && <p className="error-text"><span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Διαθεσιμότητα είναι υποχρεωτικό </span></p>}
                     <FormControl fullWidth className="my-3">
                         <InputLabel>Χρόνος Απασχόλησης</InputLabel>
@@ -264,7 +289,10 @@ const handleSubmit = async (event) => {
                         ) : `Characters: ${wordCount}/${maxWords}`}
                     />
 
-
+                        <p>   </p>
+                        <p style={{ color: 'red', fontSize: '14px', marginBottom: '20px' }}>
+                            * Όλα τα πεδία είναι υποχρεωτικά
+                        </p>
 
 
 
@@ -278,4 +306,3 @@ const handleSubmit = async (event) => {
         </div>
     );
 }
-

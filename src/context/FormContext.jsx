@@ -9,6 +9,7 @@ export const useFormContext = () => useContext(FormContext);
 // Provider to share form data
 export const FormProvider = ({ children }) => {
     const [formData, setFormData] = useState({
+        role: 'nanny',
         name: '',
         surname: '',
         gender: '',
@@ -24,8 +25,9 @@ export const FormProvider = ({ children }) => {
         pets: '',
         smoker: '',
         phone: '',
+        bio: ' ',
         phoneAccess: '',
-        availableDate: null,
+        availableDate: [],
         availableTimeFrom: null,
         availableTimeTo: null,
     });
