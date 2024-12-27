@@ -21,6 +21,12 @@ export default function PersonalInfoParents() {
                     >
                         <TextField fullWidth label="Όνομα" type="text" className="my-3" />
                         <TextField fullWidth label="Φύλο" type="text" className="my-3" />
+                        <TextField
+                            fullWidth
+                            label="Τηλέφωνο Επικοινωνίας"
+                            type="text"
+                            className="my-3"
+                        />
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Αριθμός παιδιών</InputLabel>
                             <Select defaultValue="">
@@ -30,21 +36,8 @@ export default function PersonalInfoParents() {
                                 <MenuItem value="4+">4+</MenuItem>
                             </Select>
                         </FormControl>
-                        <TextField
-                            fullWidth
-                            label="Μέχρι πόσα παιδιά μπορείτε να αναλάβετε ταυτόχρονα"
-                            type="text"
-                            className="my-3"
-                        />
-                        
-                    </Col>
-                    <Col
-                        md={6}
-                        xs={12}
-                        className="d-flex flex-column align-items-center justify-content-center text-center"
-                    >
                         <FormControl fullWidth className="my-3">
-                            <InputLabel>Αριθμός παιδιών από 6 μηνών έως 2.5 ετών</InputLabel>
+                            <InputLabel>Πόσα παιδιά έχετε σε ηλικίες από 6 μηνών έως 2.5 ετών</InputLabel>
                             <Select defaultValue="">
                                 <MenuItem value="1">1</MenuItem>
                                 <MenuItem value="2">2</MenuItem>
@@ -52,11 +45,28 @@ export default function PersonalInfoParents() {
                                 <MenuItem value="4+">4+</MenuItem>
                             </Select>
                         </FormControl>
+                        
+                    </Col>
+                    <Col
+                        md={6}
+                        xs={12}
+                        className="d-flex flex-column align-items-center justify-content-center text-center"
+                    >
+                        <TextField fullWidth label="Επίθετο" type="text" className="my-3" />
                         <label>Ημερομηνία Γέννησης:</label>
                         <Datepicker/>
-                        <TextField fullWidth label="Τοποθεσία" type="text" className="my-3" />
+                        <TextField fullWidth label="Τόπος Κατοικίας" type="text" className="my-3" />
                         <FormControl fullWidth className="my-3">
-                            <InputLabel>Πόσα παιδιά θα βρσίκονται εκείνη τη στιγμή στο σπίτι;</InputLabel>
+                            <InputLabel>Έχετε κατοικίδια στο σπίτι</InputLabel>
+                            <Select defaultValue="">
+                                <MenuItem value="ΝΑΙ">ΝΑΙ</MenuItem>
+                                <MenuItem value="ΟΧΙ">ΟΧΙ</MenuItem>
+                                
+                            </Select>
+                        </FormControl>
+                        
+                        <FormControl fullWidth className="my-3">
+                            <InputLabel>Πόσα παιδιά θέλετε να αναλάβει η ντάντα;</InputLabel>
                             <Select defaultValue="">
                                 <MenuItem value="1">1</MenuItem>
                                 <MenuItem value="2">2</MenuItem>
