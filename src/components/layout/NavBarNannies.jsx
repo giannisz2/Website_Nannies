@@ -58,6 +58,15 @@ export default function NavBarNannies() {
     navigate('/MeetingNanny');
   };
 
+
+  const TransactionHistory = () => {
+    navigate('/TransactionHistory');
+  };
+
+  const gotoMessage = () => {
+    navigate('/Message');
+  };
+
   return (
     <>
       <Navbar className="nav" bg="light" expand="lg" variant="light">
@@ -76,11 +85,11 @@ export default function NavBarNannies() {
                   Ιστορικό
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#/Πληρωμών">Πληρωμών</Dropdown.Item>
+                  <Dropdown.Item href="#/Πληρωμών"onClick={TransactionHistory}>Πληρωμών</Dropdown.Item>
                   <Dropdown.Item onClick={goToAgreementHistory}>Συμφωνητικών</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <Button className="button mx-2" variant="primary">
+              <Button className="button mx-2" variant="primary"onClick={gotoMessage}>
                 Ειδοποιήσεις
               </Button>
               <Button className="button mx-2" onClick={MeetingNanny} variant="primary">
