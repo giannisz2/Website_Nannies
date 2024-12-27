@@ -167,7 +167,7 @@ export default function FirstStep() {
                             onChange={handleInputChange}
                             className="my-3" 
                             helperText={formErrors.surname ? (
-                                <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Επ είναι υποχρεωτικό</span>
+                                <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Επώνυμο είναι υποχρεωτικό</span>
                             ) : null} 
                         />
                         <Col>
