@@ -3,28 +3,24 @@ import Footer from '../../components/layout/Footer.jsx';
 import HelpButton from '../../components/buttons/HelpButton.jsx';
 import { Row, Col } from 'react-bootstrap';
 import { Select, MenuItem, TextField, InputLabel, FormControl } from '@mui/material';
+import Datepicker from '../../components/layout/Datepicker.jsx';
 import '../../styles/SecondStep.css';
 import { db } from '../../providers/firebaseConfig'; 
 import { collection, addDoc } from "firebase/firestore";
-import HoursPicker from "../Hourspicker.jsx"
 import { useFormContext } from '../../context/FormContext.jsx';
-import { Timestamp } from "firebase/firestore";import { useNavigate } from 'react-router-dom';
+import { Timestamp } from "firebase/firestore";
+
+import { useNavigate } from 'react-router-dom';
 import React, { useState } from "react";
+
+
 
 
 
 export default function SecondStep() {
 
 
-    const [formData, setFormData] = useState({
-            availability: '',
-            employmentTime: '',
-            location: '',
-            experienceYears: '',
-            maxChildren: '',
-            pets: '',
-            smoker: ''
-        });
+    const { formData, setFormData } = useFormContext();
     
         const [formErrors, setFormErrors] = useState({});
 
@@ -52,43 +48,47 @@ export default function SecondStep() {
     const [isSubmitted, setIsSubmitted] = useState(false);
   
     
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-        setIsSubmitted(true); // Ορίζει ότι η φόρμα έχει υποβληθεί
-    
-        const errors = {};
-        let isValid = true;
-    
-        ['availability', 'employmentTime', 'location', 'experienceYears', 'maxChildren', 'pets', 'smoker'].forEach((field) => {
-            if (!formData[field]) {
-                errors[field] = true;
-                isValid = false;
-            }
-        });
-    
-        if (!bio.trim()) {
-            errors.bio = true; 
+const handleSubmit = async (event) => {
+    event.preventDefault();
+    setIsSubmitted(true);
+
+    const errors = {};
+    let isValid = true;
+
+    ['availability', 'employmentTime', 'location', 'experienceYears', 'maxChildren', 'pets', 'smoker'].forEach((field) => {
+        if (!formData[field]) {
+            errors[field] = true;
             isValid = false;
         }
-    
-        setFormErrors(errors);
-    
-        if (isValid) {
-            try {
-                const preparedData = { ...formData,
+    });
+
+    if (!bio.trim()) {
+        errors.bio = true;
+        isValid = false;
+    }
+
+    setFormErrors(errors);
+
+    if (isValid) {
+        try {
+            // Μετατροπή της ημερομηνίας σε Timestamp
+            const preparedData = {
+                ...formData,
                 birthdate: formData.birthdate ? Timestamp.fromDate(new Date(formData.birthdate)) : null, // Μετατροπή ημερομηνίας
                 availability: formData.availability ? Timestamp.fromDate(new Date(formData.availability)) : null,
                 bio: bio.trim(),
             };
-                const docRef = await addDoc(collection(db, "users"), preparedData);
-                console.log("Document written with ID: ", docRef.id);
-                navigate('/ThirdStep');
-            } catch (e) {
-                console.error("Error adding document: ", e.message);
-                alert(`Σφάλμα κατά την αποθήκευση: ${e.message}`);
-            }
+
+            const docRef = await addDoc(collection(db, "users"), preparedData);
+            console.log("Document written with ID: ", docRef.id);
+            navigate('/ThirdStep');
+        } catch (e) {
+            console.error("Error adding document: ", e.message);
+            alert(`Σφάλμα κατά την αποθήκευση: ${e.message}`);
         }
-    };
+    }
+};
+
     
     
     
@@ -143,10 +143,28 @@ export default function SecondStep() {
             </div>
             <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
                 <Row className="row">
-                    <p>Διαθεσιμότητα: </p>
-                    <HoursPicker /> 
+                    <p>Διαθεσιμότητα: (Πότε θα μπορούσατε να ξεκινήσετε;)</p>
+                    <Datepicker 
+                        name="availability" 
+                        selected={formData.availability ? new Date(formData.availability) : null} 
+                        onChange={(date) => {
+                            setFormData(prev => ({
+                                ...prev,
+                                availability: date ? date.toISOString() : null
+                            }));
+                            setFormErrors(prev => ({
+                                ...prev,
+                                availability: !date
+                            }));
+                        }}
+                        dateFormat="dd/MM/yyyy"
+                    />
+
+
 
                     {formErrors.availability && <p className="error-text"><span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Διαθεσιμότητα είναι υποχρεωτικό </span></p>}
+                   
+                   
                     <FormControl fullWidth className="my-3">
                         <InputLabel>Χρόνος Απασχόλησης</InputLabel>
                         <Select name="employmentTime"
@@ -163,7 +181,6 @@ export default function SecondStep() {
                                 </span>
                             )}
                     </FormControl>
-                    
                     <TextField
                         fullWidth
                         label="Τοποθεσία"
@@ -206,10 +223,10 @@ export default function SecondStep() {
                                 onChange={handleInputChange}
                                 defaultValue=""
                             >
-                                <MenuItem value="2">1</MenuItem>
+                                <MenuItem value="1">1</MenuItem>
                                 <MenuItem value="2">2</MenuItem>
-                                <MenuItem value="2">3</MenuItem>
-                                <MenuItem value="Άλλο">4+</MenuItem>
+                                <MenuItem value="3">3</MenuItem>
+                                <MenuItem value="4+">4+</MenuItem>
                             </Select>
                             {formErrors.maxChildren && (
                                 <span style={{ color: 'red', fontSize: '12px' }}>
@@ -274,7 +291,7 @@ export default function SecondStep() {
                         ) : `Characters: ${wordCount}/${maxWords}`}
                     />
 
-                    <p>   </p>
+                        <p>   </p>
                         <p style={{ color: 'red', fontSize: '14px', marginBottom: '20px' }}>
                             * Όλα τα πεδία είναι υποχρεωτικά
                         </p>
@@ -284,7 +301,8 @@ export default function SecondStep() {
                     <div className="buttons-pu">
                         <button className="button-temp-pu">Προσωρινή Αποθήκευση</button>
                         <button className="button-apply-pu" onClick={handleSubmit}>Υποβολή</button>
-                    </div>                </Row>
+                    </div>
+                </Row>
             </div>
             <Footer />
         </div>

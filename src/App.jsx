@@ -28,6 +28,7 @@ import ParentHomepage from './pages/parents/ParentHomepage.jsx';
 import TransactionHistoryParents from './pages/parents/TransactionHistoryParents.jsx';
 import RatesParents from './pages/parents/RatesParents.jsx'
 import SignUp from './pages/parents/SignUp.jsx'
+import PreviewParents from './pages/parents/PreviewParents.jsx'
 import Stars from './pages/parents/stars.jsx'
 
 function App() {
@@ -62,7 +63,7 @@ function App() {
           <Route path='/ParentHomepage' element={<ParentHomepage/>}/>
           <Route path='/TransactionHistoryParents' element={<TransactionHistoryParents/>}/>
           <Route path='/RatesParents' element={<RatesParents/>}/>
-
+          <Route path='/PreviewParents' element={<PreviewParents/>}/>
           <Route path='/SignUp' element={<SignUp/>}/>
 
           <Route path='/Stars' element={<Stars/>}/>
