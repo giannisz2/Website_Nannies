@@ -63,13 +63,13 @@ export default function ThirdStep() {
     
         setFormErrors(errors);
     
-        // Έλεγχος τηλεφώνου
+        
         if (!validatePhoneNumber(formData.phone)) {
             handleSnackbarOpen('Ο αριθμός τηλεφώνου πρέπει να έχει 10 ψηφία.', 'error');
             return false;
         }
     
-        // Έλεγχος άλλων πεδίων
+        
         if (Object.values(errors).some((error) => error === true)) {
             handleSnackbarOpen('Παρακαλώ συμπληρώστε όλα τα υποχρεωτικά πεδία.', 'error');
             return false;

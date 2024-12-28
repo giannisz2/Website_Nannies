@@ -16,7 +16,7 @@ export default function SelectionCriteria() {
     const navigate = useNavigate();
 
     const handleSignUp = () => {
-        navigate('/FirstStep'); // Ανακατευθύνει στη σελίδα FirstStep
+        navigate('/FirstStep'); 
     };
 
 

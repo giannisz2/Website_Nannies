@@ -19,10 +19,26 @@ import { Timestamp } from "firebase/firestore";
 export default function FirstStep() {
     const { formData, setFormData } = useFormContext();
 
+    const validateGreekUppercase = (value) => {
+        const greekUppercaseRegex = /^[Α-ΩΪΫ]+$/; // Ελέγχει μόνο κεφαλαία ελληνικά γράμματα
+        return greekUppercaseRegex.test(value);
+    };
+    
+
+
+
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+    
+        
+        if ((name === "name" || name === "surname") && value && !validateGreekUppercase(value)) {
+            handleSnackbarOpen('Το πεδίο πρέπει να περιέχει μόνο κεφαλαία ελληνικά γράμματα.');
+            setFormErrors((prev) => ({ ...prev, [name]: true }));
+            return;
+        }
+    
         setFormData((prev) => ({ ...prev, [name]: value }));
-        setFormErrors({ ...formErrors, [name]: !value }); // Set error to true if value is empty
+        setFormErrors((prev) => ({ ...prev, [name]: !value })); // Ενημερώνει τα errors
     };
 
     const [formErrors, setFormErrors] = useState({});
@@ -32,11 +48,11 @@ export default function FirstStep() {
     const handleDateChange = (date) => {
         setFormData((prev) => ({
             ...prev,
-            birthdate: date, // Αποθήκευσε την ημερομηνία στο σωστό πεδίο
+            birthdate: date, 
         }));
         setFormErrors((prev) => ({
             ...prev,
-            birthdate: !date, // Ενημέρωσε τα errors αν η ημερομηνία είναι άκυρη
+            birthdate: !date, 
         }));
     };
     
@@ -44,15 +60,29 @@ export default function FirstStep() {
     const checkFormValidity = () => {
         const errors = {};
         let isValid = true;
-        ['name', 'surname', 'gender', 'birthdate', 'educationLevel', 'experience', 'recommendationLetters'].forEach(field => {
+    
+        
+        ['name', 'surname'].forEach((field) => {
+            if (!formData[field] || !validateGreekUppercase(formData[field])) {
+                errors[field] = true;
+                isValid = false;
+            }
+        });
+    
+        
+        ['gender', 'birthdate', 'educationLevel', 'experience', 'recommendationLetters'].forEach((field) => {
             if (!formData[field] || (typeof formData[field] === 'string' && formData[field].trim() === '')) {
                 errors[field] = true;
                 isValid = false;
             }
         });
+    
         setFormErrors(errors);
         return isValid;
     };
+
+
+
     
     const isOver18 = (birthdate) => {
         const today = new Date();
@@ -115,9 +145,9 @@ export default function FirstStep() {
     
 
     const handleFileUploadChange = (event) => {
-        const file = event.target.files[0]; // Get the first selected file
+        const file = event.target.files[0]; 
         if (file) {
-            setFormData({ ...formData, recommendationLetters: file.name }); // Update the formData state with the file name
+            setFormData({ ...formData, recommendationLetters: file.name }); 
         }
     };
     
@@ -148,7 +178,7 @@ export default function FirstStep() {
 
                         <TextField 
                         fullWidth 
-                        label="Όνομα" 
+                        label="Όνομα (ΜΕ ΚΕΦΑΛΑΙΑ)" 
                         type="text"
                         name="name" 
                         value={formData.name} 
@@ -160,7 +190,7 @@ export default function FirstStep() {
                     />
                         <TextField 
                             fullWidth 
-                            label="Επώνυμο" 
+                            label="Επώνυμο (ΜΕ ΚΕΦΑΛΑΙΑ)" 
                             type="text"
                             name="surname" 
                             value={formData.surname}
