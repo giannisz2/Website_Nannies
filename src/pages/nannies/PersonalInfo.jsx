@@ -11,6 +11,8 @@ import { db } from '../../providers/firebaseConfig';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+
+
 export default function PersonalInfo() {
     const [formData, setFormData] = useState({
         name: '',
@@ -150,10 +152,10 @@ export default function PersonalInfo() {
                             <TextField
                                 fullWidth
                                 label="Όνομα"
-                                name="name"
+                                type="text"
                                 value={formData.name || ''}
-                                onChange={handleInputChange}
-                                margin="normal"
+                                InputProps={{ readOnly: true }}
+                                className="my-3"
                             />
                             <TextField
                                 fullWidth
@@ -198,7 +200,7 @@ export default function PersonalInfo() {
                             />
                             <TextField
                                 fullWidth
-                                label="Τηλέφωνο"
+                                label="Τηλέφωνο Επικοινωνίας"
                                 name="phone"
                                 value={formData.phone || ''}
                                 onChange={handleInputChange}
@@ -219,23 +221,17 @@ export default function PersonalInfo() {
                             <TextField
                                 fullWidth
                                 label="Επώνυμο"
-                                name="surname"
+                                type="text"
                                 value={formData.surname || ''}
-                                onChange={handleInputChange}
-                                margin="normal"
+                                InputProps={{ readOnly: true }}
+                                className="my-3"
                             />
-                            <DatePicker
+                            <TextField
+                                fullWidth
                                 label="Ημερομηνία Γέννησης"
-                                value={formData.birthdate ? dayjs(formData.birthdate) : null}
-                                onChange={(date) => handleInputChange({ target: { name: 'birthdate', value: date?.toISOString() || '' } })}
-                                margin="normal"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Μέχρι Πόσα Παιδιά"
-                                name="maxChildren"
-                                value={formData.maxChildren || ''}
-                                onChange={handleInputChange}
+                                type="text"
+                                value={formData.birthdate || ''}
+                                InputProps={{ readOnly: true }}
                                 className="my-3"
                             />
                             <TextField
@@ -246,6 +242,7 @@ export default function PersonalInfo() {
                                 onChange={handleInputChange}
                                 className="my-3"
                             />
+                            
                             <FormControl fullWidth className="my-3">
                                 <InputLabel>Είστε καπνιστής;</InputLabel>
                                 <Select
