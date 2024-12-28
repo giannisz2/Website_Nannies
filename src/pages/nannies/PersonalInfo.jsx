@@ -152,6 +152,10 @@ export default function PersonalInfo() {
     
             const userRef = doc(db, 'users', userId);
             await updateDoc(userRef, formData);
+
+            localStorage.setItem('initialFormData', JSON.stringify(initialFormData));
+
+
             navigate('/PersonalInfoDone'); // Μετάβαση στη σελίδα PersonalInfoDone
         } catch (error) {
             console.error('Error updating document: ', error);

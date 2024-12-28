@@ -15,7 +15,7 @@ import dayjs from 'dayjs';
 
 
 
-export default function PersonalInfo() {
+export default function PersonalInfoDone() {
     const [formData, setFormData] = useState({
         name: '',
         surname: '',
@@ -38,18 +38,31 @@ export default function PersonalInfo() {
         availableTimeTo: null,
     });
 
+    const [initialFormData, setInitialFormData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const [dialogOpen, setDialogOpen] = useState(false);
     const [snackbarOpen, setSnackbarOpen] = useState(false);
+    
 
 
+    const handleFinalSubmit = async () => {
+        try {
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                console.error('User ID is not available');
+                return;
+            }
 
-    const handleFinalSubmit = () => {
-        setSnackbarOpen(true);
-        setTimeout(() => {
-            navigate('/NannyHomepage'); 
-        }, 2000);
+            const userRef = doc(db, 'users', userId);
+            await updateDoc(userRef, formData);
+            setSnackbarOpen(true);
+            setTimeout(() => {
+                navigate('/NannyHomepage');
+            }, 2000);
+        } catch (error) {
+            console.error('Error updating document: ', error);
+        }
     };
 
 
@@ -67,7 +80,10 @@ export default function PersonalInfo() {
                 const userDoc = await getDoc(userRef);
 
                 if (userDoc.exists()) {
-                    setFormData(userDoc.data());
+                    const data = userDoc.data();
+                    setFormData(data);
+                    setInitialFormData(data);
+                    
                 } else {
                     console.error('No such document!');
                 }
@@ -85,23 +101,31 @@ export default function PersonalInfo() {
 
     const handleDialogClose = async (saveChanges) => {
         setDialogOpen(false);
-        if (saveChanges) {
+    
+        if (!saveChanges) {
             try {
-                const userId = localStorage.getItem('userId');
-                if (!userId) {
-                    console.error('User ID is not available');
-                    return;
+                // Επαναφορά δεδομένων από το localStorage
+                const initialData = JSON.parse(localStorage.getItem('initialFormData'));
+                if (initialData) {
+                    const userId = localStorage.getItem('userId');
+                    if (!userId) {
+                        console.error('User ID is not available');
+                        return;
+                    }
+    
+                    const userRef = doc(db, 'users', userId);
+                    await updateDoc(userRef, initialData); // Ενημέρωση της βάσης δεδομένων με τα αρχικά δεδομένα
                 }
-
-                const userRef = doc(db, 'users', userId);
-                await updateDoc(userRef, formData);
-                setSnackbarOpen(true);
             } catch (error) {
-                console.error('Error updating document: ', error);
+                console.error('Error restoring initial data: ', error);
             }
+            navigate('/NannyHomepage'); // Έξοδος χωρίς αποθήκευση
+        } else {
+            handleFinalSubmit(); // Αποθήκευση και έξοδος
         }
-        navigate('/NannyHomepage');
     };
+    
+
 
     if (isLoading) {
         return <p>Φόρτωση...</p>;
