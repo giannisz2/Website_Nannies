@@ -163,6 +163,8 @@ const handleSubmit = async (event) => {
 
 
                     {formErrors.availability && <p className="error-text"><span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Διαθεσιμότητα είναι υποχρεωτικό </span></p>}
+                   
+                   
                     <FormControl fullWidth className="my-3">
                         <InputLabel>Χρόνος Απασχόλησης</InputLabel>
                         <Select name="employmentTime"
@@ -221,10 +223,10 @@ const handleSubmit = async (event) => {
                                 onChange={handleInputChange}
                                 defaultValue=""
                             >
-                                <MenuItem value="2">1</MenuItem>
+                                <MenuItem value="1">1</MenuItem>
                                 <MenuItem value="2">2</MenuItem>
-                                <MenuItem value="2">3</MenuItem>
-                                <MenuItem value="Άλλο">4+</MenuItem>
+                                <MenuItem value="3">3</MenuItem>
+                                <MenuItem value="4+">4+</MenuItem>
                             </Select>
                             {formErrors.maxChildren && (
                                 <span style={{ color: 'red', fontSize: '12px' }}>
