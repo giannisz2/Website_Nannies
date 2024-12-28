@@ -13,6 +13,8 @@ import { DatePicker, TimePicker } from '@mui/x-date-pickers';
 import dayjs from 'dayjs';
 import { collection, addDoc } from "firebase/firestore";
 import { db } from '../../providers/firebaseConfig';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 
 
@@ -20,6 +22,12 @@ export default function ThirdStep() {
     const navigate = useNavigate();
     const { formData, setFormData } = useFormContext();
     const [formErrors, setFormErrors] = useState({});
+
+
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState('error');
+
 
     useEffect(() => {
         const savedData = JSON.parse(localStorage.getItem('userData')) || {};
@@ -35,21 +43,55 @@ export default function ThirdStep() {
     }, [formData]);
     
 
+    const validatePhoneNumber = (phone) => {
+        return /^\d{10}$/.test(phone); // Ελέγχει αν είναι ακριβώς 10 ψηφία
+    };
+
+
+
     const validateForm = () => {
         const errors = {
-            phone: !formData.phone?.trim(),
+            phone: !formData.phone?.trim() || !validatePhoneNumber(formData.phone),
             phoneAccess: !formData.phoneAccess,
             availableDate: !formData.availableDate || formData.availableDate.length === 0,
             availableTimeFrom: !formData.availableTimeFrom,
-            availableTimeTo: !formData.availableTimeTo || 
-                             (formData.availableTimeFrom && dayjs(formData.availableTimeTo).isBefore(dayjs(formData.availableTimeFrom))),
+            availableTimeTo:
+                !formData.availableTimeTo ||
+                (formData.availableTimeFrom &&
+                    dayjs(formData.availableTimeTo).isBefore(dayjs(formData.availableTimeFrom))),
         };
     
         setFormErrors(errors);
-        return !Object.values(errors).some((error) => error === true);
+    
+        // Έλεγχος τηλεφώνου
+        if (!validatePhoneNumber(formData.phone)) {
+            handleSnackbarOpen('Ο αριθμός τηλεφώνου πρέπει να έχει 10 ψηφία.', 'error');
+            return false;
+        }
+    
+        // Έλεγχος άλλων πεδίων
+        if (Object.values(errors).some((error) => error === true)) {
+            handleSnackbarOpen('Παρακαλώ συμπληρώστε όλα τα υποχρεωτικά πεδία.', 'error');
+            return false;
+        }
+    
+        return true;
     };
     
-    
+
+
+
+
+
+    const handleSnackbarOpen = (message, severity = 'error') => {
+        setSnackbarMessage(message);
+        setSnackbarSeverity(severity);
+        setSnackbarOpen(true);
+    };
+
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
 
     const handleSubmit = async () => {
         if (validateForm()) {
@@ -57,13 +99,17 @@ export default function ThirdStep() {
                 const preparedData = {
                     ...formData,
                     availableDate: formData.availableDate.map((date) => dayjs(date).toISOString()),
-                    availableTimeFrom: formData.availableTimeFrom ? dayjs(formData.availableTimeFrom).toISOString() : null,
-                    availableTimeTo: formData.availableTimeTo ? dayjs(formData.availableTimeTo).toISOString() : null,
+                    availableTimeFrom: formData.availableTimeFrom
+                        ? dayjs(formData.availableTimeFrom).toISOString()
+                        : null,
+                    availableTimeTo: formData.availableTimeTo
+                        ? dayjs(formData.availableTimeTo).toISOString()
+                        : null,
                 };
                 console.log('Prepared Data:', preparedData);
     
-                const docRef = await addDoc(collection(db, "users"), preparedData);
-                console.log("Document written with ID: ", docRef.id);
+                const docRef = await addDoc(collection(db, 'users'), preparedData);
+                console.log('Document written with ID: ', docRef.id);
     
                 navigate('/PreviewPage');
             } catch (e) {
@@ -82,6 +128,11 @@ export default function ThirdStep() {
             ...prev,
             [name]: value,
         }));
+        if (name === 'phone' && !validatePhoneNumber(value)) {
+            setFormErrors((prev) => ({ ...prev, phone: true }));
+        } else {
+            setFormErrors((prev) => ({ ...prev, phone: false }));
+        }
     };
     
     const handleDateChange = (date) => {
@@ -199,6 +250,16 @@ export default function ThirdStep() {
                         </div>
                     </Row>
                 </div>
+                <Snackbar
+                    open={snackbarOpen}
+                    autoHideDuration={4000}
+                    onClose={handleSnackbarClose}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                >
+                    <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+                        {snackbarMessage}
+                    </Alert>
+                </Snackbar>
                 <Footer />
             </div>
         </LocalizationProvider>
