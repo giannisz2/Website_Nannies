@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import Datepicker from '../../components/layout/Datepicker.jsx';
+
 
 export default function PersonalInfo() {
     const [formData, setFormData] = useState({
@@ -39,6 +39,7 @@ export default function PersonalInfo() {
         availableTimeTo: null,
     });
 
+    const [initialFormData, setInitialFormData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
     const [formErrors, setFormErrors] = useState({});
@@ -90,7 +91,9 @@ export default function PersonalInfo() {
                 const userDoc = await getDoc(userRef);
 
                 if (userDoc.exists()) {
-                    setFormData(userDoc.data());
+                    const data = userDoc.data();
+                    setFormData(data);
+                    setInitialFormData(data);
                 } else {
                     console.error('No such document!');
                 }
@@ -174,7 +177,12 @@ export default function PersonalInfo() {
     };
 
 
-
+    const handleCloseWithoutSaving = () => {
+        if (initialFormData) {
+            setFormData(initialFormData); // Επαναφορά της αρχικής κατάστασης
+        }
+        navigate('/NannyHomepage'); // Μετάβαση χωρίς αποθήκευση
+    };
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -198,7 +206,7 @@ export default function PersonalInfo() {
                             top: '10px',
                             right: '10px',
                         }}
-                        onClick={() => navigate('/NannyHomepage')}
+                        onClick={handleCloseWithoutSaving}
                     >
                         <CloseIcon />
                     </IconButton>
@@ -381,7 +389,7 @@ export default function PersonalInfo() {
                                 margin="normal"
                             />
 
-                            
+
                             <FormControl fullWidth className="my-3">
                                 <InputLabel>Είστε διατεθειμένος να εργαστείτε σε σπίτι με κατοικίδια ζώα;</InputLabel>
                                 <Select
