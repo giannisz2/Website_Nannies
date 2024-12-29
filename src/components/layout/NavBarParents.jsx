@@ -93,11 +93,11 @@ export default function NavBarParents() {
               </Dropdown.Toggle>
               <Dropdown.Menu>
                 <Dropdown.Item>Λήξη Συνεργασίας</Dropdown.Item>
-                <Dropdown.Item>Νέο συμφωνητικό</Dropdown.Item>
+                <Dropdown.Item href="/ParentsAgreement">Νέο συμφωνητικό</Dropdown.Item>
                 <Dropdown.Item>Ανανέωση</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-            <Button className="button mx-2" variant="primary">
+            <Button className="button mx-2" variant="primary" href='./NewPayment'>
               Πληρωμή
             </Button>
           </Nav>

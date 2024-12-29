@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import NavBarNannies from '../../components/layout/NavbarNannies';
+import NavBarParents from '../../components/layout/NavBarParents';
 import HelpButton from '../../components/buttons/HelpButton';
 import Footer from '../../components/layout/Footer'
 import { Row,Col } from 'react-bootstrap';
@@ -15,7 +15,7 @@ export default function MessageParents(){
   const togglePopUp = () => setShow(!show);
 
   return (<div id="Message">
-            <NavBarNannies className="nav-bar-nannies" />
+            <NavBarParents/>
             <HelpButton/>
             <Row>
                 <Col>
