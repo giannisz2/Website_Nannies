@@ -7,7 +7,7 @@ import '../../styles/AgreementHistory.css'
 
 export default function AgreementHistory(){
   return (<div id="AgreementHistory">
-            <NavBarNannies className="nav-bar-nannies" />
+            <NavBarNannies className="nav-bar" />
             <HelpButton/>
             <div id="breadCrumb">
             <Breadcrumb label="Συμφωνητικά"/>

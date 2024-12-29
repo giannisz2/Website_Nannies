@@ -40,6 +40,7 @@ import AgreementRenewal from './pages/parents/AgreementRenewal.jsx';
 import PreviewAgreement from './pages/parents/PreviewAgreement.jsx'
 import TempAgreement from './pages/parents/TempAgreement.jsx';
 import Popup from './components/popups/Popup.jsx';
+import AgreementHistoryParents from './pages/parents/AgreementHistoryParents.jsx';
 
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
           <Route path="/" element={<HomePage/>}/>
           <Route path="/SelectionCriteria" element={<SelectionCriteria/>}/>
           <Route path="/AgreementHistory" element={<AgreementHistory/>}/>
+          <Route path="/AgreementHistoryParents" element={<AgreementHistoryParents/>}/>
           <Route path="/TransactionHistory" element={<TransactionHistory/>}/>
           <Route path="/NannyHomepage" element={<NannyHomepage/>}/>
           <Route path="/Message" element={<Message/>}/>

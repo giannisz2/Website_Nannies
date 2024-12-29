@@ -79,8 +79,8 @@ export default function NavBarParents() {
                 Ιστορικό
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item href="#/Πληρωμών">Πληρωμών</Dropdown.Item>
-                <Dropdown.Item onClick={goToTransactionHistory}>Συμφωνητικών</Dropdown.Item>
+                <Dropdown.Item href="/TransactionHistoryParents">Πληρωμών</Dropdown.Item>
+                <Dropdown.Item onClick={goToTransactionHistory} href='/AgreementHistoryParents'>Συμφωνητικών</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
            
