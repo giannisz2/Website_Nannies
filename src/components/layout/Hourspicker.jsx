@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import '../styles/Hourspicker.css';
+import '../../styles/Hourspicker.css'
 
 const HoursPicker = () => {
   const [selectedHours, setSelectedHours] = useState([]);
