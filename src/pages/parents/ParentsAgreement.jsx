@@ -1,10 +1,11 @@
 import React, { useState }  from 'react';
-import NavBarNannies from '../../components/layout/NavbarNannies';
+import NavBarParents from '../../components/layout/NavBarParents';
 import Footer from '../../components/layout/Footer';
 import { Row ,Col } from 'react-bootstrap';
-import '../../styles/Agreement.css';
 import TextField from '@mui/material/TextField';
 import HelpButton from '../../components/buttons/HelpButton'
+import '../../styles/Agreement.css';
+
 
 export default function ParentsAgreement() {
     const [isChecked, setIsChecked] = useState(false);
@@ -16,7 +17,7 @@ export default function ParentsAgreement() {
     return (
         <>
             <div className="nanny-agreement">
-                <NavBarNannies />
+                <NavBarParents />
                 <HelpButton/>
                 <p className="this_text">Συμφωνητικό</p>
                 <div className="centered-container"> 
