@@ -3,6 +3,7 @@ import NavBarParents from '../../components/layout/NavBarParents';
 import Footer from '../../components/layout/Footer';
 import '../../styles/Rates.css';
 import TextField from '@mui/material/TextField';
+import HelpButton from '../../components/buttons/HelpButton'
 
 export default function Rates() {
     const [showMore, setShowMore] = useState(false);
@@ -13,6 +14,7 @@ export default function Rates() {
         <>
             <div className="nanny-rates">
                 <NavBarParents />
+                <HelpButton/>
                 <p className="this_text">Αξιολόγησε την Μαρία Μώμμου</p>
                 <div className="rating-container">
                     <b className="text">Συνέπεια(χρόνος)</b>

@@ -3,6 +3,7 @@ import SidebarFilters from "../../components/layout/SidebarFilters";
 import NavBarParents from "../../components/layout/NavBarParents";
 import Footer from "../../components/layout/Footer";
 import ProfileCard from "../../components/layout/ProfileCard";
+import HelpButton from '../../components/buttons/HelpButton'
 import "../../styles/SearchNannies.css";
 
 export default function SearchNannies() {
@@ -80,6 +81,7 @@ export default function SearchNannies() {
     return (
         <>
             <NavBarParents className="navbar" />
+            <HelpButton/>
             <div className="search-nannies-container">
                 {/* Sidebar with Filters */}
                 <SidebarFilters

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Logo from '../../components/buttons/Logo.jsx';
-import Footer from '../../components/layout/Footer.jsx';
 import HelpButton from '../../components/buttons/HelpButton.jsx';
 import { Box, Grid, Typography, Divider, IconButton, Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
 import { Snackbar, Alert } from '@mui/material';

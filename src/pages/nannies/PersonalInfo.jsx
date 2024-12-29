@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Logo from '../../components/buttons/Logo.jsx';
-import Footer from '../../components/layout/Footer.jsx';
 import HelpButton from '../../components/buttons/HelpButton.jsx';
 import { Box, Grid, Typography, Divider, IconButton  } from '@mui/material';
 import { Select, MenuItem, TextField, InputLabel, FormControl } from '@mui/material';

@@ -4,6 +4,7 @@ import Footer from '../../components/layout/Footer';
 import { Row ,Col } from 'react-bootstrap';
 import '../../styles/Agreement.css';
 import TextField from '@mui/material/TextField';
+import HelpButton from '../../components/buttons/HelpButton'
 
 export default function ParentsAgreement() {
     const [isChecked, setIsChecked] = useState(false);
@@ -16,6 +17,7 @@ export default function ParentsAgreement() {
         <>
             <div className="nanny-agreement">
                 <NavBarNannies />
+                <HelpButton/>
                 <p className="this_text">Συμφωνητικό</p>
                 <div className="centered-container"> 
                     <TextField fullWidth={false} label="Σμφωνητικό" type="text" className="text-agreement1" value="Θέλω να έρθω σε συμφωνία με τον/ην:" disabled />

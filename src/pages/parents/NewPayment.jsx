@@ -3,6 +3,7 @@ import Footer from '../../components/layout/Footer';
 import TextField from '@mui/material/TextField';
 import NavBarParents from '../../components/layout/NavBarParents';
 import '../../styles/NewPayment.css';
+import HelpButton from '../../components/buttons/HelpButton'
 
 export default function NewPayment() {
 
@@ -14,6 +15,7 @@ export default function NewPayment() {
 
     return(<div className='new-payment'>
             <NavBarParents/>
+            <HelpButton/>
             <p className='new-payment-text'>Νέα πληρωμή</p>
             <div className='name'>
                 <p className='name-text'>Ονοματεπώνυμο:</p>
