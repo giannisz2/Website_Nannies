@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import '../../styles/Popup.css';
+import '../../styles/SignInPopup.css';
 
-const Popup = () => {
+const SignInPopup = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openPopup = () => {
@@ -29,4 +29,4 @@ const Popup = () => {
   );
 };
 
-export default Popup;
+export default SignInPopup;

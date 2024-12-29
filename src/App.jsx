@@ -39,7 +39,7 @@ import AgreementExpiration from './pages/parents/AgreementExpiration.jsx';
 import AgreementRenewal from './pages/parents/AgreementRenewal.jsx';
 import PreviewAgreement from './pages/parents/PreviewAgreement.jsx'
 import TempAgreement from './pages/parents/TempAgreement.jsx';
-import Popup from './components/popups/Popup.jsx';
+import SignInPopup from './components/popups/SignInPopup.jsx';
 import AgreementHistoryParents from './pages/parents/AgreementHistoryParents.jsx';
 
 
@@ -86,7 +86,7 @@ function App() {
           <Route path='/AgreementRenewal' element={<AgreementRenewal/>}/>
           <Route path='/PreviewAgreement' element={<PreviewAgreement/>}/>
           <Route path='/TempAgreement' element={<TempAgreement/>}/>
-          <Route path='/Popup' element={<Popup/>}/>
+          <Route path='/SignInPopup' element={<SignInPopup/>}/>
         </Routes>
       </BrowserRouter>
     </>
