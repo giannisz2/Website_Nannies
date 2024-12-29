@@ -19,6 +19,7 @@ import Rates from './pages/nannies/Rates.jsx';
 import Agreement from './pages/nannies/Agreement.jsx';
 import TransactionHistory from './pages/nannies/TransactionHistory.jsx';
 import Voucher from './pages/nannies/Voucher.jsx';
+import Voucher2 from './pages/nannies/Voucher2.jsx';
 import Message from './pages/nannies/Message.jsx';
 import SearchNannies from './pages/parents/SearchNannies.jsx';
 import PersonalInfoParentsDone from './pages/parents/PersonalInfoParentsDone.jsx';
@@ -27,6 +28,7 @@ import ParentHomepage from './pages/parents/ParentHomepage.jsx';
 import TransactionHistoryParents from './pages/parents/TransactionHistoryParents.jsx';
 import RatesParents from './pages/parents/RatesParents.jsx'
 import SignUp from './pages/parents/SignUp.jsx'
+import PreviewParents from './pages/parents/PreviewParents.jsx'
 import Stars from './pages/parents/stars.jsx'
 import MessageParents from './pages/parents/MessageParents.jsx'
 
@@ -55,6 +57,7 @@ function App() {
           <Route path="/Rates" element={<Rates/>}/>
           <Route path="/Agreement" element={<Agreement/>}/>
           <Route path="/Voucher" element={<Voucher/>}/>
+          <Route path="/Voucher2" element={<Voucher2/>}/>
           <Route path='/SearchNannies' element={<SearchNannies/>}/>
           <Route path='/PersonalInfoParentsDone' element={<PersonalInfoParentsDone/>}/>
           <Route path='/PersonalInfoParents' element={<PersonalInfoParents/>}/>
@@ -63,6 +66,7 @@ function App() {
           <Route path='/RatesParents' element={<RatesParents/>}/>
           <Route path='/MessageParents' element={<MessageParents/>}/>
           
+          <Route path='/PreviewParents' element={<PreviewParents/>}/>
           <Route path='/SignUp' element={<SignUp/>}/>
 
           <Route path='/Stars' element={<Stars/>}/>

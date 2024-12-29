@@ -11,6 +11,10 @@ import { db } from '../../providers/firebaseConfig';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
+
+
 export default function PersonalInfo() {
     const [formData, setFormData] = useState({
         name: '',
@@ -35,9 +39,44 @@ export default function PersonalInfo() {
         availableTimeTo: null,
     });
 
+    const [initialFormData, setInitialFormData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
+    const [formErrors, setFormErrors] = useState({});
+    const [isSubmitted, setIsSubmitted] = useState(false);
 
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [snackbarSeverity, setSnackbarSeverity] = useState('error');
+    
+
+    const validatePhoneNumber = (phone) => {
+        return /^\d{10}$/.test(phone); // Ελέγχει αν είναι ακριβώς 10 ψηφία
+    };
+
+
+    const validateForm = () => {
+        const errors = {};
+        let isValid = true;
+    
+        // Έλεγχος για όλα τα πεδία που απαιτούνται
+        ['gender', 'employmentTime', 'availability','educationLevel', 'bio','recommendationLetters', 'experienceYears', 'maxChildren', 'smoker', 'availability', 'phone','availableDate'].forEach(field => {
+            if (typeof formData[field] === 'string' ? !formData[field]?.trim() : !formData[field]) {
+                errors[field] = true;
+                isValid = false;
+            }
+            
+        });
+    
+        setFormErrors(errors);
+        if (!validatePhoneNumber(formData.phone)) {
+            handleSnackbarOpen('Ο αριθμός τηλεφώνου πρέπει να έχει 10 ψηφία.', 'error');
+            return false;
+        }
+    
+        return isValid;
+    };
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -52,7 +91,9 @@ export default function PersonalInfo() {
                 const userDoc = await getDoc(userRef);
 
                 if (userDoc.exists()) {
-                    setFormData(userDoc.data());
+                    const data = userDoc.data();
+                    setFormData(data);
+                    setInitialFormData(data);
                 } else {
                     console.error('No such document!');
                 }
@@ -95,25 +136,57 @@ export default function PersonalInfo() {
     };
 
     const handleSave = async () => {
+        setIsSubmitted(true);
+    
+        if (!validateForm()) {
+            console.log("Form validation failed.");
+            return;
+        }
+    
         try {
             const userId = localStorage.getItem('userId');
             if (!userId) {
                 console.error('User ID is not available');
                 return;
             }
-
+    
             const userRef = doc(db, 'users', userId);
             await updateDoc(userRef, formData);
+
+            localStorage.setItem('initialFormData', JSON.stringify(initialFormData));
+
+
             navigate('/PersonalInfoDone'); // Μετάβαση στη σελίδα PersonalInfoDone
         } catch (error) {
             console.error('Error updating document: ', error);
             alert('Σφάλμα κατά την ενημέρωση των στοιχείων.');
         }
     };
+    
 
     if (isLoading) {
         return <p>Φόρτωση...</p>;
     }
+
+
+
+    const handleSnackbarOpen = (message, severity = 'error') => {
+        setSnackbarMessage(message);
+        setSnackbarSeverity(severity);
+        setSnackbarOpen(true);
+    };
+
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
+
+
+    const handleCloseWithoutSaving = () => {
+        if (initialFormData) {
+            setFormData(initialFormData); // Επαναφορά της αρχικής κατάστασης
+        }
+        navigate('/NannyHomepage'); // Μετάβαση χωρίς αποθήκευση
+    };
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -137,7 +210,7 @@ export default function PersonalInfo() {
                             top: '10px',
                             right: '10px',
                         }}
-                        onClick={() => navigate('/NannyHomepage')}
+                        onClick={handleCloseWithoutSaving}
                     >
                         <CloseIcon />
                     </IconButton>
@@ -150,35 +223,64 @@ export default function PersonalInfo() {
                             <TextField
                                 fullWidth
                                 label="Όνομα"
-                                name="name"
+                                type="text"
                                 value={formData.name || ''}
-                                onChange={handleInputChange}
-                                margin="normal"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Φύλο"
-                                name="gender"
-                                value={formData.gender || ''}
-                                onChange={handleInputChange}
-                                margin="normal"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Χρόνος Απασχόλησης"
-                                name="employmentTime"
-                                value={formData.employmentTime || ''}
-                                onChange={handleInputChange}
-                                margin="normal"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Εκπαίδευση"
-                                name="educationLevel"
-                                value={formData.educationLevel || ''}
-                                onChange={handleInputChange}
+                                InputProps={{ readOnly: true }}
                                 className="my-3"
                             />
+                            <FormControl fullWidth className="my-3">
+                                <InputLabel>Φύλο</InputLabel>
+                                <Select
+                                    name="gender"
+                                    value={formData.gender}
+                                    onChange={handleInputChange}
+                                >
+                                    <MenuItem value="Αρσενικό">Αρσενικό</MenuItem>
+                                    <MenuItem value="Θυληκό">Θυληκό</MenuItem>
+                                    <MenuItem value="Άλλο">Άλλο</MenuItem>
+                                </Select>
+                                {formErrors.gender && (
+                                    <p style={{ color: 'red', fontSize: '12px' }}>
+                                        Το πεδίο Φύλο είναι υποχρεωτικό
+                                    </p>
+                                )}
+                            </FormControl>
+                            <FormControl fullWidth className="my-3">
+                                <InputLabel>Χρόνος Απασχόλησης</InputLabel>
+                                <Select name="employmentTime"
+                                        value={formData.employmentTime}
+                                        onChange={handleInputChange}
+                                        defaultValue=""
+                                    >
+                                    <MenuItem value="Μερική">Μερική</MenuItem>
+                                    <MenuItem value="Πλήρης">Πλήρης</MenuItem>
+                                </Select>
+                                {formErrors.employmentTime && (
+                                        <span style={{ color: 'red', fontSize: '12px' }}>
+                                        Το πεδίο Χρόνος Απασχόλησης είναι υποχρεωτικό
+                                        </span>
+                                    )}
+                            </FormControl>
+
+                             <FormControl fullWidth className="my-3">
+                                <InputLabel>Επίπεδο σπουδών~</InputLabel>
+                                <Select 
+                                    name="educationLevel" 
+                                    value={formData.educationLevel} 
+                                    onChange={handleInputChange}
+                                >
+                                    <MenuItem value="Τριτοβάθμια εκπαίδευση">Τριτοβάθμια εκπαίδευση</MenuItem>
+                                    <MenuItem value="Δευτεροβάθμια εκπαίδευση">Δευτεροβάθμια εκπαίδευση</MenuItem>
+                                    <MenuItem value="Πρωτοβάθμια εκπαίδευση">Πρωτοβάθμια εκπαίδευση</MenuItem>
+                                    <MenuItem value="Άλλο">Άλλο</MenuItem>
+                                </Select>
+                                {formErrors.educationLevel && (
+                                    <p style={{ color: 'red', fontSize: '12px' }}>
+                                        Το πεδίο Επίπεδο σπουδών είναι υποχρεωτικό
+                                    </p>
+                                )}
+                            </FormControl>
+
                             <TextField
                                 fullWidth
                                 label="Συστατικές Επιστολές"
@@ -188,22 +290,38 @@ export default function PersonalInfo() {
                                 className="my-3"
                             />
 
+                            <FormControl fullWidth className="my-3">
+                                <InputLabel>Έτη προϋπηρεσίας</InputLabel>
+                                <Select name="experienceYears"
+                                    value={formData.experienceYears}
+                                    onChange={handleInputChange}
+                                    defaultValue=""
+                                >
+                                    <MenuItem value="0">0</MenuItem>
+                                    <MenuItem value="1">1</MenuItem>
+                                    <MenuItem value="2">2</MenuItem>
+                                    <MenuItem value="3">3</MenuItem>
+                                    <MenuItem value="4+">4+</MenuItem>
+                                </Select>
+                                {formErrors.experienceYears && (
+                                    <span style={{ color: 'red', fontSize: '12px' }}>
+                                    Το πεδίο Έτη προϋπηρεσίας είναι υποχρεωτικό
+                                    </span>
+                                )}
+                            </FormControl>
+
+
                             <TextField
                                 fullWidth
-                                label="Έτη Προϋπηρεσίας"
-                                name="experienceYears"
-                                value={formData.experienceYears || ''}
-                                onChange={handleInputChange}
-                                margin="normal"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Τηλέφωνο"
+                                label="Τηλέφωνο Επικοινωνίας"
                                 name="phone"
                                 value={formData.phone || ''}
                                 onChange={handleInputChange}
+                                error={formErrors.phone && isSubmitted}
+                                helperText={formErrors.phone && isSubmitted ? "Το πεδίο είναι υποχρεωτικό" : null}
                                 margin="normal"
-                            />
+                                />
+
                             <TextField
                                 fullWidth
                                 label="Λίγα λόγια για εσάς..."
@@ -213,58 +331,69 @@ export default function PersonalInfo() {
                                 multiline
                                 rows={4}
                                 className="my-3"
+                                helperText={formErrors.surname ? (
+                                    <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Επώνυμο είναι υποχρεωτικό</span>
+                                ) : null} 
                             />
                         </Grid>
                         <Grid item xs={12} md={6}>
                             <TextField
                                 fullWidth
                                 label="Επώνυμο"
-                                name="surname"
+                                type="text"
                                 value={formData.surname || ''}
-                                onChange={handleInputChange}
-                                margin="normal"
-                            />
-                            <DatePicker
-                                label="Ημερομηνία Γέννησης"
-                                value={formData.birthdate ? dayjs(formData.birthdate) : null}
-                                onChange={(date) => handleInputChange({ target: { name: 'birthdate', value: date?.toISOString() || '' } })}
-                                margin="normal"
-                            />
-                            <TextField
-                                fullWidth
-                                label="Μέχρι Πόσα Παιδιά"
-                                name="maxChildren"
-                                value={formData.maxChildren || ''}
-                                onChange={handleInputChange}
+                                InputProps={{ readOnly: true }}
                                 className="my-3"
                             />
                             <TextField
                                 fullWidth
-                                label="Μέχρι Πόσα Παιδιά"
-                                name="maxChildren"
-                                value={formData.maxChildren || ''}
-                                onChange={handleInputChange}
+                                label="Ημερομηνία Γέννησης"
+                                type="text"
+                                value={formData.birthdate || ''}
+                                InputProps={{ readOnly: true }}
                                 className="my-3"
                             />
                             <FormControl fullWidth className="my-3">
-                                <InputLabel>Είστε καπνιστής;</InputLabel>
-                                <Select
-                                    name="smoker"
-                                    value={formData.smoker || ''}
+                                <InputLabel>Μέχρι πόσα παιδια μπορείτε να αναλάβετε ταυτόχρονα;</InputLabel>
+                                <Select name="maxChildren"
+                                    value={formData.maxChildren}
                                     onChange={handleInputChange}
+                                    defaultValue=""
                                 >
-                                    <MenuItem value="ΝΑΙ">ΝΑΙ</MenuItem>
-                                    <MenuItem value="ΟΧΙ">ΟΧΙ</MenuItem>
+                                    <MenuItem value="1">1</MenuItem>
+                                    <MenuItem value="2">2</MenuItem>
+                                    <MenuItem value="3">3</MenuItem>
+                                    <MenuItem value="4+">4+</MenuItem>
                                 </Select>
+                                
                             </FormControl>
                             
-                             <DatePicker
+                            <FormControl fullWidth className="my-3">
+                                <InputLabel>Είστε καπνιστής;</InputLabel>
+                                <Select name="smoker"
+                                    value={formData.smoker}
+                                    onChange={handleInputChange}
+                                    defaultValue=""
+                                >
+                                    <MenuItem value="ΝΑΙ">NAI</MenuItem>
+                                    <MenuItem value="ΟΧΙ">OXI</MenuItem>
+                                </Select>
+                                {formErrors.smoker && (
+                                    <span style={{ color: 'red', fontSize: '12px' }}>
+                                    Το πεδίο Είστε καπνιστής είναι υποχρεωτικό
+                                    </span>
+                                )}
+                            </FormControl>
+                            
+                            <DatePicker
                                 
                                 label="Διαθεσιμότητα"
                                 value={formData.availability ? dayjs(formData.availability) : null}
                                 onChange={(date) => handleInputChange({ target: { name: 'availability', value: date?.toISOString() || '' } })}
                                 margin="normal"
                             />
+
+
                             <FormControl fullWidth className="my-3">
                                 <InputLabel>Είστε διατεθειμένος να εργαστείτε σε σπίτι με κατοικίδια ζώα;</InputLabel>
                                 <Select
@@ -289,20 +418,26 @@ export default function PersonalInfo() {
                                     <MenuItem value="Σε αυτούς που επιλέγω εγώ">Σε αυτούς που επιλέγω εγώ</MenuItem>
                                 </Select>
                             </FormControl>
-                            <DatePicker
-                                label="Προσθέστε Ημερομηνίες Διαθεσιμότητας"
-                                value={null}
-                                onChange={handleDateChange}
-                                margin="normal"
-                            />
-                            <ul>
-                                {formData.availableDate?.map((date, index) => (
-                                    <li key={index}>
-                                        {dayjs(date).format('DD/MM/YYYY')}
-                                        <button type="button" onClick={() => removeDate(index)}>Διαγραφή</button>
-                                    </li>
-                                ))}
-                            </ul>
+                            <p>Ποιες μέρες/ώρες είσαι διαθέσιμος/η να σε καλέσουν;</p>
+                                                    <DatePicker
+                                                        value={null}
+                                                        minDate={dayjs()}
+                                                        onChange={handleDateChange}
+                                                        className="my-3"
+                                                    />
+                            
+                                                    <ul>
+                                                        {formData.availableDate?.map((date, index) => (
+                                                            <li key={index}>
+                                                                {dayjs(date).format('DD/MM/YYYY')}
+                                                                <button type="button" onClick={() => removeDate(index)}>
+                                                                    Διαγραφή
+                                                                </button>
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                            
+                                                    {formErrors.availableDate && <p style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>Το πεδίο είναι υποχρεωτικό</p>}
                         </Grid>
                         <Grid item xs={12}>
                             <Divider sx={{ marginY: 2 }} />
@@ -325,7 +460,16 @@ export default function PersonalInfo() {
                         </Grid>
                     </Grid>
                 </Box>
-                
+                <Snackbar
+                    open={snackbarOpen}
+                    autoHideDuration={4000}
+                    onClose={handleSnackbarClose}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                >
+                    <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+                        {snackbarMessage}
+                    </Alert>
+                </Snackbar>
             </Box>
         </LocalizationProvider>
     );

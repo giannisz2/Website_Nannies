@@ -9,6 +9,10 @@ import Alert from '@mui/material/Alert';
 import '../../styles/PersonalInfoDone.css';
 import { useFormContext } from '../../context/FormContext.jsx';
 import { useNavigate } from 'react-router-dom';
+import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+
 
 export default function PreviewPage() {
     const { formData } = useFormContext();
@@ -24,6 +28,7 @@ export default function PreviewPage() {
 
 
     return (
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
         <div className="profile-edit-nannies d-flex flex-column min-vh-100">
             <HelpButton />
             <Logo />
@@ -91,12 +96,23 @@ export default function PreviewPage() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
+                        
                         <TextField
                             fullWidth
-                            label="Είστε Καπνιστής"
+                            label="Εμπειρία"
                             type="text"
-                            value={formData.smoker || ''}
+                            value={formData.experience || ''}
                             InputProps={{ readOnly: true }}
+                            className="my-3"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Λίγα Λόγια για Εσάς"
+                            type="text"
+                            value={formData.bio || 'Δεν έχουν καταχωρηθεί στοιχεία'}
+                            InputProps={{ readOnly: true }}
+                            multiline
+                            rows={4}
                             className="my-3"
                         />
                     </Col>
@@ -121,32 +137,14 @@ export default function PreviewPage() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
-                        <TextField
-                            fullWidth
+                        <DatePicker
                             label="Διαθεσιμότητα"
-                            type="text"
-                            value={formData.availability || ''}
-                            InputProps={{ readOnly: true }}
-                            className="my-3"
+                            value={formData.availability ? dayjs(formData.availability) : null}
+                            readOnly
+                            disabled
+                            sx={{ width: '100%' }}
                         />
-                        <TextField
-                            fullWidth
-                            label="Εμπειρία"
-                            type="text"
-                            value={formData.experience || ''}
-                            InputProps={{ readOnly: true }}
-                            className="my-3"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Λίγα Λόγια για Εσάς"
-                            type="text"
-                            value={formData.bio || 'Δεν έχουν καταχωρηθεί στοιχεία'}
-                            InputProps={{ readOnly: true }}
-                            multiline
-                            rows={4}
-                            className="my-3"
-                        />
+                        
                         <TextField
                             fullWidth
                             label="Τοποθεσία"
@@ -160,6 +158,14 @@ export default function PreviewPage() {
                             label="Είστε Διαθέσιμος σε Σπίτι με Κατοικίδια"
                             type="text"
                             value={formData.pets || ''}
+                            InputProps={{ readOnly: true }}
+                            className="my-3"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Είστε Καπνιστής"
+                            type="text"
+                            value={formData.smoker || ''}
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
@@ -179,24 +185,27 @@ export default function PreviewPage() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
-                        <TextField
-                            fullWidth
-                            label="Ώρες Διαθεσιμότητας"
-                            type="text"
-                            value={`${formData.availableTimeFrom || ''} - ${formData.availableTimeTo || ''}`}
-                            InputProps={{ readOnly: true }}
-                            className="my-3"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Ημερομηνίες Διαθεσιμότητας"
-                            type="text"
-                            value={formData.availableDate?.join(', ') || 'Δεν υπάρχουν'}
-                            InputProps={{ readOnly: true }}
-                            multiline
-                            rows={2}
-                            className="my-3"
-                        />
+                        <TimePicker
+                                label="Ώρα Από"
+                                value={formData.availableTimeFrom ? dayjs(formData.availableTimeFrom) : null}
+                                readOnly
+                                disabled
+                                sx={{ width: '100%' }}
+                            />
+                            <TimePicker
+                                label="Ώρα Μέχρι"
+                                value={formData.availableTimeTo ? dayjs(formData.availableTimeTo) : null}
+                                readOnly
+                                disabled
+                                sx={{ width: '100%', marginTop: '16px' }}
+                            />
+                        <DatePicker
+                                label="Ημερομηνίες Διαθεσιμότητας"
+                                value={formData.availableDate?.length ? dayjs(formData.availableDate[0]) : null}
+                                readOnly
+                                disabled
+                                sx={{ width: '100%', marginTop: '16px' }}
+                            />
                          <button className="button-apply" onClick={handleFinalSubmit}>
                             Οριστική Υποβολή
                         </button>
@@ -215,5 +224,6 @@ export default function PreviewPage() {
             </Snackbar>
             <Footer />
         </div>
+        </LocalizationProvider>
     );
 }

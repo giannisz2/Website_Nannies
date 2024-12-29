@@ -45,24 +45,33 @@ function NavBar() {
 
   const handleSignIn = async () => {
     try {
-      const querySnapshot = await getDocs(collection(db, 'users'));
-      const users = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
-
-      const user = users.find(
+      // Λήψη δεδομένων από τη συλλογή "users"
+      const usersQuerySnapshot = await getDocs(collection(db, 'users'));
+      const users = usersQuerySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  
+      // Λήψη δεδομένων από τη συλλογή "Parent"
+      const parentsQuerySnapshot = await getDocs(collection(db, 'Parent'));
+      const parents = parentsQuerySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  
+      // Συνδυασμός δεδομένων από τις δύο συλλογές
+      const allUsers = [...users, ...parents];
+  
+      // Αναζήτηση χρήστη στις συνδυασμένες συλλογές
+      const user = allUsers.find(
         (u) =>
           u.name.trim().toLowerCase() === formData.firstName.trim().toLowerCase() &&
           u.surname.trim().toLowerCase() === formData.lastName.trim().toLowerCase() &&
           u.phone.trim() === formData.phone.trim()
       );
-
+  
       if (user) {
         setSnackbarMessage(`Καλώς ήρθες, ${user.name} ${user.surname}!`);
         setSnackbarSeverity('success');
         setSnackbarOpen(true);
         setShowSignInModal(false);
         localStorage.setItem("userId", user.id); // Αποθήκευση του ID του εγγράφου
-        setShowSignInModal(false);
-
+  
+        // Πλοήγηση ανάλογα με το ρόλο του χρήστη
         if (user.role === 'Parent') {
           navigate('/ParentHomepage');
         } else if (user.role === 'nanny') {
@@ -80,6 +89,11 @@ function NavBar() {
       setSnackbarOpen(true);
     }
   };
+  
+
+
+
+
 
   return (
     <>

@@ -34,8 +34,25 @@ export default function PersonalInfoParents() {
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
+
+        if ((name === "name" || name === "surname") && value && !validateGreekUppercase(value)) {
+            handleSnackbarOpen('Το πεδίο πρέπει να περιέχει μόνο κεφαλαία ελληνικά γράμματα.');
+            setFormErrors((prev) => ({ ...prev, [name]: true }));
+            return;
+        }
+
         setFormData({ ...formData, [name]: value });
         setFormErrors({ ...formErrors, [name]: !value }); // Set error to true if value is empty
+    };
+
+
+    const validateGreekUppercase = (value) => {
+        const greekUppercaseRegex = /^[Α-ΩΪΫ]+$/; // Ελέγχει μόνο κεφαλαία ελληνικά γράμματα
+        return greekUppercaseRegex.test(value);
+    };
+    
+    const validatePhoneNumber = (phone) => {
+        return /^\d{10}$/.test(phone); // Ελέγχει αν είναι ακριβώς 10 ψηφία
     };
 
     const handleDateChange = (date) => {
@@ -51,21 +68,66 @@ export default function PersonalInfoParents() {
 
     const checkFormValidity = () => {
         const errors = {};
-        if (!formData.name) errors.name = true;
-        if (!formData.surname) errors.surname = true;
-        if (!formData.gender) errors.gender = true;
-        if (!formData.birthdate) errors.birthdate = true;
-        if (!formData.phone) errors.phone = true;
-        if (!formData.residence) errors.residence = true;
-        if (!formData.childrenCount) errors.childrenCount = true;
-        if (!formData.pets) errors.pets = true;
-        if (!formData.childrenUnder2) errors.childrenUnder2 = true;
-        if (!formData.nannyChildrenCount) errors.nannyChildrenCount = true;
+        let isValid = true;
+
+        ['name', 'surname'].forEach((field) => {
+            if (!formData[field] || !validateGreekUppercase(formData[field])) {
+                errors[field] = true;
+                isValid = false;
+            }
+        });
+
+
+
+
+        if (!formData.gender) {
+            errors.gender = true;
+            isValid = false;
+        }
+        if (!formData.birthdate) {
+            errors.birthdate = true;
+            isValid = false;
+        }
+       
+        if (!validatePhoneNumber(formData.phone)) {
+            handleSnackbarOpen('Ο αριθμός τηλεφώνου πρέπει να έχει 10 ψηφία.', 'error');
+            errors.phone = true;
+            isValid = false;
+        
+        }
+        if (!formData.residence) {
+            errors.residence = true;
+            isValid = false;
+        }
+        if (!formData.childrenCount) {
+            errors.childrenCount = true;
+            isValid = false;
+        }
+        if (!formData.pets) {
+            errors.pets = true;
+            isValid = false;
+        }
+        if (!formData.childrenUnder2) {
+            errors.childrenUnder2 = true;
+            isValid = false;
+        }
+        if (!formData.nannyChildrenCount) {
+            errors.nannyChildrenCount = true;
+            isValid = false;
+        }
         setFormErrors(errors);
-        return Object.keys(errors).length === 0;
+        //setFormErrors(errors);
+
+        // Επιστροφή του isValid
+        return isValid;
+
+
+
+
     };
 
 
+    
     const isOver18 = (birthdate) => {
         const today = new Date();
         const birthDate = new Date(birthdate);
@@ -88,27 +150,27 @@ export default function PersonalInfoParents() {
                 setFormErrors({ ...formErrors, birthdate: true });
                 return;
             }
-        
+            
             if (checkFormValidity()) {
                 try {
                     const preparedData = {
                         ...formData,
                         birthdate: formData.birthdate ? Timestamp.fromDate(new Date(formData.birthdate)) : null,
                     };
-        
+            
                     console.log("Prepared Data:", preparedData);
-        
-                    const docRef = await addDoc(collection(db, "users"), preparedData);
-                    handleSnackbarOpen('Το προφίλ δημιουργήθηκε με επιτυχία!', 'success');
+            
+                    const docRef = await addDoc(collection(db, "Parent"), preparedData);
+
                     console.log("Document written with ID: ", docRef.id);
-                    
-                    setTimeout(() => navigate('/ParentHomepage'), 2000);
-                    //navigate('/ParentHomepage');
+                    // Αποθήκευση του userId στο localStorage
+                    localStorage.setItem("userId", docRef.id);
+                    navigate('/PreviewParents');
                 } catch (e) {
                     console.error("Error adding document: ", e);
-                    handleSnackbarOpen('Προέκυψε σφάλμα κατά τη δημιουργία του προφίλ.', 'error');
                 }
             }
+            
         };
 
     useEffect(() => {
@@ -118,10 +180,10 @@ export default function PersonalInfoParents() {
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
-    const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+    const [snackbarSeverity, setSnackbarSeverity] = useState('error');
     
     
-    const handleSnackbarOpen = (message, severity = 'success') => {
+    const handleSnackbarOpen = (message, severity = 'error') => {
         setSnackbarMessage(message);
         setSnackbarSeverity(severity);
         setSnackbarOpen(true);
@@ -141,9 +203,9 @@ export default function PersonalInfoParents() {
             <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
                 <Row className="align-items-start justify-content-center g-5 m-0 w-100">
                     <Col md={6} xs={12} className="d-flex flex-column align-items-center justify-content-center text-center">
-                       <TextField 
+                      <TextField 
                             fullWidth 
-                            label="Όνομα" 
+                            label="Όνομα (ΜΕ ΚΕΦΑΛΑΙΑ)" 
                             type="text"
                             name="name" 
                             value={formData.name} 
@@ -160,8 +222,8 @@ export default function PersonalInfoParents() {
                                     value={formData.gender}
                                     onChange={handleInputChange}
                                 >
-                                    <MenuItem value="Άνδρας">Άνδρας</MenuItem>
-                                    <MenuItem value="Γυναίκα">Γυναίκα</MenuItem>
+                                    <MenuItem value="Αρσενικό">Αρσενικό</MenuItem>
+                                    <MenuItem value="Θυληκό">Θυληκό</MenuItem>
                                     <MenuItem value="Άλλο">Άλλο</MenuItem>
                                 </Select>
                                 {formErrors.gender && (
@@ -172,7 +234,7 @@ export default function PersonalInfoParents() {
                             </FormControl>
                         <TextField
                             fullWidth
-                            label="Τηλέφωνο Επικοινωνίας"
+                            label="Κινητό Τηλέφωνο"
                             type="text"
                             name="phone"
                             value={formData.phone || ''}
@@ -220,7 +282,7 @@ export default function PersonalInfoParents() {
                     <Col md={6} xs={12} className="d-flex flex-column align-items-center justify-content-center text-center">
                         <TextField 
                             fullWidth 
-                            label="Επώνυμο" 
+                            label="Επώνυμο (ΜΕ ΚΕΦΑΛΑΙΑ)" 
                             type="text"
                             name="surname" 
                             value={formData.surname}

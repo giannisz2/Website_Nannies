@@ -36,7 +36,7 @@ export default function NavBarNannies() {
   };
 
   const handleDeactivateAccount = () => {
-    handleSnackbarOpen('Ο λογαριασμός απενεργοποιήθηκε!', 'info');
+    handleSnackbarOpen('Ο λογαριασμός αποσυνδέθηκε!', 'info');
     setTimeout(() => {
       navigate('/'); 
     }, 2000); 
@@ -109,7 +109,7 @@ export default function NavBarNannies() {
                 </Dropdown.Toggle>
                 <Dropdown.Menu align="end">
                   <Dropdown.Item onClick={handleProfileEdit}>Επεξεργασία Προφίλ</Dropdown.Item>
-                  <Dropdown.Item onClick={handleDeactivateAccount}>Απενεργοποίηση</Dropdown.Item>
+                  <Dropdown.Item onClick={handleDeactivateAccount}>Αποσύνδεση</Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Nav>
