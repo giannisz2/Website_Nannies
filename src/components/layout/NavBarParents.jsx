@@ -84,7 +84,7 @@ export default function NavBarParents() {
               </Dropdown.Menu>
             </Dropdown>
            
-            <Button className="button mx-2" variant="primary">
+            <Button className="button mx-2" variant="primary" href='/MessageParents'>
               Ειδοποιήσεις
             </Button>
             <Dropdown className="d-inline mx-2">
