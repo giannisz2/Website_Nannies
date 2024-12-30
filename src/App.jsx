@@ -24,6 +24,8 @@ import Voucher from './pages/nannies/Voucher.jsx';
 import Voucher2 from './pages/nannies/Voucher2.jsx';
 import Message from './pages/nannies/Message.jsx';
 import SearchNannies from './pages/parents/SearchNannies.jsx';
+import NanniesProfile from './pages/parents/NanniesProfile.jsx';
+import NanniesProfileDone from './pages/parents/NanniesProfileDone.jsx';
 import PersonalInfoParentsDone from './pages/parents/PersonalInfoParentsDone.jsx';
 import PersonalInfoParents from './pages/parents/PersonalInfoParents.jsx';
 import ParentHomepage from './pages/parents/ParentHomepage.jsx';
@@ -71,6 +73,8 @@ function App() {
           <Route path="/Voucher" element={<Voucher/>}/>
           <Route path="/Voucher2" element={<Voucher2/>}/>
           <Route path='/SearchNannies' element={<SearchNannies/>}/>
+          <Route path='/NanniesProfile' element={<NanniesProfile/>}/>
+          <Route path='/NanniesProfileDone' element={<NanniesProfileDone/>}/>
           <Route path='/PersonalInfoParentsDone' element={<PersonalInfoParentsDone/>}/>
           <Route path='/PersonalInfoParents' element={<PersonalInfoParents/>}/>
           <Route path='/ParentHomepage' element={<ParentHomepage/>}/>
