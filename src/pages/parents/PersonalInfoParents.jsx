@@ -50,13 +50,18 @@ export default function PersonalInfo() {
         let isValid = true;
     
         // Έλεγχος για όλα τα πεδία που απαιτούνται
-        ['gender', 'phone', 'residence','childrenCount', 'pets', 'childrenUnder2', ' nannyChildrenCount'].forEach(field => {
+        ['gender', 'phone', 'residence', 'childrenCount', 'pets', 'childrenUnder2', 'nannyChildrenCount'].forEach(field => {
             if (typeof formData[field] === 'string' ? !formData[field]?.trim() : !formData[field]) {
                 errors[field] = true;
                 isValid = false;
             }
-            
         });
+    
+        // Ειδικός έλεγχος για την ημερομηνία γέννησης
+        if (!formData.birthdate || !dayjs(formData.birthdate, 'DD/MM/YYYY', true).isValid()) {
+            errors.birthdate = true;
+            isValid = false;
+        }
     
         setFormErrors(errors);
         if (!validatePhoneNumber(formData.phone)) {
@@ -66,6 +71,7 @@ export default function PersonalInfo() {
     
         return isValid;
     };
+    
     
     useEffect(() => {
         const fetchData = async () => {
@@ -291,9 +297,16 @@ export default function PersonalInfo() {
                                 fullWidth
                                 label="Ημερομηνία Γέννησης"
                                 value={formData.birthdate || ''}
-                                InputProps={{ readOnly: true }}
+                                onChange={(e) => setFormData({ ...formData, birthdate: e.target.value })}
+                                InputProps={{ readOnly: false }}
                                 className="my-3"
+                                helperText={formErrors.birthdate && (
+                                    <span style={{ color: 'red', fontSize: '12px' }}>
+                                        Παρακαλώ εισάγετε μια έγκυρη ημερομηνία
+                                    </span>
+                                )}
                             />
+
                             
                             <TextField
                                 fullWidth
