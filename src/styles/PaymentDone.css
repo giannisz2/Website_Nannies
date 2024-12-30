@@ -1,0 +1,29 @@
+.this_text_payment {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: large;
+    font-weight: bold;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.tic{
+    margin-top: -50px;
+    margin-left: 300px;
+}
+
+.button-apply-pc {
+    padding: 15px 50px; 
+    border: none; 
+    border-radius: 40px;
+    font-size: 18px; 
+    color: white; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    background-color: black;
+    margin-top: 20px; 
+}
+
+.button-apply-pc:hover {
+    background-color: #333; 
+}

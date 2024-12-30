@@ -3,10 +3,16 @@ import Footer from '../../components/layout/Footer';
 import TextField from '@mui/material/TextField';
 import NavBarParents from '../../components/layout/NavBarParents';
 import '../../styles/NewPayment.css';
+import { useNavigate } from 'react-router-dom';
 import HelpButton from '../../components/buttons/HelpButton'
 
 export default function NewPayment() {
 
+    const navigate = useNavigate();
+
+    const completePayment = () => {
+        navigate('/PaymentDone');
+    };
      const [isChecked, setIsChecked] = useState(false);
         const handleCheckboxChange = () => {
             setIsChecked(!isChecked);  
@@ -36,7 +42,7 @@ export default function NewPayment() {
                         helperText={formErrors.name && "Πρέπει να συμπληρωθεί για να προχωρήσετε παρακάτω"}
                     />
             </div>
-                <button type="submit" className='pay'>Πληρωμή</button>
+                <button onClick={completePayment} type="submit" className='pay'>Πληρωμή</button>
                 <Footer />
             </div>);
 }
