@@ -5,6 +5,7 @@ import { Row ,Col } from 'react-bootstrap'; // Εισαγωγή του Row
 import '../../styles/Voucher.css';
 import TextField from '@mui/material/TextField';
 import QR__CODE from '../../assets/images/qr_code.jpg';
+import HelpButton from '../../components/buttons/HelpButton'
 
 export default function Voucher() {
     const [isChecked, setIsChecked] = useState(false);
@@ -16,6 +17,7 @@ export default function Voucher() {
         <>
             <div className="nanny-voucher">
                 <NavBarNannies />
+                <HelpButton/>
                 <p className="this_text">Voucher</p>
                 <p className="this_text-voucher" style={{ display: 'inline-block', marginRight: '10px' }}>Το ποσό που σου αντιστοιχεί είναι: </p>
                 <p className="text-voucher2" style={{ display: 'inline-block' }}>800 € </p>

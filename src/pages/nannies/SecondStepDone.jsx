@@ -6,7 +6,7 @@ import { Select, MenuItem, TextField, InputLabel, FormControl } from '@mui/mater
 import '../../styles/SecondStep.css';
 import { db } from '../../providers/firebaseConfig'; 
 import { collection, addDoc } from "firebase/firestore";
-import HoursPicker from "../Hourspicker.jsx"
+import HoursPicker from "../../components/layout/Hourspicker.jsx"
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from "react";
 

@@ -2,14 +2,16 @@ import React from 'react';
 import NavBarNannies from '../../components/layout/NavbarNannies';
 import Footer from '../../components/layout/Footer';
 import '../../styles/Voucher.css';
-import BreadcrumpbVoucher from '../../components/layout/BreadcrumbVoucher';
+import BreadcrumpbVoucher from '../../components/layout/BreadcrumbSearchNannies';
 import { Row, Col } from 'react-bootstrap';
+import HelpButton from '../../components/buttons/HelpButton'
 
 export default function Voucher2() {
     return (
         <>
             <div className="nanny-voucher2">
                 <NavBarNannies />
+                <HelpButton/>
                 <div Breadcrumb="breadCrumb">
                     <BreadcrumpbVoucher label="Εισαγωγή ποσού" />  
                 </div>      

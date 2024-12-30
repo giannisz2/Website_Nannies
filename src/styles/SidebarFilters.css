@@ -4,24 +4,27 @@
     padding: 16px;
     max-width: 250px;
     color: #6d4a9d;
+    background-color: #f9f9f9;
 }
 
 .filters-title {
     font-size: 1.2rem;
     font-weight: bold;
     margin-bottom: 16px;
-    
+    color: #6d4a9d;
 }
 
 .filter-item {
     background-color: #ffffff;
+    border: 1px solid #d5c3e6;
     border-radius: 4px;
-    padding: 8px 12px; 
-    margin-bottom: 12px; 
+    padding: 8px 12px;
+    margin-bottom: 12px;
     color: #6d4a9d;
     text-align: left;
     cursor: pointer;
-    font-size: 0.9rem; 
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
 }
 
 .filter-item:last-child {
@@ -31,13 +34,41 @@
 .filter-item:hover {
     background-color: #e8dff4;
     border-color: #c6b4db;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .filters-container:hover {
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.input{
+.input {
     background-color: white;
     color: black;
+    border: 1px solid #d5c3e6;
+    border-radius: 4px;
+    padding: 8px 12px;
+    width: 100%;
+    font-size: 0.9rem;
+    transition: border-color 0.3s ease;
+}
+
+.input:focus {
+    border-color: #6d4a9d;
+    outline: none;
+}
+
+.select {
+    background-color: white;
+    color: black;
+    border: 1px solid #d5c3e6;
+    border-radius: 4px;
+    padding: 8px 12px;
+    width: 100%;
+    font-size: 0.9rem;
+    transition: border-color 0.3s ease;
+}
+
+.select:focus {
+    border-color: #6d4a9d;
+    outline: none;
 }

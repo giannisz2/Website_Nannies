@@ -10,11 +10,12 @@
 
 .this_text {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-size: large;
+    font-size: x-large;
     font-weight: bold;
     margin-top: 90px;
     margin-left: 100px;
 }
+
 
 .content {
     display: flex;

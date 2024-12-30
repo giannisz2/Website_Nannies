@@ -79,12 +79,12 @@ export default function NavBarParents() {
                 Ιστορικό
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item href="#/Πληρωμών">Πληρωμών</Dropdown.Item>
-                <Dropdown.Item onClick={goToTransactionHistory}>Συμφωνητικών</Dropdown.Item>
+                <Dropdown.Item href="/TransactionHistoryParents">Πληρωμών</Dropdown.Item>
+                <Dropdown.Item onClick={goToTransactionHistory} href='/AgreementHistoryParents'>Συμφωνητικών</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
            
-            <Button className="button mx-2" variant="primary">
+            <Button className="button mx-2" variant="primary" href='/MessageParents'>
               Ειδοποιήσεις
             </Button>
             <Dropdown className="d-inline mx-2">
@@ -92,12 +92,12 @@ export default function NavBarParents() {
                 Συμφωνητικό
               </Dropdown.Toggle>
               <Dropdown.Menu>
-                <Dropdown.Item>Λήξη Συνεργασίας</Dropdown.Item>
-                <Dropdown.Item>Νέο συμφωνητικό</Dropdown.Item>
-                <Dropdown.Item>Ανανέωση</Dropdown.Item>
+                <Dropdown.Item href='./AgreementExpiration'>Λήξη Συνεργασίας</Dropdown.Item>
+                <Dropdown.Item href="/ParentsAgreement">Νέο συμφωνητικό</Dropdown.Item>
+                <Dropdown.Item href='./AgreementRenewal'>Ανανέωση</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-            <Button className="button mx-2" variant="primary">
+            <Button className="button mx-2" variant="primary" href='./NewPayment'>
               Πληρωμή
             </Button>
           </Nav>
