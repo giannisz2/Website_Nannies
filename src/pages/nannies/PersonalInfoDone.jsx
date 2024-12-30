@@ -305,7 +305,7 @@ export default function PersonalInfoDone() {
                                 disabled
                                 sx={{ width: '100%', marginTop: '16px' }}
                             />
-                        <button className="button-apply" onClick={handleFinalSubmit}>
+                        <button className="button-pid" onClick={handleFinalSubmit}>
                             Οριστική Υποβολή
                         </button>
                     </Grid>

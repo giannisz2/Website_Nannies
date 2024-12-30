@@ -31,28 +31,25 @@ h2 {
     color: #444;
 }
 
-.button-temp-pu {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 16px;
-    border-radius: 5px;
+.buttonspreviewpage{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; 
 }
 
-.button-temp-pu:hover {
-    background-color: #0056b3;
+.button-applypreviewpage{
+    padding: 15px 50px; 
+    border: none; 
+    border-radius: 40px;
+    font-size: 18px; 
+    color: white; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    background-color: black;
+    margin-top: 20px; 
 }
 
-.button-apply-pu {
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 16px;
-    border-radius: 5px;
-}
-
-.button-apply-pu:hover {
-    background-color: #218838;
+.button-applypreviewpage:hover {
+    background-color: #333; 
 }

@@ -37,6 +37,7 @@ import Stars from './pages/parents/stars.jsx'
 import MessageParents from './pages/parents/MessageParents.jsx'
 import ParentsAgreement from './pages/parents/ParentsAgreement.jsx';
 import NewPayment from './pages/parents/NewPayment.jsx';
+import PaymentDone from './pages/parents/PaymentDone.jsx';
 import AgreementExpiration from './pages/parents/AgreementExpiration.jsx';
 import AgreementRenewal from './pages/parents/AgreementRenewal.jsx';
 import PreviewAgreement from './pages/parents/PreviewAgreement.jsx'
@@ -82,6 +83,7 @@ function App() {
           <Route path='/RatesParents' element={<RatesParents/>}/>
           <Route path='/MessageParents' element={<MessageParents/>}/>
           <Route path='/NewPayment' element={<NewPayment/>}/>
+          <Route path='/PaymentDone' element={<PaymentDone/>}/>
           <Route path='/PreviewParents' element={<PreviewParents/>}/>
           <Route path='/SignUp' element={<SignUp/>}/>
           <Route path='/ParentsAgreement' element={<ParentsAgreement/>}/>

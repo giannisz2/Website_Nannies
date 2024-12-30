@@ -12,7 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-
+import '../../styles/PersonalInfo.css';
 
 export default function PersonalInfo() {
     const [formData, setFormData] = useState({
@@ -452,8 +452,8 @@ export default function PersonalInfo() {
                                 onChange={(time) => handleTimeChange('availableTimeTo', time)}
                             />
                         </Grid>
-                        <Grid item xs={12}>
-                            <button type="button" className="button-apply" onClick={handleSave}>
+                        <Grid item xs={12} className='button-container-pi'>
+                            <button type="button" className="button-apply-pi" onClick={handleSave}>
                                 Υποβολή
                             </button>
                         </Grid>

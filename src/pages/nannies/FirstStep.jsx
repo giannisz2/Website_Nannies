@@ -284,9 +284,9 @@ export default function FirstStep() {
                             * Όλα τα πεδία είναι υποχρεωτικά
                         </p>
                         <p className="paragraph">Τα υπόλοιπα στοιχεία θα συμπληρώνονται αυτόματα από το Taxisnet</p>
-                        <div className='buttons-pu'>
-                            <button type="button" className="button-temp-pu">Προσωρινή Αποθήκευση</button>
-                            <button type="submit" className="button-apply-pu">Υποβολή</button>
+                        <div className='buttons-pu1'>
+                            <button type="button" className="button-temp-pu1">Προσωρινή Αποθήκευση</button>
+                            <button type="submit" className="button-apply-pu1">Υποβολή</button>
                         </div>
                         <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
                         <Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%' }}>
