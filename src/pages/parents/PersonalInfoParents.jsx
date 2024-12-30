@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Logo from '../../components/buttons/Logo.jsx';
-
+import '../../styles/PersonalInfoParentsDone.css'
 import HelpButton from '../../components/buttons/HelpButton.jsx';
 import { Box, Grid, Typography, Divider, IconButton  } from '@mui/material';
 import { Select, MenuItem, TextField, InputLabel, FormControl } from '@mui/material';
@@ -83,6 +83,11 @@ export default function PersonalInfo() {
 
                 if (userDoc.exists()) {
                     const data = userDoc.data();
+
+                    if (data.birthdate) {
+                        data.birthdate = dayjs(data.birthdate.toDate()).format('DD/MM/YYYY');
+                    }
+
                     setFormData(data);
                     setInitialFormData(data);
                 } else {
@@ -283,10 +288,9 @@ export default function PersonalInfo() {
                                 InputProps={{ readOnly: true }}
                                 className="my-3"
                             />
-                            <TextField
+                           <TextField
                                 fullWidth
                                 label="Ημερομηνία Γέννησης"
-                                type="text"
                                 value={formData.birthdate || ''}
                                 InputProps={{ readOnly: true }}
                                 className="my-3"
@@ -344,11 +348,12 @@ export default function PersonalInfo() {
                                                     
                         </Grid>
                         
-                        <Grid item xs={12}>
-                            <button type="button" className="button-apply" onClick={handleSave}>
-                                Υποβολή
-                            </button>
-                        </Grid>
+                        <Grid item xs={12} sx={{ display: 'flex', justifyContent: 'center', marginTop: '20px' }}>
+                        <button type="button" className="button-apply" onClick={handleSave}>
+                            Υποβολή
+                        </button>
+                    </Grid>
+
                     </Grid>
                 </Box>
                 <Snackbar
