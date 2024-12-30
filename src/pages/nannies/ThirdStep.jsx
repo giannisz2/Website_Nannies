@@ -243,8 +243,8 @@ export default function ThirdStep() {
                             * Όλα τα πεδία είναι υποχρεωτικά
                         </p>
 
-                        <div className="buttons">
-                            <button type="button" className="button-apply" onClick={handleSubmit}>
+                        <div className="buttons3">
+                            <button type="button" className="button-apply3" onClick={handleSubmit}>
                                 Υποβολή
                             </button>
                         </div>

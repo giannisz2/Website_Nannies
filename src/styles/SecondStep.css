@@ -62,12 +62,6 @@
     color: black;
 }
 
-
-.buttons{
-    display: flex;
-    justify-content: center;
-}
-
 .paragraph{
     text-align: center;
     font-size: large;
@@ -79,12 +73,37 @@
     margin-right: 100px;
 }
 
-.button-apply{
-    background-color: black;
+.buttons-pu1 {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    gap: 200px; 
+    margin-top: 30px; 
 }
 
-.button-temp{
-    background-color: orange;
+.button-temp-pu1,
+.button-apply-pu1 {
+    padding: 15px 50px; 
+    border: none; 
+    border-radius: 40px; 
+    font-size: 18px; 
+    color: white; 
+    cursor: pointer; 
+    transition: all 0.3s ease;
 }
 
+.button-temp-pu1 {
+    background-color: orange; 
+}
 
+.button-temp-pu1:hover {
+    background-color: darkorange; 
+}
+
+.button-apply-pu1 {
+    background-color: black; 
+}
+
+.button-apply-pu1:hover {
+    background-color: #333; 
+}

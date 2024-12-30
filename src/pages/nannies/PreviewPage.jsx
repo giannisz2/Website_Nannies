@@ -11,6 +11,7 @@ import { useFormContext } from '../../context/FormContext.jsx';
 import { useNavigate } from 'react-router-dom';
 import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import "../../styles/PreviewPage.css"
 import dayjs from 'dayjs';
 
 
@@ -206,7 +207,7 @@ export default function PreviewPage() {
                                 disabled
                                 sx={{ width: '100%', marginTop: '16px' }}
                             />
-                         <button className="button-apply" onClick={handleFinalSubmit}>
+                         <button className="button-applypreviewpage" onClick={handleFinalSubmit}>
                             Οριστική Υποβολή
                         </button>
                     </Col>

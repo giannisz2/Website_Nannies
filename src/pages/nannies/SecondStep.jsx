@@ -298,9 +298,9 @@ const handleSubmit = async (event) => {
 
 
 
-                    <div className="buttons-pu">
-                        <button className="button-temp-pu">Προσωρινή Αποθήκευση</button>
-                        <button className="button-apply-pu" onClick={handleSubmit}>Υποβολή</button>
+                    <div className="buttons-pu1">
+                        <button className="button-temp-pu1">Προσωρινή Αποθήκευση</button>
+                        <button className="button-apply-pu1" onClick={handleSubmit}>Υποβολή</button>
                     </div>
                 </Row>
             </div>
