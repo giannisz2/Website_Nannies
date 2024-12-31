@@ -1,75 +1,270 @@
+import React, { useState, useEffect } from 'react';
 import Logo from '../../components/buttons/Logo.jsx';
-import Footer from '../../components/layout/Footer.jsx';
 import HelpButton from '../../components/buttons/HelpButton.jsx';
-import { Row, Col } from 'react-bootstrap';
-import { Select, MenuItem, TextField, InputLabel, FormControl } from '@mui/material';
-import '../../styles/PersonalInfoParentsDone.css'
-import Datepicker from '../../components/layout/Datepicker.jsx';
+import { Box, Grid, Typography, Divider, IconButton, Dialog, DialogTitle, DialogActions, Button } from '@mui/material';
+import { Snackbar, Alert } from '@mui/material';
+import { db } from '../../providers/firebaseConfig';
+import { doc, getDoc, updateDoc } from 'firebase/firestore';
+import { useNavigate } from 'react-router-dom';
+import CloseIcon from '@mui/icons-material/Close';
+import { TextField } from '@mui/material';
+import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
 
-export default function PersonalInfoParentsDone() {
+
+export default function PersonalInfoDone() {
+    const [formData, setFormData] = useState({
+            
+            name: '',
+            surname: '',
+            gender: '',
+            birthdate: null,
+            phone: '',
+            residence: '',
+            childrenCount: '',
+            pets: '',
+            childrenUnder2: '',
+            nannyChildrenCount: '',
+        });
+    
+
+    const [initialFormData, setInitialFormData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const navigate = useNavigate();
+    const [dialogOpen, setDialogOpen] = useState(false);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    
+
+
+    const handleFinalSubmit = async () => {
+        try {
+            const userId = localStorage.getItem('userId');
+            if (!userId) {
+                console.error('User ID is not available');
+                return;
+            }
+
+            const userRef = doc(db, 'Parent', userId);
+            await updateDoc(userRef, formData);
+            setSnackbarOpen(true);
+            setTimeout(() => {
+                navigate('/ParentHomepage');
+            }, 2000);
+        } catch (error) {
+            console.error('Error updating document: ', error);
+        }
+    };
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const userId = localStorage.getItem('userId');
+                if (!userId) {
+                    console.error('User ID is not available');
+                    setIsLoading(false);
+                    return;
+                }
+
+                const userRef = doc(db, 'Parent', userId);
+                const userDoc = await getDoc(userRef);
+
+                if (userDoc.exists()) {
+                    const data = userDoc.data();
+                    setFormData(data);
+                    setInitialFormData(data);
+                    
+                } else {
+                    console.error('No such document!');
+                }
+            } catch (error) {
+                console.error('Error fetching user data: ', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const handleClose = () => setDialogOpen(true);
+
+    const handleDialogClose = async (saveChanges) => {
+        setDialogOpen(false);
+    
+        if (!saveChanges) {
+            try {
+                // Επαναφορά δεδομένων από το localStorage
+                const initialData = JSON.parse(localStorage.getItem('initialFormData'));
+                if (initialData) {
+                    const userId = localStorage.getItem('userId');
+                    if (!userId) {
+                        console.error('User ID is not available');
+                        return;
+                    }
+    
+                    const userRef = doc(db, 'Parent', userId);
+                    await updateDoc(userRef, initialData); // Ενημέρωση της βάσης δεδομένων με τα αρχικά δεδομένα
+                }
+            } catch (error) {
+                console.error('Error restoring initial data: ', error);
+            }
+            navigate('/ParentHomepage'); // Έξοδος χωρίς αποθήκευση
+        } else {
+            handleFinalSubmit(); // Αποθήκευση και έξοδος
+        }
+    };
+    
+
+
+    if (isLoading) {
+        return <p>Φόρτωση...</p>;
+    }
+
     return (
-        <div className="profile-edit-nannies d-flex flex-column min-vh-100">
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <Box sx={{ padding: '20px', minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#f9f9f9' }}>
             <HelpButton />
             <Logo />
-
-            <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
-                <Row className="align-items-start justify-content-center g-5 m-0 w-100">
-                    <Col
-                        md={6}
-                        xs={12}
-                        className="d-flex flex-column align-items-center justify-content-center text-center"
-                    >
-                        <TextField fullWidth label="Όνομα" type="text" className="my-3" />
-                        <TextField fullWidth label="Φύλο" type="text" className="my-3" />
-                        <FormControl fullWidth className="my-3">
-                            <InputLabel>Αριθμός παιδιών</InputLabel>
-                            <Select defaultValue="">
-                                <MenuItem value="1">1</MenuItem>
-                                <MenuItem value="2">2</MenuItem>
-                                <MenuItem value="3">3</MenuItem>
-                                <MenuItem value="4+">4+</MenuItem>
-                            </Select>
-                        </FormControl>
+            <Box
+                sx={{
+                    backgroundColor: 'white',
+                    padding: '20px',
+                    borderRadius: '8px',
+                    boxShadow: '0px 2px 10px rgba(0, 0, 0,0.1)',
+                    maxWidth: '800px',
+                    margin: '0 auto',
+                    position: 'relative',
+                }}
+            >
+                <IconButton
+                    sx={{
+                        position: 'absolute',
+                        top: '10px',
+                        right: '10px',
+                    }}
+                    onClick={handleClose}
+                >
+                    <CloseIcon />
+                </IconButton>
+                <Typography variant="h4" align="center" sx={{ marginBottom: '20px' }}>
+                    Προεπισκόπηση Προφίλ
+                </Typography>
+                <Grid container spacing={2}>
+                    <Grid item xs={12} md={6}>
                         <TextField
                             fullWidth
-                            label="Μέχρι πόσα παιδιά μπορείτε να αναλάβετε ταυτόχρονα"
+                            label="Όνομα"
                             type="text"
+                            value={formData.name || ''}
+                            InputProps={{ readOnly: true }}
+                            className="my-3"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Φύλο"
+                            type="text"
+                            value={formData.gender || ''}
+                            InputProps={{ readOnly: true }}
+                            className="my-3"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Τηλέφωνο Επικοινωνίας"
+                            value={formData.phone || ''}
+                            InputProps={{ readOnly: true }}
+                            className="my-3"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Αριθμός Παιδιών"
+                            value={formData.childrenCount || ''}
+                            InputProps={{ readOnly: true }}
+                            className="my-3"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Πόσα παιδιά έχετε σε ηλικίες από 6 μηνών έως 2.5 ετών"
+                            value={formData.childrenUnder2 || ''}
+                            InputProps={{ readOnly: true }}
+                            className="my-3"
+                        />
+                       
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <TextField
+                            fullWidth
+                            label="Επώνυμο"
+                            type="text"
+                            value={formData.surname || ''}
+                            InputProps={{ readOnly: true }}
+                            className="my-3"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Ημερομηνία Γέννησης"
+                            type="text"
+                            value={formData.birthdate || ''}
+                            InputProps={{ readOnly: true }}
+                            className="my-3"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Τόπος Κατοικίας"
+                            value={formData.residence || ''}
+                            InputProps={{ readOnly: true }}
+                            className="my-3"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Έχετε κατοικίδια στο σπίτι"
+                            value={formData.pets || ''}
+                            InputProps={{ readOnly: true }}
+                            className="my-3"
+                        />
+                        <TextField
+                            fullWidth
+                            label="Έχετε κατοικίδια στο σπίτι"
+                            value={formData.pets || ''}
+                            InputProps={{ readOnly: true }}
                             className="my-3"
                         />
                         
-                    </Col>
-                    <Col
-                        md={6}
-                        xs={12}
-                        className="d-flex flex-column align-items-center justify-content-center text-center"
-                    >
-                        <FormControl fullWidth className="my-3">
-                            <InputLabel>Αριθμός παιδιών από 6 μηνών έως 2.5 ετών</InputLabel>
-                            <Select defaultValue="">
-                                <MenuItem value="1">1</MenuItem>
-                                <MenuItem value="2">2</MenuItem>
-                                <MenuItem value="3">3</MenuItem>
-                                <MenuItem value="4+">4+</MenuItem>
-                            </Select>
-                        </FormControl>
-                        <label>Ημερομηνία Γέννησης:</label>
-                        <Datepicker/>
-                        <TextField fullWidth label="Τοποθεσία" type="text" className="my-3" />
-                        <FormControl fullWidth className="my-3">
-                            <InputLabel>Πόσα παιδιά θα βρσίκονται εκείνη τη στιγμή στο σπίτι;</InputLabel>
-                            <Select defaultValue="">
-                                <MenuItem value="1">1</MenuItem>
-                                <MenuItem value="2">2</MenuItem>
-                                <MenuItem value="3">3</MenuItem>
-                                <MenuItem value="4+">4+</MenuItem>
-                            </Select>
-                        </FormControl>
-                        
-                    </Col>
-                </Row>
-            </div>
-            <button className="button-apply">Οριστική Υποβολή</button>
-            <Footer />
-        </div>
+                        </Grid>
+                            <Grid item xs={12} className='button-container-pi'>
+                                <button type="button" className="button-apply-pi" onClick={handleFinalSubmit}>
+                                   Οριστική Υποβολή
+                                </button>
+                            </Grid>
+                        </Grid>
+                <Dialog
+                    open={dialogOpen}
+                    onClose={() => setDialogOpen(false)}
+                    aria-labelledby="confirm-exit-dialog"
+                >
+                    <DialogTitle id="confirm-exit-dialog">Είστε σίγουροι ότι θέλετε να αποχωρήσετε;</DialogTitle>
+                    <DialogActions>
+                        <Button onClick={() => handleDialogClose(false)} color="secondary">
+                            Έξοδος χωρίς αποθήκευση
+                        </Button>
+                        <Button onClick={() => handleDialogClose(true)} color="primary">
+                           Αποθήκευση και έξοδος
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+                <Snackbar
+                    open={snackbarOpen}
+                    autoHideDuration={3000}
+                    onClose={() => setSnackbarOpen(false)}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                >
+                    <Alert severity="success" onClose={() => setSnackbarOpen(false)}>
+                        Οι αλλαγές αποθηκεύτηκαν με επιτυχία!
+                    </Alert>
+                </Snackbar>
+            </Box>
+        </Box>
+        </LocalizationProvider>
     );
 }

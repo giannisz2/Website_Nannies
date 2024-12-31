@@ -89,7 +89,7 @@ export default function PersonalInfo() {
                 if (userDoc.exists()) {
                     const data = userDoc.data();
 
-                    if (data.birthdate) {
+                    if (data.birthdate && data.birthdate.toDate) {
                         data.birthdate = dayjs(data.birthdate.toDate()).format('DD/MM/YYYY');
                     }
 
@@ -297,14 +297,8 @@ export default function PersonalInfo() {
                                 fullWidth
                                 label="Ημερομηνία Γέννησης"
                                 value={formData.birthdate || ''}
-                                onChange={(e) => setFormData({ ...formData, birthdate: e.target.value })}
-                                InputProps={{ readOnly: false }}
+                                InputProps={{ readOnly: true }}
                                 className="my-3"
-                                helperText={formErrors.birthdate && (
-                                    <span style={{ color: 'red', fontSize: '12px' }}>
-                                        Παρακαλώ εισάγετε μια έγκυρη ημερομηνία
-                                    </span>
-                                )}
                             />
 
                             
