@@ -64,6 +64,15 @@ export default function SignUp() {
         }
 
         setFormData({ ...formData, [name]: value });
+
+        setFormData((prev) => {
+            const updatedFormData = { ...prev, [name]: value };
+            // Save updated data to localStorage
+            localStorage.setItem('temporaryFormData', JSON.stringify(updatedFormData));
+            return updatedFormData;
+        });
+
+
         setFormErrors({ ...formErrors, [name]: !value }); 
     };
 
@@ -78,14 +87,26 @@ export default function SignUp() {
     };
 
     const handleDateChange = (date) => {
-        setFormData((prev) => ({
+       /* setFormData((prev) => ({
             ...prev,
             birthdate: date,
-        }));
+        }));*/
+
+        setFormData((prev) => {
+            const updatedFormData = { ...prev, birthdate: date };
+            localStorage.setItem('temporaryFormData', JSON.stringify(updatedFormData));
+            return updatedFormData;
+        });
         setFormErrors((prev) => ({
             ...prev,
             birthdate: !date,
         }));
+    };
+
+
+    const handleTemporarySave = () => {
+        localStorage.setItem('temporaryFormData', JSON.stringify(formData));
+        handleSnackbarOpen('Τα στοιχεία αποθηκεύτηκαν προσωρινά!', 'success');
     };
 
 
@@ -155,11 +176,11 @@ export default function SignUp() {
         }
         
         setFormErrors(errors);
-        //setFormErrors(errors);
+        
 
 
 
-        // Επιστροφή του isValid
+        
         return isValid;
 
 
@@ -172,10 +193,10 @@ export default function SignUp() {
     const isOver18 = (birthdate) => {
         const today = new Date();
         const birthDate = new Date(birthdate);
-        let age = today.getFullYear() - birthDate.getFullYear();  // Χρήση let αντί για const
+        let age = today.getFullYear() - birthDate.getFullYear();  
         const m = today.getMonth() - birthDate.getMonth();
         if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;  // Εδώ είναι εντάξει να μειώσουμε το age επειδή τώρα είναι let
+            age--;  
         }
         return age >= 18;
     };
@@ -204,7 +225,7 @@ export default function SignUp() {
                     const docRef = await addDoc(collection(db, "Parent"), preparedData);
 
                     console.log("Document written with ID: ", docRef.id);
-                    // Αποθήκευση του userId στο localStorage
+                    
                     localStorage.setItem("userId", docRef.id);
                     navigate('/PreviewParents');
                 } catch (e) {
@@ -214,10 +235,13 @@ export default function SignUp() {
             
         };
 
-    useEffect(() => {
-        // Αν θέλεις να κάνεις κάποια fetch δεδομένων, μπορείς να το χρησιμοποιήσεις εδώ.
-    }, []);
-
+        useEffect(() => {
+            const savedData = localStorage.getItem('temporaryFormData');
+            if (savedData) {
+                setFormData(JSON.parse(savedData));
+            }
+        }, []);
+    
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -336,7 +360,7 @@ export default function SignUp() {
                         <TextField fullWidth label="Ημερομηνία γέννησης" type="date" name="birthdate" value={formData.birthdate || ''}
                                 onChange={(e) => handleDateChange(e.target.value)} className="my-3"
                                 InputLabelProps={{
-                                    shrink: true, // Κάνει την ετικέτα να εμφανίζεται πάνω από το πεδίο
+                                    shrink: true, 
                                 }}
                                 helperText={formErrors.birthdate ? (
                                     <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Ημερομηνία γέννησης είναι υποχρεωτικό</span>
@@ -392,7 +416,7 @@ export default function SignUp() {
                 </Row>
             </div>
             <div className='buttons'>
-                            <button className="button-temp">Προσωρινή Αποθήκευση</button>
+                            <button className="button-temp" onClick={handleTemporarySave} >Προσωρινή Αποθήκευση</button>
                             <button className="button-apply"onClick={handleSubmit}>Υποβολή</button>
             </div>
             <Snackbar
