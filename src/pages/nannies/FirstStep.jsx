@@ -146,7 +146,10 @@ export default function FirstStep() {
     const handleFileUploadChange = (event) => {
         const file = event.target.files[0]; 
         if (file) {
-            setFormData({ ...formData, recommendationLetters: file.name }); 
+            setFormData((prev) => ({
+                ...prev,
+                recommendationLetters: file.name, // Αποθηκεύει μόνο το όνομα του αρχείου
+            }));
         }
     };
     
@@ -291,6 +294,9 @@ export default function FirstStep() {
                                 className="form-control"
                                 style={{ marginTop: '8px' }}
                             />
+                            {formData.recommendationLetters && (
+                                <p>{`Αποθηκευμένο αρχείο: ${formData.recommendationLetters}`}</p>
+                            )}
                             {formErrors.recommendationLetters && (
                                 <span style={{ color: 'red', fontSize: '12px' }}>
                                 Το πεδίο Συστατικές επιστολές είναι υποχρεωτικό
@@ -307,14 +313,14 @@ export default function FirstStep() {
                             <button type="submit" className="button-apply-pu1">Υποβολή</button>
                         </div>
                         <Snackbar open={snackbarOpen} 
-                        autoHideDuration={6000} 
-                        onClose={handleSnackbarClose}
-                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                        >
-                        <Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%' }}>
-                            {snackbarMessage}
-                        </Alert>
-                    </Snackbar>
+                            autoHideDuration={6000} 
+                            onClose={handleSnackbarClose}
+                            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                            >
+                            <Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%' }}>
+                                {snackbarMessage}
+                            </Alert>
+                        </Snackbar>
 
                     </Row>
                 </form>
