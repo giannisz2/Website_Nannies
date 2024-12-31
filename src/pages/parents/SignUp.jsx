@@ -275,7 +275,7 @@ export default function SignUp() {
                             </FormControl>
                         <TextField
                             fullWidth
-                            label="Κινητό Τηλέφωνο"
+                            label="Τηλέφωνο Επικοινωνίας"
                             type="text"
                             name="phone"
                             value={formData.phone || ''}
