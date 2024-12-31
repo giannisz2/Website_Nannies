@@ -9,7 +9,7 @@ import { db } from '../../providers/firebaseConfig';
 import { collection, addDoc } from "firebase/firestore";
 import { useFormContext } from '../../context/FormContext.jsx';
 import { Timestamp } from "firebase/firestore";
-
+import { Autocomplete } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import React, { useState } from "react";
 
@@ -18,6 +18,67 @@ import React, { useState } from "react";
 
 
 export default function SecondStep() {
+
+    const citiesAndTowns = [
+        { region: "ΑΤΤΙΚΗ", name: "ΑΘΗΝΑ" },
+        { region: "ΑΤΤΙΚΗ", name: "ΠΕΙΡΑΙΑΣ" },
+        { region: "ΑΤΤΙΚΗ", name: "ΜΑΡΟΥΣΙ" },
+        { region: "ΑΤΤΙΚΗ", name: "ΚΗΦΙΣΙΑ" },
+        { region: "ΑΤΤΙΚΗ", name: "ΓΛΥΦΑΔΑ" },
+        { region: "ΑΤΤΙΚΗ", name: "ΒΟΥΛΑ" },
+        { region: "ΑΤΤΙΚΗ", name: "ΒΟΥΛΙΑΓΜΕΝΗ" },
+        
+        { region: "ΘΕΣΣΑΛΟΝΙΚΗ", name: "ΘΕΣΣΑΛΟΝΙΚΗ" },
+        { region: "ΘΕΣΣΑΛΟΝΙΚΗ", name: "ΚΑΛΑΜΑΡΙΑ" },
+        { region: "ΘΕΣΣΑΛΟΝΙΚΗ", name: "ΠΥΛΑΙΑ" },
+        { region: "ΘΕΣΣΑΛΟΝΙΚΗ", name: "ΕΥΟΣΜΟΣ" },
+        { region: "ΘΕΣΣΑΛΟΝΙΚΗ", name: "ΣΤΑΥΡΟΥΠΟΛΗ" },
+        
+        { region: "ΠΕΛΟΠΟΝΝΗΣΟΣ", name: "ΠΑΤΡΑ" },
+        { region: "ΠΕΛΟΠΟΝΝΗΣΟΣ", name: "ΚΑΛΑΜΑΤΑ" },
+        { region: "ΠΕΛΟΠΟΝΝΗΣΟΣ", name: "ΣΠΑΡΤΗ" },
+        { region: "ΠΕΛΟΠΟΝΝΗΣΟΣ", name: "ΚΟΡΙΝΘΟΣ" },
+        { region: "ΠΕΛΟΠΟΝΝΗΣΟΣ", name: "ΤΡΙΠΟΛΗ" },
+        { region: "ΠΕΛΟΠΟΝΝΗΣΟΣ", name: "ΝΑΥΠΛΙΟ" },
+        { region: "ΠΕΛΟΠΟΝΝΗΣΟΣ", name: "ΑΡΓΟΣ" },
+        
+        { region: "ΚΡΗΤΗ", name: "ΗΡΑΚΛΕΙΟ" },
+        { region: "ΚΡΗΤΗ", name: "ΧΑΝΙΑ" },
+        { region: "ΚΡΗΤΗ", name: "ΡΕΘΥΜΝΟ" },
+        { region: "ΚΡΗΤΗ", name: "ΑΓΙΟΣ ΝΙΚΟΛΑΟΣ" },
+        
+        { region: "ΣΤΕΡΕΑ ΕΛΛΑΔΑ", name: "ΛΑΜΙΑ" },
+        { region: "ΣΤΕΡΕΑ ΕΛΛΑΔΑ", name: "ΧΑΛΚΙΔΑ" },
+        { region: "ΣΤΕΡΕΑ ΕΛΛΑΔΑ", name: "ΘΗΒΑ" },
+        { region: "ΣΤΕΡΕΑ ΕΛΛΑΔΑ", name: "ΛΙΒΑΔΕΙΑ" },
+        
+        { region: "ΜΑΚΕΔΟΝΙΑ", name: "ΚΑΒΑΛΑ" },
+        { region: "ΜΑΚΕΔΟΝΙΑ", name: "ΒΕΡΟΙΑ" },
+        { region: "ΜΑΚΕΔΟΝΙΑ", name: "ΣΕΡΡΕΣ" },
+        { region: "ΜΑΚΕΔΟΝΙΑ", name: "ΔΡΑΜΑ" },
+        { region: "ΜΑΚΕΔΟΝΙΑ", name: "ΚΟΖΑΝΗ" },
+        { region: "ΜΑΚΕΔΟΝΙΑ", name: "ΚΑΣΤΟΡΙΑ" },
+        
+        { region: "ΗΠΕΙΡΟΣ", name: "ΙΩΑΝΝΙΝΑ" },
+        { region: "ΗΠΕΙΡΟΣ", name: "ΑΡΤΑ" },
+        { region: "ΗΠΕΙΡΟΣ", name: "ΠΡΕΒΕΖΑ" },
+        { region: "ΗΠΕΙΡΟΣ", name: "ΗΓΟΥΜΕΝΙΤΣΑ" },
+        
+        { region: "ΘΕΣΣΑΛΙΑ", name: "ΛΑΡΙΣΑ" },
+        { region: "ΘΕΣΣΑΛΙΑ", name: "ΒΟΛΟΣ" },
+        { region: "ΘΕΣΣΑΛΙΑ", name: "ΚΑΡΔΙΤΣΑ" },
+        { region: "ΘΕΣΣΑΛΙΑ", name: "ΤΡΙΚΑΛΑ" },
+        
+        { region: "ΔΩΔΕΚΑΝΗΣΑ", name: "ΡΟΔΟΣ" },
+        { region: "ΔΩΔΕΚΑΝΗΣΑ", name: "ΚΩΣ" },
+        { region: "ΔΩΔΕΚΑΝΗΣΑ", name: "ΛΕΡΟΣ" },
+        { region: "ΔΩΔΕΚΑΝΗΣΑ", name: "ΚΑΛΥΜΝΟΣ" },
+        
+        { region: "ΕΠΤΑΝΗΣΑ", name: "ΚΕΡΚΥΡΑ" },
+        { region: "ΕΠΤΑΝΗΣΑ", name: "ΖΑΚΥΝΘΟΣ" },
+        { region: "ΕΠΤΑΝΗΣΑ", name: "ΛΕΥΚΑΔΑ" },
+        { region: "ΕΠΤΑΝΗΣΑ", name: "ΚΕΦΑΛΟΝΙΑ" },
+    ];
 
 
     const { formData, setFormData } = useFormContext();
@@ -181,18 +242,27 @@ const handleSubmit = async (event) => {
                                 </span>
                             )}
                     </FormControl>
-                    <TextField
-                        fullWidth
-                        label="Τοποθεσία"
-                        type="text"
-                        name="location"
-                        value={formData.location}
-                        onChange={handleInputChange}
-                        className="my-3"
-                        helperText={formErrors.location ? (
-                            <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Τοποθεσία είναι υποχρεωτικό</span>
-                        ) : null} // Εμφανίζει το μήνυμα μόνο αν υπάρχει σφάλμα
-                    />
+                    <Autocomplete
+                            fullWidth
+                            options={citiesAndTowns.map((city) => `${city.region}:${city.name}`)} // Combine region and name
+                            getOptionLabel={(option) => option} // The label to display in the dropdown
+                            renderInput={(params) => (
+                                <TextField
+                                    {...params}
+                                    label="Τόπος Κατοικίας"
+                                    className="my-3"
+                                    helperText={formErrors.residence ? (
+                                        <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Τόπος Κατοικίας είναι υποχρεωτικό</span>
+                                    ) : null}
+                                />
+                            )}
+                            value={formData.residence}
+                            onChange={(event, newValue) => {
+                                setFormData({ ...formData, residence: newValue || '' }); // Update formData with the selected value
+                                setFormErrors({ ...formErrors, residence: !newValue }); // Set error if empty
+                            }}
+                            filterSelectedOptions
+                        />
 
                     <Col>
                         <FormControl fullWidth className="my-3">
