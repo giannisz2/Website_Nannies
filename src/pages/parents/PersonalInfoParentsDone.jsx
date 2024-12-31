@@ -13,7 +13,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 
 
-export default function PersonalInfoDone() {
+export default function PersonalInfoParentsDone() {
     const [formData, setFormData] = useState({
             
             name: '',
