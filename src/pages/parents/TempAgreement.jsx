@@ -133,13 +133,13 @@ export default function TempAgreement() {
                     </Col>
                 </Row>
             </LocalizationProvider>
-            <div className='buttons'>
-                <button type="submit" className="button-temp" onClick={handleSubmit}>
-                    Προσωρινή αποθήκευση
-                </button>
-                <button type="submit" className="button-submit" onClick={handleSubmit}>
-                    Προεπισκόπηση
-                </button>
+            <div className='buttonsTemp'>
+            <button type="submit" className="button-temp-5" onClick={handleSubmit}>
+                Προσωρινή αποθήκευση
+            </button>
+            <button type="submit" className="button-submit-5" onClick={handleSubmit}>
+                Προεπισκόπηση
+            </button>
             </div>
             <Footer />
         </div>

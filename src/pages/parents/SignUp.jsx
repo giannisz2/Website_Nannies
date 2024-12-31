@@ -292,7 +292,6 @@ export default function PersonalInfoParents() {
                                 <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Επώνυμο είναι υποχρεωτικό</span>
                             ) : null} 
                         />
-                        <label>Ημερομηνία Γέννησης:</label>
                         <TextField fullWidth label="Ημερομηνία γέννησης" type="date" name="birthdate" value={formData.birthdate || ''}
                                 onChange={(e) => handleDateChange(e.target.value)} className="my-3"
                                 InputLabelProps={{
