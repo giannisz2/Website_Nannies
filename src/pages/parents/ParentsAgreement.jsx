@@ -4,12 +4,12 @@ import Footer from '../../components/layout/Footer';
 import { Row, Col } from 'react-bootstrap';
 import TextField from '@mui/material/TextField';
 import HelpButton from '../../components/buttons/HelpButton';
-import { Alert } from '@mui/material'; // Import the Alert component
+import { Alert } from '@mui/material';
 import '../../styles/Agreement.css';
 
 export default function ParentsAgreement() {
-    const [isChecked, setIsChecked] = useState(false); // Checkbox state
-    const [formErrors, setFormErrors] = useState({}); // Form error state
+    const [isChecked, setIsChecked] = useState(false);
+    const [formErrors, setFormErrors] = useState({});
 
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);  
@@ -18,13 +18,10 @@ export default function ParentsAgreement() {
     const handleSubmit = (e) => {
         e.preventDefault();
         if (!isChecked) {
-            // Show an error message if the checkbox is not checked
             setFormErrors({ checkbox: "Πρέπει να επιβεβαιώσετε ότι έχετε συμφωνήσει με το ωράριο!" });
         } else {
-            // If everything is okay, reset errors and proceed with form submission
             setFormErrors({});
             console.log('Agreement submitted');
-            // Here, you would normally submit the form data
         }
     };
 
@@ -108,7 +105,7 @@ export default function ParentsAgreement() {
                     </Row>
                 </div>
                 <div style={{ fontSize: '18px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '100px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '100px' , marginBottom: '50px'}}>
                         <span style={{ marginRight: '10px' }}>
                             Επιβεβαιώνω ότι έχουμε έρθει σε συμφωνία με τον/ην προαναφερθόντα στο ωράριο που έχει δηλωθεί
                         </span>
@@ -120,7 +117,6 @@ export default function ParentsAgreement() {
                     </div>
                 </div>
                 
-                {/* Render the error message if the checkbox is not checked */}
                 {formErrors.checkbox && (
                     <Alert className='alert' severity="error" style={{ marginTop: '10px' }}>
                         {formErrors.checkbox}
