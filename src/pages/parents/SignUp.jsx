@@ -14,7 +14,7 @@ import '../../styles/PersonalInfoParents.css';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
-export default function PersonalInfoParents() {
+export default function SignUp() {
     const [formData, setFormData] = useState({
         role: 'Parent',
         name: '',

@@ -155,8 +155,8 @@ export default function PersonalInfoPreview() {
                         />
                         <TextField
                             fullWidth
-                            label="Πόσα παιδιά θέλετε να αναλάβει η ντάντα"
-                            value={formData.nannyChildrenCount || ''}
+                            label="Έχετε κατοικίδια στο σπίτι"
+                            value={formData.pets || ''}
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
