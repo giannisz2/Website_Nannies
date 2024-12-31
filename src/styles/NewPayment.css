@@ -43,7 +43,7 @@
     display: flex;
     justify-content: center;
     gap: 10px;
-    font-size: medium;
+    font-size: small;
 }
 
 .checkbox{
@@ -57,4 +57,5 @@
     margin-top: 50px;
     border-radius: 50px;
     background-color: black;
+    color: white;
 }
