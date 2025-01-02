@@ -33,14 +33,14 @@
     display: flex;
     justify-content: center;
     width: 100%;
-    margin-top: 50px; /* Προσθέτει απόσταση από το πάνω μέρος */
+    margin-top: 50px;
 }
 
 
 .text-agreement1 {
     width: 80%; 
     font-size: 1rem;
-    margin-top: 20px; /* Προσθέτει κενό κάτω από το πρώτο TextField */
+    margin-top: 20px;
     justify-content: center;
 }
 
@@ -48,7 +48,7 @@
     width: 400px; 
     margin-right: 20px;
     font-size: 1rem;
-    margin-top: 20px; /* Προσθέτει κενό κάτω από κάθε TextField */
+    margin-top: 20px;
 }
 
 .time-container {
@@ -72,8 +72,11 @@
     background-color: black;
     justify-content: center;
     align-items: center;
-    margin:auto;
     width: 60%;
+    margin-top: 30px;
 }
 
 
+.alert {
+    margin-left: 650px;
+}
