@@ -280,8 +280,6 @@ const handleSubmit = async (event) => {
                         dateFormat="dd/MM/yyyy"
                     />
 
-
-
                     {formErrors.availability && <p className="error-text"><span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Διαθεσιμότητα είναι υποχρεωτικό </span></p>}
                    
                    
@@ -303,8 +301,8 @@ const handleSubmit = async (event) => {
                     </FormControl>
                     <Autocomplete
                         fullWidth
-                        options={citiesAndTowns.map((city) => `${city.region}:${city.name}`)} // Συνδυασμός περιοχής και ονόματος
-                        getOptionLabel={(option) => option || ""} // Εμφάνιση τιμής
+                        options={citiesAndTowns.map((city) => `${city.region}:${city.name}`)} 
+                        getOptionLabel={(option) => option || ""} 
                         renderInput={(params) => (
                             <TextField
                                 {...params}
@@ -332,11 +330,11 @@ const handleSubmit = async (event) => {
                                 onChange={handleInputChange}
                                 defaultValue=""
                             >
-                                <MenuItem value="1">0</MenuItem>
-                                <MenuItem value="2">1</MenuItem>
+                                <MenuItem value="0">0</MenuItem>
+                                <MenuItem value="1">1</MenuItem>
                                 <MenuItem value="2">2</MenuItem>
-                                <MenuItem value="2">3</MenuItem>
-                                <MenuItem value="Άλλο">4+</MenuItem>
+                                <MenuItem value="3">3</MenuItem>
+                                <MenuItem value="4+">4+</MenuItem>
                             </Select>
                             {formErrors.experienceYears && (
                                 <span style={{ color: 'red', fontSize: '12px' }}>
@@ -345,7 +343,7 @@ const handleSubmit = async (event) => {
                             )}
                         </FormControl>
                     </Col>
-                    <Col md={6}>
+                    <Col>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Μέχρι πόσα παιδια μπορείτε να αναλάβετε ταυτόχρονα;</InputLabel>
                             <Select name="maxChildren"
@@ -365,7 +363,7 @@ const handleSubmit = async (event) => {
                             )}
                         </FormControl>
                     </Col>
-                    <Col md={6}>
+                    <Col>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Είστε διατεθειμένος να εργαστείτε σε σπίτι με κατοικίδια ζώα;</InputLabel>
                             <Select name="pets"

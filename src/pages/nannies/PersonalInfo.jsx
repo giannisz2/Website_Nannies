@@ -182,9 +182,9 @@ export default function PersonalInfo() {
 
     const handleCloseWithoutSaving = () => {
         if (initialFormData) {
-            setFormData(initialFormData); // Επαναφορά της αρχικής κατάστασης
+            setFormData(initialFormData); 
         }
-        navigate('/NannyHomepage'); // Μετάβαση χωρίς αποθήκευση
+        navigate('/NannyHomepage'); 
     };
 
     return (

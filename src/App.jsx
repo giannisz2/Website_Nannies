@@ -24,6 +24,10 @@ import Voucher2 from './pages/nannies/Voucher2.jsx';
 import Message from './pages/nannies/Message.jsx';
 import SearchNannies from './pages/parents/SearchNannies.jsx';
 import NanniesProfile from './pages/parents/NanniesProfile.jsx';
+
+
+import NanniesProfileOthers from './pages/parents/NanniesProfileOthers.jsx';
+
 import NanniesProfileDone from './pages/parents/NanniesProfileDone.jsx';
 import PersonalInfoParentsDone from './pages/parents/PersonalInfoParentsDone.jsx';
 import PersonalInfoParents from './pages/parents/PersonalInfoParents.jsx';
@@ -91,6 +95,7 @@ function App() {
           <Route path='/PreviewAgreement' element={<PreviewAgreement/>}/>
           <Route path='/TempAgreement' element={<TempAgreement/>}/>
           <Route path='/SignInPopup' element={<SignInPopup/>}/>
+          <Route path='/NanniesProfileOthers' element={<NanniesProfileOthers/>}/>
         </Routes>
       </BrowserRouter>
     </>

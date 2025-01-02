@@ -44,3 +44,8 @@
     color: #555;
     font-size: 14px;
 }
+
+
+.profile-card {
+    pointer-events: auto;
+}
