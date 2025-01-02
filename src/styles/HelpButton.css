@@ -43,6 +43,10 @@
   border-radius: 5px;
 }
 
+.chat-text{
+  background-color: white;
+}
+
 .user-message {
   background-color: #e1f5fe;
   align-self: flex-end;
