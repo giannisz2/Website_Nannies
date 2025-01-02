@@ -56,6 +56,7 @@ const HelpButton = () => {
           </div>
           <div className="chat-input">
             <input
+              className="chat-text"
               type="text"
               placeholder="Γράψτε το μήνυμά σας..."
               value={message}

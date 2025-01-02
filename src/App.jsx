@@ -7,7 +7,6 @@ import HomePage from './pages/HomePage';
 import SelectionCriteria from './pages/nannies/SelectionCriteria';
 import AgreementHistory from './pages/nannies/AgreementHistory.jsx';
 import NannyHomepage from './pages/nannies/NannyHomepage';
-import ProfileEditNannies from './pages/nannies/ProfileEditNannies';
 import PreviewPage from './pages/nannies/PreviewPage.jsx';
 import PersonalInfo from './pages/nannies/PersonalInfo';
 import FirstStep from "./pages/nannies/FirstStep.jsx"
@@ -59,7 +58,6 @@ function App() {
           <Route path="/TransactionHistory" element={<TransactionHistory/>}/>
           <Route path="/NannyHomepage" element={<NannyHomepage/>}/>
           <Route path="/Message" element={<Message/>}/>
-          <Route path="/ProfileEditNannies" element={<ProfileEditNannies/>}/>   {/*tipota*/}
           <Route path="/PersonalInfo" element={<PersonalInfo/>}/>
           <Route path="/PersonalInfoDone" element={<PersonalInfoDone/>}/>
           <Route path="/FirstStep" element={<FirstStep/>}/>          
