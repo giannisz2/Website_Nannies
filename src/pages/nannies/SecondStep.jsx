@@ -21,6 +21,22 @@ import Alert from '@mui/material/Alert';
 
 export default function SecondStep() {
 
+    const initialFormData = {
+        name: "",
+        surname: "",
+        gender: "",
+        birthdate: "",
+        educationLevel: "",
+        experience: "",
+        recommendationLetters: "",
+        availability: "",
+        employmentTime: "",
+        location: "", 
+        bio: "",
+    };
+    
+
+
     const citiesAndTowns = [
         { region: "ΑΤΤΙΚΗ", name: "ΑΘΗΝΑ" },
         { region: "ΑΤΤΙΚΗ", name: "ΠΕΙΡΑΙΑΣ" },
@@ -85,20 +101,20 @@ export default function SecondStep() {
 
     const { formData, setFormData } = useFormContext();
     
-        const [formErrors, setFormErrors] = useState({});
+    const [formErrors, setFormErrors] = useState({});
 
-        const checkFormValidity = () => {
-            const errors = {};
-            let isValid = true;
-            ['availability', 'employmentTime', 'location', 'experienceYears', 'maxChildren', 'pets', 'smoker'].forEach(field => {
-                if (!formData.availability) {
-                    errors.availability = true;
-                    isValid = false;
-                }
-                
-            });
-            setFormErrors(errors);
-            return isValid;
+    const checkFormValidity = () => {
+        const errors = {};
+        let isValid = true;
+        ['availability', 'employmentTime', 'location', 'experienceYears', 'maxChildren', 'pets', 'smoker'].forEach(field => {
+            if (!formData.availability) {
+                errors.availability = true;
+                isValid = false;
+            }
+            
+        });
+        setFormErrors(errors);
+        return isValid;
         };
 
 
@@ -137,7 +153,7 @@ const handleSubmit = async (event) => {
             // Μετατροπή της ημερομηνίας σε Timestamp
             const preparedData = {
                 ...formData,
-                birthdate: formData.birthdate ? Timestamp.fromDate(new Date(formData.birthdate)) : null, // Μετατροπή ημερομηνίας
+                birthdate: formData.birthdate ? Timestamp.fromDate(new Date(formData.birthdate)) : null, 
                 availability: formData.availability ? Timestamp.fromDate(new Date(formData.availability)) : null,
                 bio: bio.trim(),
             };
@@ -202,14 +218,23 @@ const handleSubmit = async (event) => {
     useEffect(() => {
         const savedData = localStorage.getItem('formData');
         if (savedData) {
+            const parsedData = JSON.parse(savedData);
             setFormData((prevData) => ({
-                ...JSON.parse(savedData), // Τα δεδομένα από το FirstStep
-                ...prevData, // Τα δεδομένα από το SecondStep (αν υπάρχουν)
+                ...prevData,
+                ...parsedData,
             }));
+            if (parsedData.bio) setBio(parsedData.bio); 
+            if (parsedData.availability) {
+                setFormData((prevData) => ({
+                    ...prevData,
+                    availability: parsedData.availability,
+                }));
+            }
         }
     }, []);
     
     const handleTemporarySave = () => {
+       
         localStorage.setItem('formData', JSON.stringify(formData));
         handleSnackbarOpen('Τα δεδομένα αποθηκεύτηκαν προσωρινά.');
         setTimeout(() => {
@@ -277,26 +302,27 @@ const handleSubmit = async (event) => {
                             )}
                     </FormControl>
                     <Autocomplete
-                            fullWidth
-                            options={citiesAndTowns.map((city) => `${city.region}:${city.name}`)} // Combine region and name
-                            getOptionLabel={(option) => option} // The label to display in the dropdown
-                            renderInput={(params) => (
-                                <TextField
-                                    {...params}
-                                    label="Τόπος Κατοικίας"
-                                    className="my-3"
-                                    helperText={formErrors.residence ? (
-                                        <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Τόπος Κατοικίας είναι υποχρεωτικό</span>
-                                    ) : null}
-                                />
-                            )}
-                            value={formData.residence}
-                            onChange={(event, newValue) => {
-                                setFormData({ ...formData, residence: newValue || '' }); // Update formData with the selected value
-                                setFormErrors({ ...formErrors, residence: !newValue }); // Set error if empty
-                            }}
-                            filterSelectedOptions
-                        />
+                        fullWidth
+                        options={citiesAndTowns.map((city) => `${city.region}:${city.name}`)} // Συνδυασμός περιοχής και ονόματος
+                        getOptionLabel={(option) => option || ""} // Εμφάνιση τιμής
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                label="Τόπος Κατοικίας"
+                                className="my-3"
+                                helperText={formErrors.location ? (
+                                    <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Τόπος Κατοικίας είναι υποχρεωτικό</span>
+                                ) : null}
+                            />
+                        )}
+                        value={formData.location || ""} 
+                        onChange={(event, newValue) => {
+                            setFormData({ ...formData, location: newValue || "" }); 
+                            setFormErrors({ ...formErrors, location: !newValue }); 
+                        }}
+                        filterSelectedOptions
+                    />
+
 
                     <Col>
                         <FormControl fullWidth className="my-3">
