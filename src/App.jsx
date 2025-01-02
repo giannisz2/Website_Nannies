@@ -36,7 +36,7 @@ import TransactionHistoryParents from './pages/parents/TransactionHistoryParents
 import RatesParents from './pages/parents/RatesParents.jsx'
 import SignUp from './pages/parents/SignUp.jsx'
 import PreviewParents from './pages/parents/PreviewParents.jsx'
-import Stars from './pages/parents/stars.jsx'
+import Stars from './components/layout/stars.jsx'
 import MessageParents from './pages/parents/MessageParents.jsx'
 import ParentsAgreement from './pages/parents/ParentsAgreement.jsx';
 import NewPayment from './pages/parents/NewPayment.jsx';

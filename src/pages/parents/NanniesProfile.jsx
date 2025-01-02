@@ -5,13 +5,18 @@ import SidebarFilters from "../../components/layout/SidebarRO";
 import NavBarParents from "../../components/layout/NavBarParents";
 import Footer from "../../components/layout/Footer";
 import { Row, Col } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom'; 
+import { TextField } from '@mui/material';
 import Breadcrumb from "../../components/layout/BreadcrumbSearchNannies";
 import HelpButton from '../../components/buttons/HelpButton';
 import "../../styles/SearchNannies.css";
 import "../../styles/NanniesProfile.css";
-
+import '../../styles/PopUp.css'
 
 export default function NanniesProfile() {
+    const breadcrumbLinks = [
+        { label: 'Αναζήτηση Νταντάδων', path: '/SearchNannies' },
+      ];
     const handleDownload = () => {
         const fileUrl = 'path/to/your/recommendation-letter.pdf';
         const link = document.createElement('a');
@@ -20,11 +25,37 @@ export default function NanniesProfile() {
         link.click(); 
     };
 
+    
+
+    const [show, setShow] = useState(false);
+    const togglePopUp = () => setShow(!show);
+
     const [isChecked, setIsChecked] = useState(false);
     const handleCheckboxChange = () => {
         setIsChecked(!isChecked);  
     };
-    
+
+    const [successMessage, setSuccessMessage] = useState(false);
+
+    const handleSendMessage = () => {
+        setSuccessMessage(true);
+        setShow(false);
+        setTimeout(() => {
+            setSuccessMessage(false);
+        }, 3000);
+    };
+
+
+    const navigate = useNavigate(); 
+
+    const handleRateClick = () => {
+        navigate('/RatesParents'); 
+    };    
+
+    const handleBooking = () => {
+        navigate('/NanniesProfileDone'); 
+    };  
+
     const [formErrors, setFormErrors] = useState({});
     
     const [nannies] = useState([
@@ -60,16 +91,22 @@ export default function NanniesProfile() {
                     }}
                     disabled={true}
                 />
+                {successMessage && (
+                <div className="success-message">
+                    Το μήνυμα στάλθηκε με επιτυχία!
+                </div>
+                )}
+
                 <Row>
-                    <Col md={6}>
+                    <Col md={7}>
                     <div className="profil-list">
                         <div className="breadCrumb">
-                            <Breadcrumb label={nanny.name}/>  
+                            <Breadcrumb links={breadcrumbLinks} label={nanny.name}/>  
                         </div>                          
                         <div className="profil-card">
                             <div className="profil-content">
                                 <div className="profil-image">
-                                    <img src="/path/to/placeholder.png" alt="Nanny" />
+                                    <img src="/path/to/placeholder.png" alt={nanny.name} />
                                 </div>
                                 <div className="profil-info">
                                     <h2>{nanny.name}</h2>
@@ -80,10 +117,28 @@ export default function NanniesProfile() {
                                     <p>Τύπος απασχόλησης: {nanny.employmentTime}</p>
                                     <p>{nanny.description}</p>
                                     <div className="button-container">
-                                        <button className="talk-button">
+                                        <button className="talk-button" onClick={togglePopUp}>
                                             <span className="icon">💬</span> Μίλα με την νταντά
                                         </button>
-                                        <button className="rate-button">
+                                        {show && (
+                                            <div className="popup-overlay">
+                                            <div className="popup">
+                                                <button className="close-btn" onClick={togglePopUp}>
+                                                        &times;
+                                                </button>
+                                                <TextField fullWidth label="Το μήνυμά σου..." type="text" className="popup_text" />
+                                                <div className="popup-buttons">
+                                                <button className="cancel-btn" onClick={togglePopUp}>
+                                                    Ακύρωση
+                                                </button>
+                                                <button className="send-btn" onClick={handleSendMessage}>
+                                                    Αποστολή
+                                                </button>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        )}
+                                        <button className="rate-button" onClick={handleRateClick}>
                                             <span className="icon">⭐</span> Αξιολόγησε τη νταντά
                                         </button>
                                     </div>
@@ -107,7 +162,7 @@ export default function NanniesProfile() {
                             </button>
                         </div>
                 </Col>
-                <Col md={6}>
+                <Col md={5}>
                     <div className="center-container">
                         <div className="header-meet"> ΚΡΑΤΗΣΗ ΡΑΝΤΕΒΟΥ</div>
                         <Calendar />
@@ -132,7 +187,7 @@ export default function NanniesProfile() {
                                     onChange={handleCheckboxChange} 
                                 />
                         </div>
-                        <button type="button" className="button-apply-pc">Κλείσε ραντεβού</button>
+                        <button type="button" className="button-apply-pc" onClick={handleBooking}>Κλείσε ραντεβού</button>
                     </div>
                 </Col>
                 </Row>

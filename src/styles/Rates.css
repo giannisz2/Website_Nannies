@@ -5,7 +5,7 @@
 .nanny-rates {
     display: flex;
     flex-direction: column;
-    height: 100vh;  /* Διασφαλίζει ότι το στοιχείο θα κεντραριστεί κάθετα και οριζόντια στην οθόνη */
+    height: 100vh;  
 }
 
 .this_text {
@@ -41,6 +41,11 @@
     gap: 20px;
 }
 
+.container-textp {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
 .star-rating .filled {
     font-size: 2rem; 
@@ -65,7 +70,25 @@
     cursor: pointer;  
 }
 
-.button-apply{
-    color: white;
+.buttons-rates{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px; 
+}
+
+.button-apply-rates{
+    padding: 15px 50px; 
+    border: none; 
+    border-radius: 40px;
+    font-size: 18px; 
+    color: white; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
     background-color: black;
+    margin-top: 20px; 
+}
+
+.button-apply-rates:hover {
+    background-color: #333; 
 }

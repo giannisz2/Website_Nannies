@@ -1,16 +1,11 @@
 import React from 'react';
-import NavBarNannies from '../../components/layout/NavbarNannies';
-import Footer from '../../components/layout/Footer';
-import '../../styles/Rates.css';
+import '../../styles/stars.css';
 
-export default function Rates() {
+export default function Stars() {
     return (
         <>
-            <div className="nanny-rates">
-                <NavBarNannies />
-                <p className="text">Αξιολογήσεις</p>
-
-                <div className="star-rating">
+            <div className="nanny-rates1">
+                <div className="star-rating1">
                     {[...Array(5)].map((_, index) => (
                         <>
                             <input
@@ -30,8 +25,6 @@ export default function Rates() {
                         </>
                     ))}
                 </div>
-
-                <Footer />
             </div>
         </>
     );

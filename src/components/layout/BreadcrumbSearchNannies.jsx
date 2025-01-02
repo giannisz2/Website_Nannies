@@ -6,34 +6,39 @@ import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 import { useNavigate } from 'react-router-dom';
 import '../../styles/AgreementHistory.css';
 
-export default function BreadcrumbSearchNannies({ label = null }) {
-  const navigate = useNavigate(); 
+export default function BreadcrumbSearchNannies({ links = [], label = null }) {
+  const navigate = useNavigate();
 
+  // Δημιουργία breadcrumbs δυναμικά από το array `links`
   const breadcrumbs = [
-    <Link
-      underline="hover"
-      key="1"
-      color="inherit"
-      onClick={() => navigate('/SearchNannies')}  
-      style={{ cursor: 'pointer' }}
-    >
-      Αναζήτηση
-    </Link>,
-    <Typography key="2" sx={{ color: 'text.primary' }}>
-      {label}
-    </Typography>,
+    ...links.map((link, index) => (
+      <Link
+        underline="hover"
+        key={index}
+        color="inherit"
+        onClick={() => navigate(link.path)} // Χρήση του `path` για πλοήγηση
+        style={{ cursor: 'pointer' }}
+      >
+        {link.label}
+      </Link>
+    )),
+    label && (
+      <Typography key="current" sx={{ color: 'text.primary' }}>
+        {label}
+      </Typography>
+    ),
   ];
 
   return (
     <Breadcrumb
       id="bread"
-      separator={<NavigateNextIcon fontSize="small" />}  
+      separator={<NavigateNextIcon fontSize="small" />}
       aria-label="breadcrumb"
       sx={{
-        fontSize: '20px', 
+        fontSize: '16px', 
       }}
     >
-      {breadcrumbs}  
+      {breadcrumbs}
     </Breadcrumb>
   );
 }

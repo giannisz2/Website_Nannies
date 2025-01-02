@@ -6,6 +6,7 @@ import { Row, Col } from 'react-bootstrap';
 import TextField from "@mui/material/TextField";
 import '../../styles/AgreementHistory.css';
 import '../../styles/Message.css';
+import '../../styles/PopUp.css';
 
 export default function Message() {
   const [show, setShow] = useState(false);
@@ -94,7 +95,7 @@ export default function Message() {
             <p>
               <strong>Από:</strong> {messages[currentMessageIndex].sender}
             </p>
-            <TextField fullWidth label="Απάντηση" type="text" className="nanny_message_text" />
+            <TextField fullWidth label="Απάντηση" type="text" className="popup_text" />
           </div>
         </div>
       )}
