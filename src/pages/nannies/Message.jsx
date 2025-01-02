@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import NavBarParents from '../../components/layout/NavBarParents';
+import NavBar from '../../components/layout/NavBarNannies';
 import HelpButton from '../../components/buttons/HelpButton';
 import Footer from '../../components/layout/Footer';
 import { Row, Col } from 'react-bootstrap';
@@ -59,7 +59,7 @@ export default function Message() {
 
   return (
     <div id="Message">
-      <NavBarParents />
+      <NavBar />
       <HelpButton />
       <Row>
         <Col md={6}>
