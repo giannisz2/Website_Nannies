@@ -285,7 +285,7 @@ const handleSubmit = async (event) => {
                             )}
                         </FormControl>
                     </Col>
-                    <Col>
+                    <Col md={6}>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Μέχρι πόσα παιδια μπορείτε να αναλάβετε ταυτόχρονα;</InputLabel>
                             <Select name="maxChildren"
@@ -305,7 +305,7 @@ const handleSubmit = async (event) => {
                             )}
                         </FormControl>
                     </Col>
-                    <Col>
+                    <Col md={6}>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Είστε διατεθειμένος να εργαστείτε σε σπίτι με κατοικίδια ζώα;</InputLabel>
                             <Select name="pets"
