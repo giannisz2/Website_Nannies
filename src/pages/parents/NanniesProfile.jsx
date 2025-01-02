@@ -69,7 +69,7 @@ export default function NanniesProfile() {
                         <div className="profil-card">
                             <div className="profil-content">
                                 <div className="profil-image">
-                                    <img src={nanny.imageUrl} alt="Nanny" />
+                                    <img src="/path/to/placeholder.png" alt="Nanny" />
                                 </div>
                                 <div className="profil-info">
                                     <h2>{nanny.name}</h2>

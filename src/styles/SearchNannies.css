@@ -1,15 +1,28 @@
 .search-nannies-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start; 
     padding: 20px;
+    width: 100%; 
 }
 
 .profile-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 200px;
-    width: 100%;
+    display: flex;
+    margin-top: -120px;
+    margin-left: -50px; 
+    flex-direction: column;
 }
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Εξασφαλίζει ότι ο container καλύπτει όλο το ύψος της σελίδας */
+
+}
+
+.content {
+    flex: 1; /* Το main τμήμα αναλαμβάνει όλο το διαθέσιμο χώρο */
+}
+
 
 .no-results {
     text-align: center;
