@@ -22,6 +22,9 @@ export default function PreviewPage() {
 
     const handleFinalSubmit = () => {
         setSnackbarOpen(true);
+        localStorage.removeItem('formData');
+       
+
         setTimeout(() => {
             navigate('/NannyHomepage'); 
         }, 2000);
