@@ -272,7 +272,7 @@ export default function FirstStep() {
 
                         <TextField 
                             fullWidth 
-                            label="Εμπειρία" 
+                            label="Εμπειρία (Τι αφορούν οι σπουδές σας)" 
                             name="experience" 
                             value={formData.experience} 
                             onChange={handleInputChange} 

@@ -217,6 +217,14 @@ export default function PersonalInfoDone() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
+                         <TextField
+                            fullWidth
+                            label="Εμπειρία"
+                            type="text"
+                            value={formData.experience || ''}
+                            InputProps={{ readOnly: true }}
+                            className="my-3"
+                        />
                         <TextField
                             fullWidth
                             label="Λίγα Λόγια για Εσάς"

@@ -320,7 +320,18 @@ export default function PersonalInfo() {
                                 helperText={formErrors.phone && isSubmitted ? "Το πεδίο είναι υποχρεωτικό" : null}
                                 margin="normal"
                                 />
-
+                                <TextField 
+                                    fullWidth 
+                                    label="Εμπειρία (Τι αφορούν οι σπουδές σας)" 
+                                    name="experience" 
+                                    value={formData.experience} 
+                                    onChange={handleInputChange} 
+                                    className="my-3"
+                                    helperText={
+                                        formErrors.experience && 
+                                        <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Εμπειρία είναι υποχρεωτικό</span>
+                                    }
+                                />
                             <TextField
                                 fullWidth
                                 label="Λίγα λόγια για εσάς..."
