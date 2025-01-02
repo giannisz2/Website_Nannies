@@ -15,7 +15,7 @@ export default function SearchNannies() {
             age: 30,
             specialization: "Νηπιαγωγός",
             experience: "5 χρόνια",
-            description: "Αγαπώ τα παιδιά και επιθυμώ συνεργασία μαζί με οποια οικογένεια θέλει.",
+            description: "Αγαπώ τα παιδιά και επιθυμώ να συνεργαστώ μαζί με όποια οικογένεια θέλει.",
             studies: "Πρωτοβάθμια",
             employmentTime: "full-time"
         },
