@@ -18,7 +18,7 @@
     display: flex;
     flex-direction: column;
     color: #333;
-    flex: 2; /* Αντί για width */
+    flex: 2; 
 }
 
 .profile-image-placeholder {
@@ -30,7 +30,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    flex: 1; /* Αντί για width */
+    flex: 1; 
 }
 
 .info-box h3 {
