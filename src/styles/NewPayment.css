@@ -1,60 +1,102 @@
+.new-payment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: #f5f5f5;
+    min-height: 100vh;
+}
+
 .new-payment-text {
+    font-size: 24px;
     font-weight: bold;
-    margin-left: 100px;
-    margin-top: 70px;
-    font-size: x-large;
-}
-
-.name{
-    margin-top: 150px;
-    display: flex;
-    justify-content: center;
-}
-
-.name-text{
-    margin-top: 15px;
-    margin-right: 15px;
-    font-size: large;
-}
-
-.text-name{
-    width: 67.2%;
-}
-
-.email{
-    margin-top: 50px;
-    margin-left: 90px;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 150px;
-}
-
-.email-text{
-    margin-top: 15px;
-    margin-right: 15px;
-    font-size: large;
-}
-
-.text-email{
-    width: 71%;
-}
-
-.declaration{
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    font-size: medium;
-}
-
-.checkbox{
-    margin-top: 1.5px;
-}
-
-.pay{
-    width: 20%;
+    margin-bottom: 20px;
     text-align: center;
-    margin-left: 800px;
-    margin-top: 50px;
-    border-radius: 50px;
+    color: #333;
+    margin-top: 100px;
+}
+
+.name, .email, .declaration {
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 20px;
+}
+
+.name-text, .email-text, .span-text {
+    font-size: 16px;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.text-name, .text-email {
+    width: 100%;
+    max-width: 600px;
+}
+
+.checkbox {
+    margin-right: 10px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.pay {
     background-color: black;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    width: 200px;
+    margin-top: 20px;
+}
+
+.pay:hover {
+    background-color: hsl(0, 0%, 20%);
+}
+
+.declaration {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.declaration .span-text {
+    margin-bottom: 10px;
+    line-height: 1.5;
+}
+
+.MuiAlert-root {
+    width: 100%;
+    max-width: 600px;
+    font-size: 14px;
+}
+
+.MuiAlert-standardError {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.MuiAlert-message {
+    text-align: left;
+}
+
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+@media screen and (max-width: 768px) {
+    .new-payment {
+        padding: 10px;
+    }
+
+    .name, .email, .declaration {
+        width: 100%;
+    }
+
+    .pay {
+        width: 100%;
+    }
 }

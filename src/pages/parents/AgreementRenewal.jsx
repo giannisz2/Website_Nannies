@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NavBarParents from '../../components/layout/NavBarParents';
 import Footer from '../../components/layout/Footer';
 import HelpButton from '../../components/buttons/HelpButton';
 import { Row, Col } from 'react-bootstrap';
-import { TextField } from '@mui/material';
+import { TextField, Alert } from '@mui/material'; // Importing MUI's Alert component
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { useState } from 'react';
-
 import '../../styles/AgreementRenewal.css';
 
 export default function AgreementRenewal() {
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
+    const [isWorkingAtHome, setIsWorkingAtHome] = useState(false); // State for checkbox
+    const [showAlert, setShowAlert] = useState(false); // Alert visibility state
 
     const handleSubmit = () => {
-        console.log('Form submitted with times:', startTime, endTime);
+        // Check if the start time, end time, or checkbox is missing
+        if (!startTime || !endTime || !isWorkingAtHome) {
+            setShowAlert(true); // Show alert if any condition is not met
+        } else {
+            setShowAlert(false); // Hide alert if all conditions are met
+            console.log('Form submitted with times:', startTime, endTime);
+            // Additional submit logic can be added here
+        }
     };
 
     return (
@@ -23,6 +30,8 @@ export default function AgreementRenewal() {
             <NavBarParents />
             <p className='top-text'>Ανανέωση Συμφωνητικού</p>
             <HelpButton />
+
+
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Row>
                     <Col>
@@ -101,7 +110,12 @@ export default function AgreementRenewal() {
                         <p className="text">και εργάζεται στην κατοικία μου</p>
                     </Col>
                     <Col>
-                        <input type="checkbox" className="checkbox" aria-label="Εργάζεται στην κατοικία μου" />
+                        <input
+                            type="checkbox"
+                            className="checkbox"
+                            aria-label="Εργάζεται στην κατοικία μου"
+                            onChange={(e) => setIsWorkingAtHome(e.target.checked)} // Update checkbox state
+                        />
                     </Col>
                 </Row>
                 <Row>
@@ -120,18 +134,23 @@ export default function AgreementRenewal() {
                         <TimePicker
                             label="Ώρα Έναρξης"
                             value={startTime}
-                            onChange={(newValue) => setStartTime(newValue)}
+                            onChange={(newValue) => setStartTime(newValue)} // Update start time
                             renderInput={(params) => <TextField {...params} />}
                         />
                         <TimePicker
                             label="Ώρα Λήξης"
                             value={endTime}
-                            onChange={(newValue) => setEndTime(newValue)}
+                            onChange={(newValue) => setEndTime(newValue)} // Update end time
                             renderInput={(params) => <TextField {...params} />}
                         />
                     </Col>
                 </Row>
             </LocalizationProvider>
+            {showAlert && (
+                <Alert severity="error" className="alert" onClose={() => setShowAlert(false)}>
+                    Παρακαλώ συμπληρώστε την Ώρα Έναρξης, Ώρα Λήξης και κάντε check το box.
+                </Alert>
+            )}
             <button type="button" className="button-apply" onClick={handleSubmit}>
                 Υποβολή
             </button>
