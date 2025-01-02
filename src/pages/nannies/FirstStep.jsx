@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from '../../components/buttons/Logo.jsx';
 import Footer from '../../components/layout/Footer.jsx';
 import HelpButton from '../../components/buttons/HelpButton.jsx';
@@ -146,11 +146,30 @@ export default function FirstStep() {
     const handleFileUploadChange = (event) => {
         const file = event.target.files[0]; 
         if (file) {
-            setFormData({ ...formData, recommendationLetters: file.name }); 
+            setFormData((prev) => ({
+                ...prev,
+                recommendationLetters: file.name, // Αποθηκεύει μόνο το όνομα του αρχείου
+            }));
         }
     };
     
+
+    useEffect(() => {
+        const savedData = localStorage.getItem('formData');
+        if (savedData) {
+            setFormData(JSON.parse(savedData));
+        }
+    }, []);
+
    
+    const handleTemporarySave = () => {
+        localStorage.setItem('formData', JSON.stringify(formData));
+        handleSnackbarOpen('Τα δεδομένα αποθηκεύτηκαν προσωρινά.');
+        setTimeout(() => {
+            navigate('/');
+        }, 2000);
+    };
+    
 
     return (
         <div className="profile-edit-nannies d-flex flex-column min-vh-100">
@@ -168,6 +187,8 @@ export default function FirstStep() {
                     <div className="circle">3</div>
                 </div>
             </div>
+
+            
             <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
                 <div className="form-header">
                 
@@ -273,6 +294,9 @@ export default function FirstStep() {
                                 className="form-control"
                                 style={{ marginTop: '8px' }}
                             />
+                            {formData.recommendationLetters && (
+                                <p>{`Αποθηκευμένο αρχείο: ${formData.recommendationLetters}`}</p>
+                            )}
                             {formErrors.recommendationLetters && (
                                 <span style={{ color: 'red', fontSize: '12px' }}>
                                 Το πεδίο Συστατικές επιστολές είναι υποχρεωτικό
@@ -285,14 +309,18 @@ export default function FirstStep() {
                         </p>
                         <p className="paragraph">Τα υπόλοιπα στοιχεία θα συμπληρώνονται αυτόματα από το Taxisnet</p>
                         <div className='buttons-pu1'>
-                            <button type="button" className="button-temp-pu1">Προσωρινή Αποθήκευση</button>
+                            <button type="button" className="button-temp-pu1"onClick={handleTemporarySave}>Προσωρινή Αποθήκευση</button>
                             <button type="submit" className="button-apply-pu1">Υποβολή</button>
                         </div>
-                        <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
-                        <Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%' }}>
-                            {snackbarMessage}
-                        </Alert>
-                    </Snackbar>
+                        <Snackbar open={snackbarOpen} 
+                            autoHideDuration={6000} 
+                            onClose={handleSnackbarClose}
+                            anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                            >
+                            <Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%' }}>
+                                {snackbarMessage}
+                            </Alert>
+                        </Snackbar>
 
                     </Row>
                 </form>

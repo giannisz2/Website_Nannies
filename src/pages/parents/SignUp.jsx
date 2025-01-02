@@ -104,30 +104,75 @@ export default function SignUp() {
             return;
         }
 
+        
+        if (name === "childrenUnder2") {
+            if (parseInt(value) > parseInt(formData.childrenCount)) {
+                handleSnackbarOpen('Ο αριθμός παιδιών σε ηλικίες από 6 μηνών έως 2.5 ετών δεν μπορεί να είναι μεγαλύτερος από το συνολικό αριθμό παιδιών.', 'error');
+                setFormErrors((prev) => ({ ...prev, [name]: true }));
+                return;
+            } else {
+                setFormErrors((prev) => ({ ...prev, [name]: false }));
+            }
+        }
+
+
+        if (name === "nannyChildrenCount") {
+            if (parseInt(value) > parseInt(formData.childrenUnder2)) {
+                handleSnackbarOpen('Ο αριθμός παιδιών που θέλετε να αναλάβει η νταντά δεν μπορεί να είναι μεγαλύτερος από τον αριθμό παιδιών σε ηλικίες από 6 μηνών έως 2.5 ετών.', 'error');
+                setFormErrors((prev) => ({ ...prev, [name]: true }));
+                return;
+            } else {
+                setFormErrors((prev) => ({ ...prev, [name]: false }));
+            }
+        }
+
         setFormData({ ...formData, [name]: value });
-        setFormErrors({ ...formErrors, [name]: !value }); // Set error to true if value is empty
+
+        setFormData((prev) => {
+            const updatedFormData = { ...prev, [name]: value };
+            // Save updated data to localStorage
+            localStorage.setItem('temporaryFormData', JSON.stringify(updatedFormData));
+            return updatedFormData;
+        });
+
+
+        setFormErrors({ ...formErrors, [name]: !value }); 
     };
 
 
     const validateGreekUppercase = (value) => {
-        const greekUppercaseRegex = /^[Α-ΩΪΫ]+$/; // Ελέγχει μόνο κεφαλαία ελληνικά γράμματα
+        const greekUppercaseRegex = /^[Α-ΩΪΫ]+$/; 
         return greekUppercaseRegex.test(value);
     };
     
     const validatePhoneNumber = (phone) => {
-        return /^\d{10}$/.test(phone); // Ελέγχει αν είναι ακριβώς 10 ψηφία
+        return /^\d{10}$/.test(phone); 
     };
 
     const handleDateChange = (date) => {
-        setFormData((prev) => ({
+       /* setFormData((prev) => ({
             ...prev,
             birthdate: date,
-        }));
+        }));*/
+
+        setFormData((prev) => {
+            const updatedFormData = { ...prev, birthdate: date };
+            localStorage.setItem('temporaryFormData', JSON.stringify(updatedFormData));
+            return updatedFormData;
+        });
         setFormErrors((prev) => ({
             ...prev,
             birthdate: !date,
         }));
     };
+
+
+    const handleTemporarySave = () => {
+        localStorage.setItem('temporaryFormData', JSON.stringify(formData));
+        handleSnackbarOpen('Τα στοιχεία αποθηκεύτηκαν προσωρινά!', 'success');
+    };
+
+
 
     const checkFormValidity = () => {
         const errors = {};
@@ -178,10 +223,27 @@ export default function SignUp() {
             errors.nannyChildrenCount = true;
             isValid = false;
         }
-        setFormErrors(errors);
-        //setFormErrors(errors);
 
-        // Επιστροφή του isValid
+
+        if (parseInt(formData.childrenUnder2) > parseInt(formData.childrenCount)) {
+            errors.childrenUnder2 = true;
+            handleSnackbarOpen('Ο αριθμός παιδιών σε ηλικίες από 6 μηνών έως 2.5 ετών δεν μπορεί να είναι μεγαλύτερος από το συνολικό αριθμό παιδιών.', 'error');
+            isValid = false;
+        }
+        
+
+        if (parseInt(formData.nannyChildrenCount) > parseInt(formData.childrenUnder2)) {
+            errors.nannyChildrenCount = true;
+            handleSnackbarOpen('Ο αριθμός παιδιών που θέλετε να αναλάβει η νταντά δεν μπορεί να είναι μεγαλύτερος από τον αριθμό παιδιών σε ηλικίες από 6 μηνών έως 2.5 ετών.', 'error');
+            isValid = false;
+        }
+        
+        setFormErrors(errors);
+        
+
+
+
+        
         return isValid;
 
 
@@ -194,10 +256,10 @@ export default function SignUp() {
     const isOver18 = (birthdate) => {
         const today = new Date();
         const birthDate = new Date(birthdate);
-        let age = today.getFullYear() - birthDate.getFullYear();  // Χρήση let αντί για const
+        let age = today.getFullYear() - birthDate.getFullYear();  
         const m = today.getMonth() - birthDate.getMonth();
         if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;  // Εδώ είναι εντάξει να μειώσουμε το age επειδή τώρα είναι let
+            age--;  
         }
         return age >= 18;
     };
@@ -226,7 +288,7 @@ export default function SignUp() {
                     const docRef = await addDoc(collection(db, "Parent"), preparedData);
 
                     console.log("Document written with ID: ", docRef.id);
-                    // Αποθήκευση του userId στο localStorage
+                    
                     localStorage.setItem("userId", docRef.id);
                     navigate('/PreviewParents');
                 } catch (e) {
@@ -236,10 +298,13 @@ export default function SignUp() {
             
         };
 
-    useEffect(() => {
-        // Αν θέλεις να κάνεις κάποια fetch δεδομένων, μπορείς να το χρησιμοποιήσεις εδώ.
-    }, []);
-
+        useEffect(() => {
+            const savedData = localStorage.getItem('temporaryFormData');
+            if (savedData) {
+                setFormData(JSON.parse(savedData));
+            }
+        }, []);
+    
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -297,7 +362,7 @@ export default function SignUp() {
                             </FormControl>
                         <TextField
                             fullWidth
-                            label="Κινητό Τηλέφωνο"
+                            label="Τηλέφωνο Επικοινωνίας"
                             type="text"
                             name="phone"
                             value={formData.phone || ''}
@@ -358,7 +423,7 @@ export default function SignUp() {
                         <TextField fullWidth label="Ημερομηνία γέννησης" type="date" name="birthdate" value={formData.birthdate || ''}
                                 onChange={(e) => handleDateChange(e.target.value)} className="my-3"
                                 InputLabelProps={{
-                                    shrink: true, // Κάνει την ετικέτα να εμφανίζεται πάνω από το πεδίο
+                                    shrink: true, 
                                 }}
                                 helperText={formErrors.birthdate ? (
                                     <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Ημερομηνία γέννησης είναι υποχρεωτικό</span>
@@ -417,7 +482,7 @@ export default function SignUp() {
                             </Select>
                             {formErrors.nannyChildrenCount && (
                                     <p style={{ color: 'red', fontSize: '12px' , textAlign:'left' }}>
-                                        Το πεδίο Έχετε κατοικίδια στο σπίτι είναι υποχρεωτικό
+                                        Το πεδίο Πόσα παιδιά θέλετε να αναλάβει η ντάντα είναι υποχρεωτικό
                                     </p>
                                 )}
                         </FormControl>
@@ -425,7 +490,7 @@ export default function SignUp() {
                 </Row>
             </div>
             <div className='buttons'>
-                            <button className="button-temp">Προσωρινή Αποθήκευση</button>
+                            <button className="button-temp" onClick={handleTemporarySave} >Προσωρινή Αποθήκευση</button>
                             <button className="button-apply"onClick={handleSubmit}>Υποβολή</button>
             </div>
             <Snackbar

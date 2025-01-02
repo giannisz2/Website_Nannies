@@ -11,7 +11,9 @@ import { useFormContext } from '../../context/FormContext.jsx';
 import { Timestamp } from "firebase/firestore";
 import { Autocomplete } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import Snackbar from '@mui/material/Snackbar';
+import Alert from '@mui/material/Alert';
 
 
 
@@ -181,7 +183,39 @@ const handleSubmit = async (event) => {
         }
     };
     
+
+
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+
+    const handleSnackbarOpen = (message) => {
+        setSnackbarMessage(message);
+        setSnackbarOpen(true);
+    };
     
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
+    
+
+
+    useEffect(() => {
+        const savedData = localStorage.getItem('formData');
+        if (savedData) {
+            setFormData((prevData) => ({
+                ...JSON.parse(savedData), // Τα δεδομένα από το FirstStep
+                ...prevData, // Τα δεδομένα από το SecondStep (αν υπάρχουν)
+            }));
+        }
+    }, []);
+    
+    const handleTemporarySave = () => {
+        localStorage.setItem('formData', JSON.stringify(formData));
+        handleSnackbarOpen('Τα δεδομένα αποθηκεύτηκαν προσωρινά.');
+        setTimeout(() => {
+            navigate('/');
+        }, 2000);
+    };
     
    
     
@@ -369,9 +403,18 @@ const handleSubmit = async (event) => {
 
 
                     <div className="buttons-pu1">
-                        <button className="button-temp-pu1">Προσωρινή Αποθήκευση</button>
+                        <button className="button-temp-pu1"onClick={handleTemporarySave}>Προσωρινή Αποθήκευση</button>
                         <button className="button-apply-pu1" onClick={handleSubmit}>Υποβολή</button>
                     </div>
+                    <Snackbar open={snackbarOpen} 
+                        autoHideDuration={6000} 
+                        onClose={handleSnackbarClose}
+                        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+                        >
+                        <Alert onClose={handleSnackbarClose} severity="warning" sx={{ width: '100%' }}>
+                            {snackbarMessage}
+                        </Alert>
+                    </Snackbar>
                 </Row>
             </div>
             <Footer />
