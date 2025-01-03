@@ -73,7 +73,7 @@ function App() {
           <Route path="/Agreement" element={<Agreement/>}/>
           <Route path="/Voucher" element={<Voucher/>}/>
           <Route path="/Voucher2" element={<Voucher2/>}/>
-          <Route path='/SearchNannies' element={<SearchNannies/>}/>      {/*filtra kai sundesh*/}
+          <Route path='/SearchNannies' element={<SearchNannies/>}/>     
           <Route path='/NanniesProfile' element={<NanniesProfile/>}/>   
           <Route path='/NanniesProfileDone' element={<NanniesProfileDone/>}/>  
           <Route path='/PersonalInfoParentsDone' element={<PersonalInfoParentsDone/>}/>
