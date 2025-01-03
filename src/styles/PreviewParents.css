@@ -35,35 +35,22 @@ h2 {
     
 }
 
-.button-temp-pu {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 16px;
-    border-radius: 5px;
-    
+
+.button-apply-pp{
+    padding: 15px 50px; 
+    border: none; 
+    border-radius: 40px; 
+    font-size: 18px; 
+    color: white; 
+    cursor: pointer; 
+    background-color: black;
+    transition: all 0.3s ease;
+    display: flex;
+    margin-top: 10px;
+    align-items: center;
+    justify-self: center;
 }
 
-.button-temp-pu:hover {
-    background-color: #0056b3;
+.button-apply-pp:hover {
+    background-color: #333; 
 }
-
-.button-apply-pu {
-    background-color: #28a745;
-    color: #fff;
-    border: none;
-    padding: 0.5rem 1rem;
-    font-size: 16px;
-    border-radius: 5px;
-    
-}
-
-.button-apply-pu:hover {
-    background-color: #218838;
-    
-}
-
-
-
-   

@@ -3,26 +3,41 @@
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif
 }
 
-.buttonsTemp{
-    display: flex;
-    justify-content: center;
-    gap: 500px;
-}
-.button-submit-5{
-    width: 20%;
-    height: 20%;
-    margin: 0px;
-    border-radius: 50px;
-    background-color: black;
+.buttonsTemp {
+    display: flex; 
+    justify-content: center; 
+    align-items: center;
+    gap: 200px; 
+    margin-top: 30px; 
 }
 
-.button-temp-5{
-    width: 20%;
-    height: 20%;
-    margin: 0px;
-    border-radius: 50px;
-    background-color: orange;
+.button-temp-5,
+.button-submit-5 {
+    padding: 15px 50px; 
+    border: none; 
+    border-radius: 40px; 
+    font-size: 18px; 
+    color: white; 
+    cursor: pointer; 
+    transition: all 0.3s ease;
 }
+
+.button-temp-5 {
+    background-color: orange; 
+}
+
+.button-temp-5:hover {
+    background-color: darkorange; 
+}
+
+.button-submit-5 {
+    background-color: black; 
+}
+
+.button-submit-5:hover {
+    background-color: #333; 
+}
+
 
 .top-text{
     font-weight: bold;

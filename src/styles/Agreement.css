@@ -68,13 +68,26 @@
     color: black;
 }
 
-.button-apply{
+
+.button-apply-agreement {
+    padding: 15px 50px;
+    border: none;
+    border-radius: 40px;
+    font-size: 18px;
+    color: white;
     background-color: black;
-    justify-content: center;
-    align-items: center;
-    width: 60%;
-    margin-top: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: inline-block;
+    text-align: center;
+    margin: 10px auto;
 }
+
+.button-apply-agreement:hover {
+    background-color: #333;
+}
+
+
 
 
 .alert {

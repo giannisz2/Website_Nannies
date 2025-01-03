@@ -489,9 +489,9 @@ export default function SignUp() {
                     </Col>
                 </Row>
             </div>
-            <div className='buttons'>
-                            <button className="button-temp" onClick={handleTemporarySave} >Προσωρινή Αποθήκευση</button>
-                            <button className="button-apply"onClick={handleSubmit}>Υποβολή</button>
+            <div className='buttons-su'>
+                            <button className="button-temp-su" onClick={handleTemporarySave} >Προσωρινή Αποθήκευση</button>
+                            <button className="button-apply-su"onClick={handleSubmit}>Υποβολή</button>
             </div>
             <Snackbar
                 open={snackbarOpen}

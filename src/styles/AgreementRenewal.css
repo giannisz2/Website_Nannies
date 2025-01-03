@@ -7,9 +7,13 @@
     width: 20%;
     border-radius: 50px;
     background-color: black;
+    color: white;
     margin-left: 780px;
 }
 
+.button-apply:hover {
+    background-color: #333;
+}
 
 .top-text{
     font-weight: bold;

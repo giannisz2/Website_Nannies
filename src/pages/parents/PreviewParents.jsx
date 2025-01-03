@@ -160,7 +160,7 @@ export default function PersonalInfoPreview() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
-                        <button className="button-apply" onClick={handleFinalSubmit}>
+                        <button className="button-apply-pp" onClick={handleFinalSubmit}>
                             Οριστική Υποβολή
                         </button>
                     </Col>

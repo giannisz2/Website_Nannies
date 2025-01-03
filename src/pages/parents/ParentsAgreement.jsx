@@ -123,7 +123,7 @@ export default function ParentsAgreement() {
                     </Alert>
                 )}
 
-                <button type="button" className="button-apply" onClick={handleSubmit}>
+                <button type="button" className="button-apply-agreement" onClick={handleSubmit}>
                     Υποβολή Συμφωνητικού
                 </button>
                 <Footer />

@@ -61,6 +61,20 @@
 }
 
 .signInButton{
+    padding: 15px 50px; 
+    border: none; 
+    border-radius: 40px; 
+    font-size: 18px; 
+    color: white; 
+    cursor: pointer; 
     background-color: black;
-    color: white;
+    transition: all 0.3s ease;
+    display: flex;
+    margin-top: 10px;
+    align-items: center;
+    justify-self: center;    
+}
+
+.signInButton:hover {
+    background-color: #333; 
 }
