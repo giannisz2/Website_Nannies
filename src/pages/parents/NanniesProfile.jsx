@@ -11,12 +11,14 @@ import Breadcrumb from "../../components/layout/BreadcrumbSearchNannies";
 import HelpButton from '../../components/buttons/HelpButton';
 import "../../styles/SearchNannies.css";
 import "../../styles/NanniesProfile.css";
-import '../../styles/PopUp.css'
+import '../../styles/PopUp.css';
+import HoursPicker from "../../components/layout/Hourspicker";
 
 export default function NanniesProfile() {
     const breadcrumbLinks = [
         { label: 'Αναζήτηση Νταντάδων', path: '/SearchNannies' },
-      ];
+    ];
+
     const handleDownload = () => {
         const fileUrl = 'path/to/your/recommendation-letter.pdf';
         const link = document.createElement('a');
@@ -24,8 +26,6 @@ export default function NanniesProfile() {
         link.download = 'Συστατική-Επιστολή.pdf'; 
         link.click(); 
     };
-
-    
 
     const [show, setShow] = useState(false);
     const togglePopUp = () => setShow(!show);
@@ -45,7 +45,6 @@ export default function NanniesProfile() {
         }, 3000);
     };
 
-
     const navigate = useNavigate(); 
 
     const handleRateClick = () => {
@@ -53,6 +52,10 @@ export default function NanniesProfile() {
     };    
 
     const handleBooking = () => {
+        if (!selectedTime) {
+            alert("Πρέπει να επιλέξετε μία ώρα.");
+            return;
+        }
         navigate('/NanniesProfileDone'); 
     };  
 
@@ -68,11 +71,23 @@ export default function NanniesProfile() {
             description: "Αγαπώ τα παιδιά και επιθυμώ συνεργασία μαζί με όποια οικογένεια θέλει. Μπορώ να κρατήσω μέχρι 3 παιδιά ταυτόχρονα.",
             studies: "Πρωτοβάθμια",
             employmentTime: "full-time",
-            imageUrl: "https://via.placeholder.com/150" // Προσωρινή εικόνα
+            imageUrl: "https://via.placeholder.com/150" 
         }
     ]);
 
-    const nanny = nannies[0]; // Θεωρούμε πως υπάρχει μία νταντά
+    const nanny = nannies[0]; 
+
+    const [selectedDate, setSelectedDate] = useState(null);
+
+    const [selectedTime, setSelectedTime] = useState(null);
+
+    const handleDateChange = (date) => {
+        setSelectedDate(date);
+    };
+
+    const handleTimeChange = (time) => {
+        setSelectedTime(time);
+    };
 
     return (
         <>
@@ -92,59 +107,59 @@ export default function NanniesProfile() {
                     disabled={true}
                 />
                 {successMessage && (
-                <div className="success-message">
-                    Το μήνυμα στάλθηκε με επιτυχία!
-                </div>
+                    <div className="success-message">
+                        Το μήνυμα στάλθηκε με επιτυχία!
+                    </div>
                 )}
 
                 <Row>
                     <Col md={7}>
-                    <div className="profil-list">
-                        <div className="breadCrumb">
-                            <Breadcrumb links={breadcrumbLinks} label={nanny.name}/>  
-                        </div>                          
-                        <div className="profil-card">
-                            <div className="profil-content">
-                                <div className="profil-image">
-                                    <img src="/path/to/placeholder.png" alt={nanny.name} />
-                                </div>
-                                <div className="profil-info">
-                                    <h2>{nanny.name}</h2>
-                                    <p>Ηλικία: {nanny.age}</p>
-                                    <p>Εξειδίκευση: {nanny.specialization}</p>
-                                    <p>Εμπειρία: {nanny.experience}</p>
-                                    <p>Σπουδές: {nanny.studies}</p>
-                                    <p>Τύπος απασχόλησης: {nanny.employmentTime}</p>
-                                    <p>{nanny.description}</p>
-                                    <div className="button-container">
-                                        <button className="talk-button" onClick={togglePopUp}>
-                                            <span className="icon">💬</span> Μίλα με την νταντά
-                                        </button>
-                                        {show && (
-                                            <div className="popup-overlay">
-                                            <div className="popup">
-                                                <button className="close-btn" onClick={togglePopUp}>
-                                                        &times;
-                                                </button>
-                                                <TextField fullWidth label="Το μήνυμά σου..." type="text" className="popup_text" />
-                                                <div className="popup-buttons">
-                                                <button className="cancel-btn" onClick={togglePopUp}>
-                                                    Ακύρωση
-                                                </button>
-                                                <button className="send-btn" onClick={handleSendMessage}>
-                                                    Αποστολή
-                                                </button>
+                        <div className="profil-list">
+                            <div className="breadCrumb">
+                                <Breadcrumb links={breadcrumbLinks} label={nanny.name}/>  
+                            </div>                          
+                            <div className="profil-card">
+                                <div className="profil-content">
+                                    <div className="profil-image">
+                                        <img src="/path/to/placeholder.png" alt={nanny.name} />
+                                    </div>
+                                    <div className="profil-info">
+                                        <h2>{nanny.name}</h2>
+                                        <p>Ηλικία: {nanny.age}</p>
+                                        <p>Εξειδίκευση: {nanny.specialization}</p>
+                                        <p>Εμπειρία: {nanny.experience}</p>
+                                        <p>Σπουδές: {nanny.studies}</p>
+                                        <p>Τύπος απασχόλησης: {nanny.employmentTime}</p>
+                                        <p>{nanny.description}</p>
+                                        <div className="button-container">
+                                            <button className="talk-button" onClick={togglePopUp}>
+                                                <span className="icon">💬</span> Μίλα με την νταντά
+                                            </button>
+                                            {show && (
+                                                <div className="popup-overlay">
+                                                    <div className="popup">
+                                                        <button className="close-btn" onClick={togglePopUp}>
+                                                            &times;
+                                                        </button>
+                                                        <TextField fullWidth label="Το μήνυμά σου..." type="text" className="popup_text" />
+                                                        <div className="popup-buttons">
+                                                            <button className="cancel-btn" onClick={togglePopUp}>
+                                                                Ακύρωση
+                                                            </button>
+                                                            <button className="send-btn" onClick={handleSendMessage}>
+                                                                Αποστολή
+                                                            </button>
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            </div>
-                                        )}
-                                        <button className="rate-button" onClick={handleRateClick}>
-                                            <span className="icon">⭐</span> Αξιολόγησε τη νταντά
-                                        </button>
+                                            )}
+                                            <button className="rate-button" onClick={handleRateClick}>
+                                                <span className="icon">⭐</span> Αξιολόγησε τη νταντά
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                             <div className="additional-boxes">
                                 <div className="info-box">
                                     <h3>Εμπειρία</h3>
@@ -161,37 +176,36 @@ export default function NanniesProfile() {
                                 Συστατικές Επιστολές
                             </button>
                         </div>
-                </Col>
-                <Col md={5}>
-                    <div className="center-container">
-                        <div className="header-meet"> ΚΡΑΤΗΣΗ ΡΑΝΤΕΒΟΥ</div>
-                        <Calendar />
-                        <div className="info-box-children">
-                            <ch3>Έχω</ch3>
-                            <input 
-                                className="children-input"
-                                type="text"
-                                placeholder="Συμπληρώστε τον αριθμό"
-                                onChange={(e) => setNumberOfChildren(e.target.value)} 
-                                error={formErrors.name}
-                                helperText={formErrors.name && "Πρέπει να συμπληρωθεί για να προχωρήσετε παρακάτω"}        
-                            />
-                            <ch3>παιδιά</ch3>
-                        </div>
-                        <div className="pets">
-                            <span className='span-text'>Έχω κατοικίδιο</span>
+                    </Col>
+                    <Col md={5}>
+                        <div className="center-container">
+                            <div className="header-meet"> ΚΡΑΤΗΣΗ ΡΑΝΤΕΒΟΥ</div>
+                            <Calendar onChange={handleDateChange} value={selectedDate} />
+                            {selectedDate && <HoursPicker onTimeChange={handleTimeChange} />}
+                            {selectedTime && <p>Επιλέξατε ώρα: {selectedTime}</p>}
+                            <div className="info-box-children">
+                                <ch3>Έχω</ch3>
+                                <input 
+                                    className="children-input"
+                                    type="text"
+                                    placeholder="Συμπληρώστε τον αριθμό"
+                                />
+                                <ch3>παιδιά</ch3>
+                            </div>
+                            <div className="pets">
+                                <span className='span-text'>Έχω κατοικίδιο</span>
                                 <input
                                     className='checkbox' 
                                     type="checkbox" 
                                     checked={isChecked} 
                                     onChange={handleCheckboxChange} 
                                 />
+                            </div>
+                            <button type="button" className="button-apply-pc" onClick={handleBooking}>Κλείσε ραντεβού</button>
                         </div>
-                        <button type="button" className="button-apply-pc" onClick={handleBooking}>Κλείσε ραντεβού</button>
-                    </div>
-                </Col>
+                    </Col>
                 </Row>
-                </div>
+            </div>
             <Footer />
         </>
     );

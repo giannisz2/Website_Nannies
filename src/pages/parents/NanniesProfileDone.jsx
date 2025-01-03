@@ -58,11 +58,11 @@ export default function NanniesProfile() {
             description: "Αγαπώ τα παιδιά και επιθυμώ συνεργασία μαζί με όποια οικογένεια θέλει. Μπορώ να κρατήσω μέχρι 3 παιδιά ταυτόχρονα.",
             studies: "Πρωτοβάθμια",
             employmentTime: "full-time",
-            imageUrl: "https://via.placeholder.com/150" // Προσωρινή εικόνα
+            imageUrl: "https://via.placeholder.com/150"
         }
     ]);
 
-    const nanny = nannies[0]; // Θεωρούμε πως υπάρχει μία νταντά
+    const nanny = nannies[0]; 
 
     return (
         <>
