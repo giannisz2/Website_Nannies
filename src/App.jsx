@@ -34,6 +34,7 @@ import PersonalInfoParents from './pages/parents/PersonalInfoParents.jsx';
 import ParentHomepage from './pages/parents/ParentHomepage.jsx';
 import TransactionHistoryParents from './pages/parents/TransactionHistoryParents.jsx';
 import RatesParents from './pages/parents/RatesParents.jsx'
+import RatesSubmits from './pages/parents/RatesSubmits.jsx'
 import SignUp from './pages/parents/SignUp.jsx'
 import PreviewParents from './pages/parents/PreviewParents.jsx'
 import Stars from './components/layout/stars.jsx'
@@ -83,6 +84,7 @@ function App() {
           <Route path='/ParentHomepage' element={<ParentHomepage/>}/>
           <Route path='/TransactionHistoryParents' element={<TransactionHistoryParents/>}/>
           <Route path='/RatesParents' element={<RatesParents/>}/>
+          <Route path='/RatesSubmits' element={<RatesSubmits/>}/>
           <Route path='/MessageParents' element={<MessageParents/>}/>
           <Route path='/NewPayment' element={<NewPayment/>}/>
           <Route path='/PaymentDone' element={<PaymentDone/>}/>
