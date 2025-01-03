@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import NavBarNannies from '../../components/layout/NavbarNannies';
 import Footer from '../../components/layout/Footer';
 import { Row, Col } from 'react-bootstrap';
@@ -11,19 +11,47 @@ import Alert from '@mui/material/Alert';
 
 export default function Voucher() {
     const [isChecked, setIsChecked] = useState(false);
-    const handleCheckboxChange = () => {
-        setIsChecked(!isChecked);
-        if (formErrors.checkbox) {
-            setFormErrors({ ...formErrors, checkbox: '' }); 
-        }
-    };
     const [formData, setFormData] = useState({
         iban: '',
         beneficiary: '',
         bank: ''
     });
     const [formErrors, setFormErrors] = useState({});
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [isDisabled, setIsDisabled] = useState(false);
+    const [isAlreadySubmitted, setIsAlreadySubmitted] = useState(false); 
+    const [showAlert, setShowAlert] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const currentDate = new Date();
+        const currentDay = currentDate.getDate(); 
+
+        if (currentDay > 5) {
+            setIsDisabled(true); 
+        }
+
+        const storedDate = localStorage.getItem('submissionDate');
+        if (storedDate) {
+            const parsedDate = new Date(storedDate);
+            const submissionMonth = parsedDate.getMonth();
+            const currentMonth = currentDate.getMonth();
+
+            if (submissionMonth === currentMonth) {
+                setIsAlreadySubmitted(true); 
+                setIsDisabled(true); 
+                setShowAlert(true); 
+            }
+        }
+    }, []);
+
+    const handleCheckboxChange = () => {
+        setIsChecked(!isChecked);
+        if (formErrors.checkbox) {
+            setFormErrors({ ...formErrors, checkbox: '' }); 
+        }
+    };
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -36,20 +64,20 @@ export default function Voucher() {
         let isValid = true;
 
         ['iban', 'beneficiary', 'bank'].forEach((field) => {
-            if (!formData[field] || formData[field].trim() === '' && ('name' || 'beneficiary' || 'bank')) {
+            if (!formData[field] || formData[field].trim() === '') {
                 errors[field] = true;
                 isValid = false;
             }
         });
+
         if (!isChecked) {
             errors.checkbox = 'Πρέπει να επιβεβαιώσετε την υπεύθυνη δήλωση για να συνεχίσετε.'; 
             isValid = false;
         }
+
         setFormErrors(errors);
         return isValid;
     };
-    const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState('');
 
     const handleSnackbarOpen = (message) => {
         setSnackbarMessage(message);
@@ -59,16 +87,19 @@ export default function Voucher() {
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);
     };
+
     const handleSubmit = (event) => {
         event.preventDefault();
-    
+
         if (checkFormValidity()) {
+            const currentDate = new Date();
+            localStorage.setItem('submissionDate', currentDate.toISOString()); 
+
             navigate('/Voucher2'); 
         } else {
             handleSnackbarOpen('Παρακαλώ συμπληρώστε όλα τα πεδία και επιβεβαιώστε το συμφωνητικό.'); 
         }
     };
-    
 
     return (
         <>
@@ -89,18 +120,35 @@ export default function Voucher() {
                             style={{ gap: '15px' }} 
                         >
                             <TextField
-                                fullWidth={false}  label="IBAN:" type="text" name="iban" value={formData.iban} onChange={handleInputChange}
+                                fullWidth={false}  
+                                label="IBAN:" 
+                                type="text" 
+                                name="iban" 
+                                value={formData.iban} 
+                                onChange={handleInputChange}
                                 className="text-agreement2"
                                 error={formErrors.iban}
                                 helperText={formErrors.iban ? 'Το πεδίο IBAN είναι υποχρεωτικό' : ''}
                             />
-                            <TextField fullWidth={false} label="Δικαιούχος:" type="text" name="beneficiary"
-                                value={formData.beneficiary} onChange={handleInputChange} className="text-agreement2"
+                            <TextField 
+                                fullWidth={false} 
+                                label="Δικαιούχος:" 
+                                type="text" 
+                                name="beneficiary"
+                                value={formData.beneficiary} 
+                                onChange={handleInputChange} 
+                                className="text-agreement2"
                                 error={formErrors.beneficiary}
                                 helperText={formErrors.beneficiary ? 'Το πεδίο Δικαιούχος είναι υποχρεωτικό' : ''}
                             />
-                            <TextField fullWidth={false} label="Τράπεζα:" type="text"
-                                name="bank" value={formData.bank} onChange={handleInputChange} className="text-agreement2"
+                            <TextField 
+                                fullWidth={false} 
+                                label="Τράπεζα:" 
+                                type="text"
+                                name="bank" 
+                                value={formData.bank} 
+                                onChange={handleInputChange} 
+                                className="text-agreement2"
                                 error={formErrors.bank}
                                 helperText={formErrors.bank ? 'Το πεδίο Τράπεζα είναι υποχρεωτικό' : ''}
                             />
@@ -115,7 +163,7 @@ export default function Voucher() {
                     </Row> 
                 </div>              
                 <div style={{ fontSize: '18px' }}>
-                    <div style={{ display: 'flex',justifyContent:'center', alignItems: 'center', marginTop : '100px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '100px' }}>
                         <span style={{ marginRight: '10px' }}>Επιβεβαιώνω ότι έχω δουλέψει στο ωράριο που αναφέρεται στο συμφωνητικό μου και έχω μείνει
                             ικανοποιημένος/η από τις συνθήκες εργασίας μου
                         </span>
@@ -127,14 +175,32 @@ export default function Voucher() {
                     {formErrors.checkbox && (
                         <Alert 
                             severity="error" 
-                            style={{ marginTop: '10px', fontSize: '12px', padding: '5px 10px', width: 'auto', maxWidth: '300px', marginLeft: '20px',}}
+                            style={{ marginTop: '10px', fontSize: '12px', padding: '5px 10px', width: 'auto', maxWidth: '300px', marginLeft: '20px', }}
                         >
                             {formErrors.checkbox ? 'Πρέπει να επιβεβαιώσετε το ωράριο και τις συνθήκες εργασίας σας' : ''}
                         </Alert>
                     )}                        
                     </div>
                 </div>
-                <button type="submit" onClick={handleSubmit} className="button-apply">Τελική υποβολή</button>
+
+                <button 
+                    type="submit" 
+                    onClick={handleSubmit} 
+                    className="button-apply-voucher" 
+                    disabled={isDisabled || isAlreadySubmitted} 
+                >
+                    Τελική υποβολή
+                </button>
+
+                {showAlert && (
+                    <Alert 
+                        severity="info" 
+                        style={{ marginTop: '10px', fontSize: '14px', padding: '10px 20px', maxWidth: '500px', marginLeft: 'auto', marginRight: 'auto'}}
+                    >
+                        Έχετε ήδη υποβάλει την αίτησή σας για αυτόν τον μήνα ή είναι μετά τις πρώτες 5 ημέρες του μήνα. Δεν μπορείτε να υποβάλλετε ξανά.
+                    </Alert>
+                )}
+
                 <Footer />
             </div>
         </>

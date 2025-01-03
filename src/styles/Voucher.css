@@ -54,7 +54,7 @@
 
 .text-voucher1 {
     font-size: 1rem;
-    margin-top: 20px; /* Προσθέτει κενό κάτω από το πρώτο TextField */
+    margin-top: 20px; 
     justify-content: center;
     display: flex;
     align-items: center;
@@ -64,7 +64,7 @@
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: x-large;
     font-weight: bold;
-    margin-top: 20px; /* Προσθέτει κενό κάτω από το πρώτο TextField */
+    margin-top: 20px;
     justify-content: center;
     display: flex;
     align-items: center;
@@ -74,7 +74,7 @@
     width: 400px; 
     margin-right: 20px;
     font-size: 1rem;
-    margin-top: 20px; /* Προσθέτει κενό κάτω από κάθε TextField */
+    margin-top: 20px; 
 }
 
 .label {
@@ -83,11 +83,23 @@
     color: black;
 }
 
-.button-apply{
+.button-apply-voucher{
+    padding: 15px 50px; 
+    border: none; 
+    border-radius: 40px; 
+    font-size: 18px; 
+    color: white; 
+    cursor: pointer; 
     background-color: black;
-    justify-content: center;
+    transition: all 0.3s ease;
+    display: flex;
+    margin-top: 10px;
     align-items: center;
-    margin:auto;
-    width: 60%;
+    justify-self: center;
 }
+
+.button-apply-voucher:hover {
+    background-color: #333; 
+}
+
 
