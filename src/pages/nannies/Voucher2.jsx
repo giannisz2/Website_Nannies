@@ -11,7 +11,7 @@ export default function Voucher2() {
 
     useEffect(() => {
       const timer = setTimeout(() => {
-        navigate('/Voucher'); 
+        navigate('/NannyHomepage'); 
       }, 3500);
   
       return () => clearTimeout(timer); 

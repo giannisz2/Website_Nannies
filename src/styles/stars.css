@@ -1,35 +1,35 @@
 .nanny-rates1 {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; 
+    align-items: flex-start;
 }
 
 .star-rating1 {
     display: flex;
-    flex-direction: row;
     justify-content: flex-start;
-    margin-bottom: 5px;
-    flex-wrap: wrap; 
-    max-width: 100%;
+    flex-direction: row-reverse;
 }
 
-.star-rating1 input {
-    display: none;
-}
-
-.star-rating1 label {
+.star {
     font-size: 2rem;
-    color: #ccc;
+    color: #ccc; 
+    background: none;
+    border: none;
     cursor: pointer;
     padding: 0 5px;
     transition: color 0.2s ease-in-out;
+    outline: none;
 }
 
-.star-rating1 label:hover,
-.star-rating1 label:hover ~ label {
-    color: #f5c518;
+.star.filled {
+    color: #f5c518; 
 }
 
-.star-rating1 input:checked ~ label {
-    color: #f5c518;
+.star:hover,
+.star:focus {
+    color: #f5c518; 
+}
+
+.star:active {
+    color: #ffbd1b; 
 }
