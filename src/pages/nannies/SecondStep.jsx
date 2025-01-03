@@ -150,7 +150,6 @@ const handleSubmit = async (event) => {
 
     if (isValid) {
         try {
-            // Μετατροπή της ημερομηνίας σε Timestamp
             const preparedData = {
                 ...formData,
                 birthdate: formData.birthdate ? Timestamp.fromDate(new Date(formData.birthdate)) : null, 
@@ -342,6 +341,22 @@ const handleSubmit = async (event) => {
                                 </span>
                             )}
                         </FormControl>
+                        <FormControl fullWidth className="my-3">
+                            <InputLabel>Είστε διατεθειμένος να εργαστείτε σε σπίτι με κατοικίδια ζώα;</InputLabel>
+                            <Select name="pets"
+                                value={formData.pets}
+                                onChange={handleInputChange}
+                                defaultValue=""
+                            >
+                                <MenuItem value="ΝΑΙ">NAI</MenuItem>
+                                <MenuItem value="ΟΧΙ">OXI</MenuItem>
+                            </Select>
+                            {formErrors.pets && (
+                                <span style={{ color: 'red', fontSize: '12px' }}>
+                                Το πεδίο Είστε διατεθειμένος να εργαστείτε σε σπίτι με κατοικίδια ζώα είναι υποχρεωτικό
+                                </span>
+                            )}
+                        </FormControl>
                     </Col>
                     <Col>
                         <FormControl fullWidth className="my-3">
@@ -362,26 +377,6 @@ const handleSubmit = async (event) => {
                                 </span>
                             )}
                         </FormControl>
-                    </Col>
-                    <Col>
-                        <FormControl fullWidth className="my-3">
-                            <InputLabel>Είστε διατεθειμένος να εργαστείτε σε σπίτι με κατοικίδια ζώα;</InputLabel>
-                            <Select name="pets"
-                                value={formData.pets}
-                                onChange={handleInputChange}
-                                defaultValue=""
-                            >
-                                <MenuItem value="ΝΑΙ">NAI</MenuItem>
-                                <MenuItem value="ΟΧΙ">OXI</MenuItem>
-                            </Select>
-                            {formErrors.pets && (
-                                <span style={{ color: 'red', fontSize: '12px' }}>
-                                Το πεδίο Είστε διατεθειμένος να εργαστείτε σε σπίτι με κατοικίδια ζώα είναι υποχρεωτικό
-                                </span>
-                            )}
-                        </FormControl>
-                    </Col>
-                    <Col>
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Είστε καπνιστής;</InputLabel>
                             <Select name="smoker"
