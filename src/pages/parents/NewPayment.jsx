@@ -109,7 +109,7 @@ export default function NewPayment() {
                     ΑΥΤΟΜΑΤΑ ΜΕ ΒΑΣΗ ΤΟ ΣΥΜΦΩΝΗΤΙΚΟ)
                 </span>
                 <input
-                    className="checkbox"
+                    className="checkbox-payment"
                     type="checkbox"
                     checked={isChecked}
                     onChange={handleCheckboxChange}
