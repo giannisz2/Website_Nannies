@@ -6,6 +6,7 @@ import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import React, { useState } from 'react';
+import NewPayment from '../../pages/parents/NewPayment';
 
 export default function NavBarParents() {
   const navigate = useNavigate();
@@ -54,6 +55,9 @@ export default function NavBarParents() {
     navigate('/RatesParents');  
   };
 
+  const Payment = () => {
+    navigate('/NewPayment');  
+  };
 
   const handleProfileClick = () => {
     navigate('/PersonalInfo');  
@@ -94,7 +98,7 @@ export default function NavBarParents() {
                 <Dropdown.Item href='./AgreementRenewal'>Ανανέωση</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
-            <Button className="button mx-2" variant="primary" href='./NewPayment'>
+            <Button className="button mx-2"  variant="primary" href='/NewPayment'>
               Πληρωμή
             </Button>
           </Nav>
