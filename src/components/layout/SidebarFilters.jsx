@@ -5,9 +5,9 @@ export default function SidebarFilters({ onFilterChange }) {
     const [filters, setFilters] = useState({
         age: '',
         employmentTime: '',
-        specialization: '',
-        studies: '',
-        experience: ''
+        experience: '',
+        educationLevel: '',
+        experienceYears: ''
     });
 
     const handleFilterChange = (key, value) => {
@@ -41,8 +41,8 @@ export default function SidebarFilters({ onFilterChange }) {
                     <input
                         className='input'
                         type="text"
-                        value={filters.experience}
-                        onChange={(e) => handleFilterChange('experience', e.target.value)}
+                        value={filters.experienceYears}
+                        onChange={(e) => handleFilterChange('experienceYears', e.target.value)}
                         placeholder="Π.χ. 5+ χρόνια"
                     />
                 </div>
@@ -55,8 +55,8 @@ export default function SidebarFilters({ onFilterChange }) {
                         onChange={(e) => handleFilterChange('employmentTime', e.target.value)}
                     >
                         <option value="">Επιλογή</option>
-                        <option value="part-time">Μερική Απασχόληση</option>
-                        <option value="full-time">Πλήρης Απασχόληση</option>
+                        <option value="Μερική">Μερική Απασχόληση</option>
+                        <option value="Πλήρης">Πλήρης Απασχόληση</option>
                     </select>
                 </div>
 
@@ -65,8 +65,8 @@ export default function SidebarFilters({ onFilterChange }) {
                     <input
                         className='input'
                         type="text"
-                        value={filters.specialization}
-                        onChange={(e) => handleFilterChange('specialization', e.target.value)}
+                        value={filters.experience}
+                        onChange={(e) => handleFilterChange('experience', e.target.value)}
                         placeholder="Π.χ. Ειδική Αγωγή"
                     />
                 </div>
@@ -76,8 +76,8 @@ export default function SidebarFilters({ onFilterChange }) {
                     <input
                         className='input'
                         type="text"
-                        value={filters.studies}
-                        onChange={(e) => handleFilterChange('studies', e.target.value)}
+                        value={filters.educationLevel}
+                        onChange={(e) => handleFilterChange('educationLevel', e.target.value)}
                         placeholder="Π.χ. Δευτεροβάθμια"
                     />
                 </div>

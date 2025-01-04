@@ -1,9 +1,25 @@
 import React from "react";
 import "../../styles/ProfileCard.css";
+import { useNavigate } from "react-router-dom";
+
+
 
 export default function ProfileCard({ nanny }) {
+
+
+    const navigate = useNavigate();
+
+    const handleProfileClick = () => {
+        navigate(`/Profile/${nanny.surname}`, { state: nanny });
+    };
+
+
+
+
+
+
     return (
-        <div className="profile-card">
+        <div className="profile-card" onClick={handleProfileClick}>
             <div className="profile-details">
                 <div className="profile-image-placeholder">
                     <img src="/path/to/placeholder.png" alt={nanny.name} />

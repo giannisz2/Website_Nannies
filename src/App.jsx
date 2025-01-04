@@ -12,7 +12,7 @@ import PersonalInfo from './pages/nannies/PersonalInfo';
 import FirstStep from "./pages/nannies/FirstStep.jsx"
 import PersonalInfoDone from './pages/nannies/PersonalInfoDone.jsx';
 import SecondStep from './pages/nannies/SecondStep.jsx';
-import SecondStepDone from './pages/nannies/SecondStepDone.jsx';
+
 import ThirdStep from './pages/nannies/ThirdStep.jsx';
 import SelectionCriteriaParents from './pages/parents/SelectionCriteriaParents.jsx';
 import MeetingNanny from './pages/nannies/MeetingNanny.jsx';
@@ -26,7 +26,7 @@ import SearchNannies from './pages/parents/SearchNannies.jsx';
 import NanniesProfile from './pages/parents/NanniesProfile.jsx';
 
 
-import NanniesProfileOthers from './pages/parents/NanniesProfileOthers.jsx';
+import Profile from './pages/parents/Profile.jsx';
 
 import NanniesProfileDone from './pages/parents/NanniesProfileDone.jsx';
 import PersonalInfoParentsDone from './pages/parents/PersonalInfoParentsDone.jsx';
@@ -68,7 +68,7 @@ function App() {
           <Route path="/FirstStep" element={<FirstStep/>}/>          
           <Route path="/PreviewPage" element={<PreviewPage/>}/>
           <Route path="/SecondStep" element={<SecondStep/>}/>
-          <Route path="/SecondStepDone" element={<SecondStepDone/>}/>
+          
           <Route path="/ThirdStep" element={<ThirdStep/>}/>
           <Route path="/SelectionCriteriaParents" element={<SelectionCriteriaParents/>}/>
           <Route path="/MeetingNanny" element={<MeetingNanny/>}/>
@@ -97,7 +97,7 @@ function App() {
           <Route path='/PreviewAgreement' element={<PreviewAgreement/>}/>
           <Route path='/TempAgreement' element={<TempAgreement/>}/>
           <Route path='/SignInPopup' element={<SignInPopup/>}/>
-          <Route path='/NanniesProfileOthers' element={<NanniesProfileOthers/>}/>
+          <Route path="/Profile/:id" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </>
