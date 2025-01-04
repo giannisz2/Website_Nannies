@@ -17,8 +17,8 @@ import '../../styles/PopUp.css';
 import HoursPicker from "../../components/layout/Hourspicker";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
-import { collection, addDoc } from "firebase/firestore";
-
+import { collection, query, where, getDocs } from "firebase/firestore";
+import {  addDoc } from "firebase/firestore";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -39,10 +39,12 @@ export default function NanniesProfile() {
     const [availableHours, setAvailableHours] = useState([]);
 
     const [childrenCount, setChildrenCount] = useState(""); 
+    const [hasExistingBooking, setHasExistingBooking] = useState(false);
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarSeverity, setSnackbarSeverity] = useState("error");
+
 
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);
@@ -78,6 +80,17 @@ export default function NanniesProfile() {
                     setParent(parentSnap.data());
                 } else {
                     console.error("Δεν βρέθηκαν δεδομένα γονέα.");
+                }
+
+                const bookingQuery = query(
+                    collection(db, "bookings"),
+                    where("nannyId", "==", id),
+                    where("parentPhone", "==", parentSnap.data().phone)
+                );
+                const querySnapshot = await getDocs(bookingQuery);
+    
+                if (!querySnapshot.empty) {
+                    setHasExistingBooking(true); 
                 }
     
             } catch (err) {
@@ -217,8 +230,8 @@ export default function NanniesProfile() {
                     defaultFilters={{
                         name: nanny.name,
                         age: nanny.age,
-                        specialization: nanny.specialization,
-                        experience: nanny.experience,
+                        specialization: nanny.experience,
+                        experience: nanny.experienceYears ,
                         studies: nanny.educationLevel,
                         employmentTime: nanny.employmentTime
                         
@@ -297,68 +310,78 @@ export default function NanniesProfile() {
                         </div>
                     </Col>
                     <Col md={5}>
-                        <div className="center-container">
-                            <div className="header-meet"> ΚΡΑΤΗΣΗ ΡΑΝΤΕΒΟΥ</div>
-                            <Calendar
-                                onChange={handleDateChange}
-                                value={selectedDate}
-                                tileDisabled={({ date }) =>
-                                    !nanny.availableDate?.some(d => d.startsWith(date.toISOString().split("T")[0]))
-                                }
-                            />
+                    <div className="center-container">
+                        {hasExistingBooking ? (
+                            <div className="message-container">
+                                <p>
+                                    Έχετε ήδη κλείσει ραντεβού με τη συγκεκριμένη νταντά. Δεν μπορείτε να
+                                    κλείσετε άλλο ραντεβού.
+                                </p>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="header-meet"> ΚΡΑΤΗΣΗ ΡΑΝΤΕΒΟΥ</div>
+                                <Calendar
+                                    onChange={handleDateChange}
+                                    value={selectedDate}
+                                    tileDisabled={({ date }) =>
+                                        !nanny.availableDate?.some(d =>
+                                            d.startsWith(date.toISOString().split("T")[0])
+                                        )
+                                    }
+                                />
 
-                            {availableHours.length > 0 ? (
-                                <div className="time-picker">
-                                    {availableHours.map((hour, index) => (
-                                        <button
-                                            key={index}
-                                            onClick={() => handleTimeChange(hour)}
-                                            className={selectedTime === hour ? "selected-time" : ""}
-                                        >
-                                            {hour}
-                                        </button>
-                                    ))}
-                                </div>
-                            ) : (
-                                <p>Δεν υπάρχουν διαθέσιμες ώρες.</p>
-                            )}
-
-                               
-
+                                {availableHours.length > 0 ? (
+                                    <div className="time-picker">
+                                        {availableHours.map((hour, index) => (
+                                            <button
+                                                key={index}
+                                                onClick={() => handleTimeChange(hour)}
+                                                className={selectedTime === hour ? "selected-time" : ""}
+                                            >
+                                                {hour}
+                                            </button>
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <p>Δεν υπάρχουν διαθέσιμες ώρες.</p>
+                                )}
 
                                 {selectedTime && <p>Επιλέξατε ώρα: {selectedTime}</p>}
-                                
+
                                 <div className="info-box-children">
-                                <span>Έχω</span>
-                                <input
-                                    className="children-input"
-                                    type="text"
-                                    placeholder="Συμπληρώστε τον αριθμό"
-                                    value={childrenCount}
-                                    onChange={(e) => setChildrenCount(e.target.value)}
-                                />
-                                <span>παιδιά</span>
-                            </div>
+                                    <span>Έχω</span>
+                                    <input
+                                        className="children-input"
+                                        type="text"
+                                        placeholder="Συμπληρώστε τον αριθμό"
+                                        value={childrenCount}
+                                        onChange={(e) => setChildrenCount(e.target.value)}
+                                    />
+                                    <span>παιδιά</span>
+                                </div>
 
+                                <div className="pets">
+                                    <span className="span-text">Έχω κατοικίδιο</span>
+                                    <input
+                                        className="checkbox"
+                                        type="checkbox"
+                                        checked={isChecked}
+                                        onChange={handleCheckboxChange}
+                                    />
+                                </div>
+                                <button
+                                    type="button"
+                                    className="button-apply-pc"
+                                    onClick={handleBooking}
+                                >
+                                    Κλείσε ραντεβού
+                                </button>
+                            </>
+                        )}
+                    </div>
+                </Col>
 
-                            <div className="pets">
-                                <span className='span-text'>Έχω κατοικίδιο</span>
-                                <input
-                                    className='checkbox' 
-                                    type="checkbox" 
-                                    checked={isChecked} 
-                                    onChange={handleCheckboxChange} 
-                                />
-                            </div>
-                            <button
-                                type="button"
-                                className="button-apply-pc"
-                                onClick={handleBooking}
-                            >
-                                Κλείσε ραντεβού
-                            </button>
-                        </div>
-                    </Col>
                 </Row>
             </div>
 
