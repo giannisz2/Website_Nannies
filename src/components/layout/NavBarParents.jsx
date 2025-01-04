@@ -68,9 +68,6 @@ export default function NavBarParents() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Button className="button" variant="primary">
-              Αιτήσεις
-            </Button>
             <Button className="button mx-2" onClick={search}variant="primary">
               Αναζήτηση
             </Button>
