@@ -23,7 +23,7 @@ export default function SearchNannies() {
                 const fetchedNannies = querySnapshot.docs.map((doc) => {
                     const data = doc.data();
     
-                    // Ασφαλής μετατροπή birthdate σε Date
+                    
                     let birthdate;
                     if (data.birthdate?.toDate) {
                         birthdate = data.birthdate.toDate();
@@ -33,7 +33,7 @@ export default function SearchNannies() {
                         birthdate = data.birthdate;
                     }
     
-                    // Υπολογισμός ηλικίας
+                    
                     const age = birthdate
                         ? new Date().getFullYear() - birthdate.getFullYear()
                         : null;
@@ -41,12 +41,12 @@ export default function SearchNannies() {
                     return {
                         id: doc.id,
                         ...data,
-                        age, // Προσθήκη ηλικίας
-                        surname: data.surname || "Χωρίς Επώνυμο", // Προσθήκη default επωνύμου
+                        age, 
+                        surname: data.surname || "Χωρίς Επώνυμο", 
                     };
                 });
     
-                console.log("Fetched nannies:", fetchedNannies); // Logging μέσα στη συνάρτηση
+                console.log("Fetched nannies:", fetchedNannies); 
                 setNannies(fetchedNannies);
                 setLoading(false);
             } catch (err) {

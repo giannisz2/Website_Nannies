@@ -38,13 +38,18 @@ export default function SidebarFilters({ onFilterChange }) {
 
                 <div className="filter-item">
                     <label>Χρόνος Εμπειρίας:</label>
-                    <input
+                    <select
                         className='input'
                         type="text"
                         value={filters.experienceYears}
-                        onChange={(e) => handleFilterChange('experienceYears', e.target.value)}
-                        placeholder="Π.χ. 5+ χρόνια"
-                    />
+                        onChange={(e) => handleFilterChange('experienceYears', e.target.value)}>
+                        <option value="">Επιλογή</option>
+                        <option value="0">0 χρόνια</option>
+                        <option value="1">1 χρόνο</option>
+                        <option value="2">2 χρόνια</option>
+                        <option value="3">3 χρόνια</option>
+                        <option value="4+">4+ χρόνια</option>
+                    </select>
                 </div>
 
                 <div className="filter-item">
