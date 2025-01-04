@@ -146,7 +146,7 @@ function NavBar() {
         <Modal.Body>
           <Form>
             <Form.Group className="mb-3" controlId="firstName">
-              <Form.Label>Όνομα</Form.Label>
+              <Form.Label>Όνομα(ΚΕΦΑΛΑΙΑ)</Form.Label>
               <Form.Control
                 type="text"
                 name="firstName"
@@ -156,7 +156,7 @@ function NavBar() {
               />
             </Form.Group>
             <Form.Group className="mb-3" controlId="lastName">
-              <Form.Label>Επώνυμο</Form.Label>
+              <Form.Label>Επώνυμο(ΚΕΦΑΛΑΙΑ)</Form.Label>
               <Form.Control
                 type="text"
                 name="lastName"
