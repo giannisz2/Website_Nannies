@@ -19,6 +19,7 @@ import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import {  addDoc } from "firebase/firestore";
+import {  useNavigate } from "react-router-dom";
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -45,6 +46,8 @@ export default function NanniesProfile() {
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarSeverity, setSnackbarSeverity] = useState("error");
 
+    const navigate = useNavigate();
+
 
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);
@@ -55,7 +58,7 @@ export default function NanniesProfile() {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                //nanny
+                // Ανάκτηση δεδομένων νταντάς
                 if (!nanny) {
                     const docRef = doc(db, "users", id);
                     const docSnap = await getDoc(docRef);
@@ -66,7 +69,7 @@ export default function NanniesProfile() {
                     }
                 }
     
-                // parent
+                
                 const userId = localStorage.getItem("userId");
                 if (!userId) {
                     console.error("User ID is not available in localStorage");
@@ -77,22 +80,30 @@ export default function NanniesProfile() {
                 const parentSnap = await getDoc(parentRef);
     
                 if (parentSnap.exists()) {
-                    setParent(parentSnap.data());
+                    const parentData = parentSnap.data();
+                    setParent(parentData);
+    
+                    
+                    const bookingQuery = query(
+                        collection(db, "bookings"),
+                        where("nannyId", "==", nanny.id),
+                        where("parentPhone", "==", parentData.phone)
+                    );
+                    const querySnapshot = await getDocs(bookingQuery);
+                    console.log("Booking Query Results: ", querySnapshot.docs.map(doc => doc.data()));
+
+
+                    if (!querySnapshot.empty) {
+                        console.log("Existing booking found");
+                        setHasExistingBooking(true);
+                    } else {
+                        console.log("No existing booking found");
+                        setHasExistingBooking(false);
+                    }
+                    
                 } else {
                     console.error("Δεν βρέθηκαν δεδομένα γονέα.");
                 }
-
-                const bookingQuery = query(
-                    collection(db, "bookings"),
-                    where("nannyId", "==", id),
-                    where("parentPhone", "==", parentSnap.data().phone)
-                );
-                const querySnapshot = await getDocs(bookingQuery);
-    
-                if (!querySnapshot.empty) {
-                    setHasExistingBooking(true); 
-                }
-    
             } catch (err) {
                 console.error("Error fetching data:", err);
                 setError("Σφάλμα κατά τη λήψη δεδομένων.");
@@ -103,6 +114,7 @@ export default function NanniesProfile() {
     
         fetchData();
     }, [id, nanny]);
+    
     
 
     const [show, setShow] = useState(false);
@@ -313,11 +325,9 @@ export default function NanniesProfile() {
                     <div className="center-container">
                         {hasExistingBooking ? (
                             <div className="message-container">
-                                <p>
-                                    Έχετε ήδη κλείσει ραντεβού με τη συγκεκριμένη νταντά. Δεν μπορείτε να
-                                    κλείσετε άλλο ραντεβού.
-                                </p>
+                               
                             </div>
+                            
                         ) : (
                             <>
                                 <div className="header-meet"> ΚΡΑΤΗΣΗ ΡΑΝΤΕΒΟΥ</div>
@@ -378,6 +388,18 @@ export default function NanniesProfile() {
                                     Κλείσε ραντεβού
                                 </button>
                             </>
+                        )}
+                        {hasExistingBooking && (
+                            <div className="existing-booking-container">
+                                <div className="message-box">
+                                    <p className="message-text">
+                                        Έχετε ήδη κλείσει ραντεβού με τη συγκεκριμένη νταντά. Δεν μπορείτε να κλείσετε άλλο ραντεβού.
+                                    </p>
+                                </div>
+                                <button onClick={() => navigate('/TempAgreement')} className="redirect-button">
+                                    Δείξτε το ενδιαφέρον σας για να συνεργαστείτε
+                                </button>
+                            </div>
                         )}
                     </div>
                 </Col>
