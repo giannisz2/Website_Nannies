@@ -23,6 +23,7 @@ import Voucher from './pages/nannies/Voucher.jsx';
 import Voucher2 from './pages/nannies/Voucher2.jsx';
 import Message from './pages/nannies/Message.jsx';
 import SearchNannies from './pages/parents/SearchNannies.jsx';
+import SearchNanniesWithoutSignIn from './pages/parents/SearchNanniesWithoutSignIn.jsx';
 import NanniesProfile from './pages/parents/NanniesProfile.jsx';
 
 
@@ -47,6 +48,8 @@ import PreviewAgreement from './pages/parents/PreviewAgreement.jsx'
 import TempAgreement from './pages/parents/TempAgreement.jsx';
 import SignInPopup from './components/popups/SignInPopup.jsx';
 import AgreementHistoryParents from './pages/parents/AgreementHistoryParents.jsx';
+
+
 
 
 function App() {
@@ -75,7 +78,9 @@ function App() {
           <Route path="/Agreement" element={<Agreement/>}/>
           <Route path="/Voucher" element={<Voucher/>}/>
           <Route path="/Voucher2" element={<Voucher2/>}/>
-          <Route path='/SearchNannies' element={<SearchNannies/>}/>     
+          <Route path='/SearchNannies' element={<SearchNannies/>}/> 
+
+           <Route path='/SearchNanniesWithoutSignIn' element={<SearchNanniesWithoutSignIn/>}/>   
           <Route path='/NanniesProfile' element={<NanniesProfile/>}/>   
           <Route path='/NanniesProfileDone' element={<NanniesProfileDone/>}/>  
           <Route path='/PersonalInfoParentsDone' element={<PersonalInfoParentsDone/>}/>
