@@ -25,6 +25,7 @@
     cursor: pointer;
     font-size: 0.9rem;
     transition: all 0.3s ease;
+    background-color: white;
 }
 
 .filter-item:last-child {
@@ -71,4 +72,8 @@
 .select:focus {
     border-color: #6d4a9d;
     outline: none;
+}
+
+.input{
+    background-color: white;
 }

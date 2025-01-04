@@ -12,6 +12,10 @@
     flex-direction: column;
 }
 
+.profile-list:hover {
+    cursor: pointer;
+}
+
 .page-container {
     display: flex;
     flex-direction: column;

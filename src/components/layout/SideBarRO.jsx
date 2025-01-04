@@ -7,7 +7,7 @@ export default function SidebarFilters({ defaultFilters, disabled }) {
             <h3>Πληροφορίες Νταντάς</h3>
             <div className="filter-group">
                 <label>Όνομα:</label>
-                <input
+                <input className="input"
                     type="text"
                     value={defaultFilters.name || ""}
                     disabled={disabled}
@@ -16,7 +16,7 @@ export default function SidebarFilters({ defaultFilters, disabled }) {
             </div>
             <div className="filter-group">
                 <label>Ηλικία:</label>
-                <input
+                <input className="input"
                     type="text"
                     value={defaultFilters.age || ""}
                     disabled={disabled}
@@ -25,7 +25,7 @@ export default function SidebarFilters({ defaultFilters, disabled }) {
             </div>
             <div className="filter-group">
                 <label>Εξειδίκευση:</label>
-                <input
+                <input className="input"
                     type="text"
                     value={defaultFilters.specialization || ""}
                     disabled={disabled}
@@ -34,7 +34,7 @@ export default function SidebarFilters({ defaultFilters, disabled }) {
             </div>
             <div className="filter-group">
                 <label>Εμπειρία:</label>
-                <input
+                <input className="input"
                     type="text"
                     value={defaultFilters.experience || ""}
                     disabled={disabled}
@@ -43,7 +43,7 @@ export default function SidebarFilters({ defaultFilters, disabled }) {
             </div>
             <div className="filter-group">
                 <label>Σπουδές:</label>
-                <input
+                <input className="input"
                     type="text"
                     value={defaultFilters.studies || ""}
                     disabled={disabled}
@@ -52,7 +52,7 @@ export default function SidebarFilters({ defaultFilters, disabled }) {
             </div>
             <div className="filter-group">
                 <label>Τύπος Απασχόλησης:</label>
-                <input
+                <input className="input"
                     type="text"
                     value={defaultFilters.employmentTime || ""}
                     disabled={disabled}
