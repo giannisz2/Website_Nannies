@@ -187,12 +187,13 @@
 
 
 .children-input {
-    width: 80px; /* Καθορίζουμε πλάτος για το input πεδίο */
+    width: 80px;
     padding: 5px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin: 0 10px; /* Χώρος μεταξύ του πεδίου και των κειμένων */
+    margin: 0 10px;
+    background-color: white;
     color: #333;
 }
 
@@ -217,6 +218,7 @@
 
 .checkbox {
     margin-left: 5px; 
+    margin-bottom: 8px;
 }
 
 .button-apply-pc {

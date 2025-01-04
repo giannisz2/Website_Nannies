@@ -126,7 +126,7 @@ export default function MessageParents() {
             <button className="arrow-btn right-arrow" onClick={handleNextItem}>
               &rarr;
             </button>
-            <h2>{currentItem.title}</h2>
+            <h2 className='header-message'>{currentItem.title}</h2>
             <p>{currentItem.content}</p>
             {currentType === 'message' && (
               <p>
