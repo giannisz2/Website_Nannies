@@ -7,7 +7,7 @@ export default function SidebarFilters({ onFilterChange }) {
         employmentTime: '',
         experience: '',
         educationLevel: '',
-        experienceYears: ''
+        experienceYears: '',
     });
 
     const handleFilterChange = (key, value) => {
@@ -40,7 +40,6 @@ export default function SidebarFilters({ onFilterChange }) {
                     <label>Χρόνος Εμπειρίας:</label>
                     <select
                         className='input'
-                        type="text"
                         value={filters.experienceYears}
                         onChange={(e) => handleFilterChange('experienceYears', e.target.value)}>
                         <option value="">Επιλογή</option>
