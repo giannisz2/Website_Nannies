@@ -390,17 +390,18 @@ export default function NanniesProfile() {
                             </>
                         )}
                         {hasExistingBooking && (
-                            <div className="existing-booking-container">
-                                <div className="message-box">
-                                    <p className="message-text">
-                                        Έχετε ήδη κλείσει ραντεβού με τη συγκεκριμένη νταντά. Δεν μπορείτε να κλείσετε άλλο ραντεβού.
-                                    </p>
-                                </div>
-                                <button onClick={() => navigate('/TempAgreement')} className="redirect-button">
-                                    Δείξτε το ενδιαφέρον σας για να συνεργαστείτε
-                                </button>
+                        <div className="booking-message">
+                            <div className="message-box">
+                                <p className="message-text">
+                                    Έχετε ήδη κλείσει ραντεβού με τη συγκεκριμένη νταντά. Δεν μπορείτε να κλείσετε άλλο ραντεβού.
+                                </p>
                             </div>
-                        )}
+                            <button onClick={() => navigate('/TempAgreement')} className="redirect-button">
+                                Δείξτε το ενδιαφέρον σας για να συνεργαστείτε
+                            </button>
+                        </div>
+                    )}
+
                     </div>
                 </Col>
 
