@@ -37,7 +37,6 @@ import RatesParents from './pages/parents/RatesParents.jsx'
 import RatesSubmits from './pages/parents/RatesSubmits.jsx'
 import SignUp from './pages/parents/SignUp.jsx'
 import PreviewParents from './pages/parents/PreviewParents.jsx'
-import Stars from './components/layout/stars.jsx'
 import MessageParents from './pages/parents/MessageParents.jsx'
 import ParentsAgreement from './pages/parents/ParentsAgreement.jsx';
 import NewPayment from './pages/parents/NewPayment.jsx';
@@ -62,13 +61,13 @@ function App() {
           <Route path="/AgreementHistoryParents" element={<AgreementHistoryParents/>}/>
           <Route path="/TransactionHistory" element={<TransactionHistory/>}/>
           <Route path="/NannyHomepage" element={<NannyHomepage/>}/>
-          <Route path="/Message" element={<Message/>}/>
+          <Route path="/Message" element={<Message/>}/>    
           <Route path="/PersonalInfo" element={<PersonalInfo/>}/>
           <Route path="/PersonalInfoDone" element={<PersonalInfoDone/>}/>
           <Route path="/FirstStep" element={<FirstStep/>}/>          
           <Route path="/PreviewPage" element={<PreviewPage/>}/>
           <Route path="/SecondStep" element={<SecondStep/>}/>
-          
+
           <Route path="/ThirdStep" element={<ThirdStep/>}/>
           <Route path="/SelectionCriteriaParents" element={<SelectionCriteriaParents/>}/>
           <Route path="/MeetingNanny" element={<MeetingNanny/>}/>
@@ -76,22 +75,21 @@ function App() {
           <Route path="/Agreement" element={<Agreement/>}/>
           <Route path="/Voucher" element={<Voucher/>}/>
           <Route path="/Voucher2" element={<Voucher2/>}/>
-          <Route path='/SearchNannies' element={<SearchNannies/>}/>
-          <Route path='/NanniesProfile' element={<NanniesProfile/>}/>
-          <Route path='/NanniesProfileDone' element={<NanniesProfileDone/>}/>
+          <Route path='/SearchNannies' element={<SearchNannies/>}/>     
+          <Route path='/NanniesProfile' element={<NanniesProfile/>}/>   
+          <Route path='/NanniesProfileDone' element={<NanniesProfileDone/>}/>  
           <Route path='/PersonalInfoParentsDone' element={<PersonalInfoParentsDone/>}/>
           <Route path='/PersonalInfoParents' element={<PersonalInfoParents/>}/>
           <Route path='/ParentHomepage' element={<ParentHomepage/>}/>
           <Route path='/TransactionHistoryParents' element={<TransactionHistoryParents/>}/>
           <Route path='/RatesParents' element={<RatesParents/>}/>
           <Route path='/RatesSubmits' element={<RatesSubmits/>}/>
-          <Route path='/MessageParents' element={<MessageParents/>}/>
-          <Route path='/NewPayment' element={<NewPayment/>}/>
+          <Route path='/MessageParents' element={<MessageParents/>}/>  
+          <Route path='/NewPayment' element={<NewPayment/>}/>     
           <Route path='/PaymentDone' element={<PaymentDone/>}/>
           <Route path='/PreviewParents' element={<PreviewParents/>}/>
           <Route path='/SignUp' element={<SignUp/>}/>
           <Route path='/ParentsAgreement' element={<ParentsAgreement/>}/>
-          <Route path='/Stars' element={<Stars/>}/>
           <Route path='/AgreementExpiration' element={<AgreementExpiration/>}/>
           <Route path='/AgreementRenewal' element={<AgreementRenewal/>}/>
           <Route path='/PreviewAgreement' element={<PreviewAgreement/>}/>
