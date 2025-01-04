@@ -86,7 +86,7 @@ export default function SearchNannies() {
                 if (experienceYears < requiredYears) return false;
             }
     
-            if (filterCriteria.specialization && !nanny.specialization?.includes(filterCriteria.specialization)) return false;
+            if (filterCriteria.experience && !nanny.experience?.includes(filterCriteria.experience)) return false;
             if (filterCriteria.educationLevel && !nanny.educationLevel?.includes(filterCriteria.educationLevel)) return false;
     
             if (filterCriteria.employmentTime && nanny.employmentTime !== filterCriteria.employmentTime) {
