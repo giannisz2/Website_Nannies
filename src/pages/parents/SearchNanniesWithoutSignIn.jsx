@@ -70,21 +70,25 @@ export default function SearchNannies() {
                 if (ageFilter.includes("+")) {
                     const minAge = parseInt(ageFilter.replace("+", "").trim());
                     if (nanny.age < minAge) return false;
-                } else {
+                } else if (ageFilter.includes("-")){
                     const ageRange = ageFilter.split("-").map(Number);
                     if (nanny.age < ageRange[0] || nanny.age > ageRange[1]) return false;
+                } else{
+                    const minAge = parseInt(ageFilter.replace("+", "").trim()) - 2;
+                    const maxAge = parseInt(ageFilter.replace("+", "").trim()) + 3; 
+                    if (nanny.age < minAge || nanny.age > maxAge) return false;
                 }
             }
 
             if (filterCriteria.experienceYears) {
                 const experienceYears = parseInt(nanny.experienceYears || "0");
                 const requiredYears = parseInt(filterCriteria.experienceYears);
-                if (experienceYears < requiredYears) return false;
+                if (experienceYears != requiredYears) return false;
             }
-
-            if (filterCriteria.specialization && !nanny.specialization?.includes(filterCriteria.specialization)) return false;
+    
+            if (filterCriteria.experience && !nanny.experience?.includes(filterCriteria.experience)) return false;
             if (filterCriteria.educationLevel && !nanny.educationLevel?.includes(filterCriteria.educationLevel)) return false;
-
+    
             if (filterCriteria.employmentTime && nanny.employmentTime !== filterCriteria.employmentTime) {
                 return false;
             }

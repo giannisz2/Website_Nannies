@@ -222,7 +222,7 @@
 }
 
 .button-apply-pc {
-    padding: 15px 50px; 
+    padding: 8px 25px; 
     border: none; 
     border-radius: 40px;
     font-size: 18px; 
@@ -238,15 +238,21 @@
 }
 
 .button-recommendations {
-    padding: 15px 50px; 
+    padding: 8px 25px; 
+    width: 350px;
     border: 2px solid black; 
-    border-radius: 40px; 
+    border-radius: 20px;
     font-size: 18px; 
     color: black; 
     background-color: white; 
     cursor: pointer; 
     transition: all 0.3s ease;
+    display: flex;
     margin-top: 20px; 
+    justify-content: center;
+    justify-self: center;
+    align-items: center;
+    margin-left: 150px;
 }
 
 .button-recommendations:hover {
@@ -329,15 +335,11 @@
     background-color: #333;
 }
 
-/* Νέες CSS κλάσεις για τοποθέτηση στο κέντρο-δεξιά */
 .booking-message {
     position: absolute;
-    right: 20px;
+    right: 30px;
     top: 50%;
     transform: translateY(-50%);
-    width: 300px; /* Προσαρμόστε το πλάτος ανάλογα με τις ανάγκες σας */
-    background: #f9f9f9;
     padding: 20px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
     border-radius: 8px;
 }

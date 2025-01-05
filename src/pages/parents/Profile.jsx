@@ -161,6 +161,9 @@ export default function NanniesProfile() {
         setSelectedDate(selectedDay);
     };
     
+    const handleSendRequest =() =>{
+        navigate('/TempAgreement');
+    };
 
 
     const handleTimeChange = (time) => {
@@ -391,14 +394,22 @@ export default function NanniesProfile() {
                         )}
                         {hasExistingBooking && (
                         <div className="booking-message">
-                            <div className="message-box">
-                                <p className="message-text">
-                                    Έχετε ήδη κλείσει ραντεβού με τη συγκεκριμένη νταντά. Δεν μπορείτε να κλείσετε άλλο ραντεβού.
-                                </p>
+                            <div className="center-container">
+                                <div className="header-meet"> ΚΡΑΤΗΣΗ ΡΑΝΤΕΒΟΥ</div>
+                                <div className="this_text"> !!! Έχεις ήδη κάνει το το ραντέβου που δικαιούσαι με την συγκεκριμένη επαγγελματία</div>
+                                <div className="info-box-children2">
+                                    <ch3>Έχω 3 παιδιά</ch3>
+                                </div>
+                                <div className="pets">
+                                    <span className='span-text'>Έχω κατοικίδιο</span>
+                                        <input
+                                            className='checkbox' 
+                                            type="checkbox" 
+                                            disabled
+                                        />
+                                </div>
+                                <button type="button" className="button-apply-pc" onClick={handleSendRequest}>Δείξε το ενδιαφέρον σου για να συνεργαστείτε</button>
                             </div>
-                            <button onClick={() => navigate('/TempAgreement')} className="redirect-button">
-                                Δείξτε το ενδιαφέρον σας για να συνεργαστείτε
-                            </button>
                         </div>
                     )}
 
