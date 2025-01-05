@@ -89,6 +89,12 @@ export default function SearchNannies() {
                 return false;
             }
 
+            if (filterCriteria.location) {
+                if (nanny.location !== filterCriteria.location) {
+                    return false; 
+                }
+            }
+
             return true;
         });
     };

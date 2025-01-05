@@ -14,6 +14,7 @@ export default function ProfileCard({ nanny, onCardClick }) {
                 </div>
                 <div className="profile-info">
                     <h3>{`${nanny.name} ${nanny.surname}`}</h3>
+                    <p><strong>Τοποθεσία:</strong> {nanny.location}</p>
                     <p><strong>Ηλικία:</strong> {nanny.age}</p>
                     <p><strong>Ειδίκευση:</strong> {nanny.experience}</p>
                     <p><strong>Εμπειρία:</strong> {nanny.experienceYears}</p>

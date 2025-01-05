@@ -26,12 +26,11 @@ export default function ProfileCard({ nanny }) {
                 </div>
                 <div className="profile-info">
                     <h3>{`${nanny.name} ${nanny.surname}`}</h3>
+                    <p><strong>Τοποθεσία:</strong> {nanny.location}</p>
                     <p><strong>Ηλικία:</strong> {nanny.age}</p>
                     <p><strong>Ειδίκευση:</strong> {nanny.experience}</p>
                     <p><strong>Εμπειρία:</strong> {nanny.experienceYears}</p>
                     <p><strong>Σπουδές:</strong> {nanny.educationLevel}</p>
-                    
-                    
                     <p><strong>Χρόνος Απασχόλησης:</strong> {nanny.employmentTime === 'full-time' ? 'Πλήρης Απασχόληση' : 'Μερική Απασχόληση'}</p>
                     <p>{nanny.bio}</p>
                 </div>
