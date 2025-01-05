@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import SidebarFilters from "../../components/layout/SidebarFilters";
 import NavBar from "../../components/layout/Navbar";
 import Footer from "../../components/layout/Footer";
-import ProfileCard from "../../components/layout/ProfileCard";
+import ProfileCard from "../../components/layout/ProfileCardPopUp";
 import { Row } from "react-bootstrap";
 import HelpButton from "../../components/buttons/HelpButton";
 import "../../styles/SearchNannies.css";
+import "../../styles/PopUp.css"
 import { db } from "../../providers/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
 import dayjs from "dayjs";
@@ -15,6 +16,8 @@ export default function SearchNannies() {
     const [filterCriteria, setFilterCriteria] = useState({});
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
+    const [isPopupOpen, setIsPopupOpen] = useState(false); 
+    const [selectedNanny, setSelectedNanny] = useState(null); 
 
     useEffect(() => {
         const fetchNannies = async () => {
@@ -22,8 +25,7 @@ export default function SearchNannies() {
                 const querySnapshot = await getDocs(collection(db, "users"));
                 const fetchedNannies = querySnapshot.docs.map((doc) => {
                     const data = doc.data();
-    
-                    
+
                     let birthdate;
                     if (data.birthdate?.toDate) {
                         birthdate = data.birthdate.toDate();
@@ -32,21 +34,19 @@ export default function SearchNannies() {
                     } else {
                         birthdate = data.birthdate;
                     }
-    
-                    
+
                     const age = birthdate
                         ? new Date().getFullYear() - birthdate.getFullYear()
                         : null;
-    
+
                     return {
                         id: doc.id,
                         ...data,
-                        age, 
-                        surname: data.surname || "Χωρίς Επώνυμο", 
+                        age,
+                        surname: data.surname || "Χωρίς Επώνυμο",
                     };
                 });
-    
-                console.log("Fetched nannies:", fetchedNannies); 
+
                 setNannies(fetchedNannies);
                 setLoading(false);
             } catch (err) {
@@ -55,17 +55,13 @@ export default function SearchNannies() {
                 setLoading(false);
             }
         };
-    
-        fetchNannies();
-       
 
+        fetchNannies();
     }, []);
-    
 
     if (error) {
         return <div>{error}</div>;
     }
-
 
     const getFilteredNannies = () => {
         return nannies.filter((nanny) => {
@@ -79,24 +75,33 @@ export default function SearchNannies() {
                     if (nanny.age < ageRange[0] || nanny.age > ageRange[1]) return false;
                 }
             }
-    
+
             if (filterCriteria.experienceYears) {
                 const experienceYears = parseInt(nanny.experienceYears || "0");
                 const requiredYears = parseInt(filterCriteria.experienceYears);
                 if (experienceYears < requiredYears) return false;
             }
-    
+
             if (filterCriteria.specialization && !nanny.specialization?.includes(filterCriteria.specialization)) return false;
             if (filterCriteria.educationLevel && !nanny.educationLevel?.includes(filterCriteria.educationLevel)) return false;
-    
+
             if (filterCriteria.employmentTime && nanny.employmentTime !== filterCriteria.employmentTime) {
                 return false;
             }
-    
+
             return true;
         });
     };
-    
+
+    const handleNannyClick = (nanny) => {
+        setSelectedNanny(nanny); 
+        setIsPopupOpen(true); 
+    };
+
+    const handleClosePopup = () => {
+        setIsPopupOpen(false); 
+        setSelectedNanny(null); 
+    };
 
     const filteredNannies = getFilteredNannies();
 
@@ -118,7 +123,11 @@ export default function SearchNannies() {
                         <div className="profile-list">
                             {filteredNannies.length > 0 ? (
                                 filteredNannies.map((nanny) => (
-                                    <ProfileCard key={nanny.id} nanny={nanny} />
+                                    <ProfileCard 
+                                        key={nanny.id} 
+                                        nanny={nanny} 
+                                        onCardClick={handleNannyClick} 
+                                    />
                                 ))
                             ) : (
                                 <p className="no-results">Δεν βρέθηκαν αποτελέσματα.</p>
@@ -128,6 +137,16 @@ export default function SearchNannies() {
                 </div>
             </main>
             <Footer />
+            {isPopupOpen && selectedNanny && (
+                <div className="popup-overlay" onClick={handleClosePopup}>
+                    <div className="popup" >
+                        <button className="close-btn" onClick={handleClosePopup}>
+                            X
+                        </button>
+                        <p><strong>Πρέπει να συνδεθείς για να μπεις στο προφίλ της νταντάς</strong></p>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
