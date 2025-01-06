@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../providers/firebaseConfig';
 import NavBarParents from '../../components/layout/NavBarParents';
 import Footer from '../../components/layout/Footer';
 import HelpButton from '../../components/buttons/HelpButton';
 import { Row, Col } from 'react-bootstrap';
-import { TextField, Alert } from '@mui/material';
+import { TextField, Alert, Snackbar } from '@mui/material';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import '../../styles/AgreementRenewal.css';
+import{updateDoc} from "firebase/firestore"
+
+
 
 export default function AgreementRenewal() {
     const [formData, setFormData] = useState({
@@ -17,6 +20,7 @@ export default function AgreementRenewal() {
         surname:'',
         address: '',
         phone: '',
+        email:'',
         colleagueName: '',
         colleagueAddress: '',
         workHours: ''
@@ -27,6 +31,16 @@ export default function AgreementRenewal() {
     const [email, setEmail] = useState('');
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
+
+
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+    
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -35,6 +49,8 @@ export default function AgreementRenewal() {
                 const userId = localStorage.getItem('userId');
                 if (!userId) {
                     console.error('User ID is not available');
+                    setSnackbarMessage("Δεν βρέθηκε αναγνωριστικό χρήστη.");
+                    setSnackbarSeverity("error");
                     setIsLoading(false);
                     return;
                 }
@@ -42,25 +58,85 @@ export default function AgreementRenewal() {
                 const userRef = doc(db, 'Parent', userId);
                 const userDoc = await getDoc(userRef);
 
-                if (userDoc.exists()) {
-                    const data = userDoc.data();
-
-                    // Adjusting data for display (e.g., date formatting)
-                    const formattedData = {
-                        name: `${data.name} ${data.surname}`,
-                        address: data.residence || '',
-                        phone: data.phone || '',
-                        colleagueName: data.colleagueName || 'ΜΑΡΙΑ ΜΩΜΜΟΥ',
-                        colleagueAddress: data.colleagueAddress || 'ΚΥΨΕΛΗ',
-                        workHours: data.workHours || 'ΠΛΗΡΕΣ ΩΡΑΡΙΟ'
-                    };
-
-                    setFormData(formattedData);
-                } else {
+                if (!userDoc.exists()) {
                     console.error('No such document!');
+                    setSnackbarMessage("Δεν βρέθηκαν δεδομένα για τον χρήστη.");
+                    setSnackbarSeverity("error");
+                    setIsLoading(false);
+                    return;
                 }
+
+                const userData = userDoc.data();
+
+                const agreementsRef = collection(db, 'agreements');
+                const activeAgreementQuery = query(
+                    agreementsRef,
+                    where('parentName','==', userData.name),
+                    where('parentSurname','==', userData.surname),
+                    where('isenable', '==', false)
+                );
+
+                const querySnapshot = await getDocs(activeAgreementQuery);
+
+                if (querySnapshot.empty) {
+                    setShowAlert(true);
+                    setSnackbarOpen(true);
+                    setSnackbarMessage("Δεν υπάρχει κάποιο προηγούμενο συμφωνητικό ή είναι ήδη ενεργό κάποιο συμφωνητικό.");
+                    setSnackbarSeverity("error");
+                    setIsLoading(false);
+                    return;
+                }
+
+
+                const activeAgreement = querySnapshot.docs[0].data();
+                console.log('Active Agreement:', activeAgreement);
+               
+
+                const usersRef = collection(db, 'users');
+                const nannyQuery = query(
+                    usersRef,
+                    where('name', '==', activeAgreement.nannyName),
+                    where('surname', '==', activeAgreement.nannySurName)
+                );
+                const nannySnapshot = await getDocs(nannyQuery);
+
+                let nannyLocation = 'Μη διαθέσιμη τοποθεσία';
+                let workHoursLabel = 'ΠΛΗΡΕΣ ΩΡΑΡΙΟ';
+
+
+                if (!nannySnapshot.empty) {
+                    const nannyData = nannySnapshot.docs[0].data();
+                    nannyLocation = nannyData.location || nannyLocation;
+                
+                    if (nannyData.employmentTime === "Μερική") {
+                        workHoursLabel = "ΜΕΡΙΚΗ ΑΠΑΣΧΟΛΗΣΗ";
+                    } else if (nannyData.employmentTime === "Πλήρης") {
+                        workHoursLabel = "ΠΛΗΡΗΣ ΑΠΑΣΧΟΛΗΣΗ";
+                    }
+                
+                }
+
+
+
+                
+
+
+                setFormData({
+                    name: `${userData.name} ${userData.surname}`,
+                    address: userData.residence || '',
+                    phone: userData.phone || '',
+                    email: activeAgreement.parentEmail || '',
+                    colleagueName: `${activeAgreement.nannyName} ${activeAgreement.nannySurName}` ,
+                    colleagueAddress: nannyLocation || '',
+                    workHours: workHoursLabel
+                });
+
+
             } catch (error) {
-                console.error('Error fetching user data: ', error);
+                console.error('Error fetching data: ', error);
+                setSnackbarOpen(true);
+                setSnackbarMessage("Προέκυψε σφάλμα κατά την ανάκτηση δεδομένων.");
+                setSnackbarSeverity("error");
             } finally {
                 setIsLoading(false);
             }
@@ -69,14 +145,96 @@ export default function AgreementRenewal() {
         fetchData();
     }, []);
 
-    const handleSubmit = () => {
-        if (!isWorkingAtHome || !email.trim() || !startTime || !endTime) {
-            setShowAlert(true);
-        } else {
-            setShowAlert(false);
-            console.log('Form submitted:', formData);
+    const handleSubmit = async () => {
+        if ( !startTime || !endTime) {
+            setSnackbarOpen(true);
+            setSnackbarMessage("Παρακαλώ συμπληρώστε τις ώρες εργασίας.");
+            setSnackbarSeverity("error");
+        }else {
+               
+            const startHours = startTime.hour();
+            const startMinutes = startTime.minute();
+            const endHours = endTime.hour();
+            const endMinutes = endTime.minute();
+
+            const totalMinutes = (endHours * 60 + endMinutes) - (startHours * 60 + startMinutes);
+
+            // Έλεγχος βάσει του workHours
+            const maxMinutes = formData.workHours === "ΜΕΡΙΚΗ ΑΠΑΣΧΟΛΗΣΗ" ? 360 : 480; // 6 ώρες = 360 λεπτά, 8 ώρες = 480 λεπτά
+        
+            if (totalMinutes >= maxMinutes) {
+                setSnackbarOpen(true);
+                setSnackbarMessage(`Δεν μπορείτε να δηλώσετε πάνω από ${maxMinutes / 60} ώρες εργασίας που θα ήθελε η νταντά.`);
+                setSnackbarSeverity("error");
+                return;
+            }
+
+            try {
+                
+                const userId = localStorage.getItem('userId');
+                if (!userId) {
+                    console.error('User ID is not available');
+                    setSnackbarOpen(true);
+                    setSnackbarMessage("Δεν βρέθηκε αναγνωριστικό χρήστη.");
+                    setSnackbarSeverity("error");
+                    return;
+                }
+
+                
+                const userRef = doc(db, 'Parent', userId);
+                const userDoc = await getDoc(userRef);
+
+                if (!userDoc.exists()) {
+                    console.error('No such document!');
+                    setIsLoading(false);
+                    return;
+                }
+
+                const userData = userDoc.data();
+
+                
+                const agreementsRef = collection(db, 'agreements');
+                const activeAgreementQuery = query(
+                    agreementsRef,
+                    where('parentName','==', userData.name),
+                    where('parentSurname','==', userData.surname),
+                    where('isenable', '==', false)
+                );
+                
+    
+                const querySnapshot = await getDocs(activeAgreementQuery);
+    
+                if (!querySnapshot.empty) {
+                    
+                    const docRef = querySnapshot.docs[0].ref;
+                    await updateDoc(docRef, {
+                        isenable: true,
+                        workHoursFrom: `${startHours}:${startMinutes.toString().padStart(2, '0')}`,
+                        workHoursTo: `${endHours}:${endMinutes.toString().padStart(2, '0')}`
+                    });
+    
+                    
+                    
+                    setSnackbarOpen(true);
+                    setSnackbarMessage("Η ανανέωση του συμφωνητικού έγινε επιτυχώς.");
+                    setSnackbarSeverity("success");
+    
+                    
+                    setTimeout(() => navigate("/ParentHomepage"), 2000);
+                } else {
+                    setSnackbarOpen(true);
+                    setSnackbarMessage("Δεν υπάρχει προηγούμενο συμφωνητικό για ανανέωση.");
+                    setSnackbarSeverity("error");
+                }
+            } catch (error) {
+                console.error("Error updating agreement:", error);
+                setSnackbarOpen(true);
+                setSnackbarMessage("Σφάλμα κατά τη λήξη του συμφωνητικού.");
+                setSnackbarSeverity("error");
+            }
         }
     };
+
 
     if (isLoading) {
         return <p>Loading...</p>;
@@ -135,12 +293,14 @@ export default function AgreementRenewal() {
                     <p className='text'>και email</p>
                 </Col>
                 <Col>
+                    <p className='text'>και email</p>
+                </Col>
+                <Col>
                     <TextField
                         fullWidth
                         className='text-field'
-                        placeholder="Εισάγετε το email σας"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={formData.email}
+                        InputProps={{ readOnly: true }}
                     />
                 </Col>
             </Row>
@@ -186,7 +346,7 @@ export default function AgreementRenewal() {
             </Row>
             <Row>
                 <Col>
-                    <p className='text'>με</p>
+                    <p className='text'>που θα ήθελε να δουλέυει με</p>
                 </Col>
                 <Col>
                     <TextField
@@ -231,6 +391,16 @@ export default function AgreementRenewal() {
             <button type="button" className="button-apply" onClick={handleSubmit}>
                 Υποβολή
             </button>
+             <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={4000}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+                <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
             <Footer />
         </div>
     );
