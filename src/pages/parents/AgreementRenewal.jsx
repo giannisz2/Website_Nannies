@@ -159,7 +159,7 @@ export default function AgreementRenewal() {
 
             const totalMinutes = (endHours * 60 + endMinutes) - (startHours * 60 + startMinutes);
 
-            // Έλεγχος βάσει του workHours
+            
             const maxMinutes = formData.workHours === "ΜΕΡΙΚΗ ΑΠΑΣΧΟΛΗΣΗ" ? 360 : 480; // 6 ώρες = 360 λεπτά, 8 ώρες = 480 λεπτά
         
             if (totalMinutes >= maxMinutes) {
@@ -367,13 +367,13 @@ export default function AgreementRenewal() {
                 <TimePicker
                     label="Ώρα Έναρξης"
                     value={startTime}
-                    onChange={(newValue) => setStartTime(newValue)} // Update start time
+                    onChange={(newValue) => setStartTime(newValue)} 
                     renderInput={(params) => <TextField {...params} />}
                 />
                 <TimePicker
                     label="Ώρα Λήξης"
                     value={endTime}
-                    onChange={(newValue) => setEndTime(newValue)} // Update end time
+                    onChange={(newValue) => setEndTime(newValue)} 
                     renderInput={(params) => <TextField {...params} />}
                 />
                 </LocalizationProvider>
