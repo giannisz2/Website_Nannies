@@ -7,21 +7,38 @@ import { TextField } from '@mui/material';
 import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { useState } from 'react';
-
+import { useLocation } from 'react-router-dom';
 import '../../styles/TempAgreement.css';
+import { Alert, Snackbar } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+
 
 export default function PreviewAgreement() {
-    const [startTime, setStartTime] = useState(null);
-    const [endTime, setEndTime] = useState(null);
+    const location = useLocation();
+    const formData = location.state?.formData || JSON.parse(localStorage.getItem('previewData'));
+    const [parentData, setParentData] = useState(formData);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+        
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
+
+    const navigate = useNavigate();
 
     const handleSubmit = () => {
-        console.log('Form submitted with times:', startTime, endTime);
+        setSnackbarMessage('Η αίτηση καταχωρήθηκε επιτυχώς.');
+        setSnackbarSeverity('success');
+        setSnackbarOpen(true);
+        
+        setTimeout(() => navigate("/ParentHomepage"), 2000);
     };
 
     return (
         <div>
             <NavBarParents />
-            <p className='top-text'>Επισκόπηση Συμφωνητικού</p>
+            <p className='top-text'>Επισκόπηση Αίτησης Ενδιαφέροντος</p>
             <HelpButton />
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <Row>
@@ -31,8 +48,9 @@ export default function PreviewAgreement() {
                     <Col>
                         <TextField
                             fullWidth
+                            value={parentData.parentName}
                             className="text-field"
-                            placeholder="ΠΕΤΡΟΣ ΑΝΑΣΤΑΣΙΟΥ  (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
+                            InputProps={{ readOnly: true }}
                         />
                     </Col>
                 </Row>
@@ -41,11 +59,12 @@ export default function PreviewAgreement() {
                         <p className="text">Που μένω στην διεύθυνση</p>
                     </Col>
                     <Col>
-                        <TextField
-                            fullWidth
-                            className="text-field"
-                            placeholder="ΠΑΠΑΓΡΗΓΟΡΙΟΥ 7, 11855, ΑΘΗΝΑ  (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
-                        />
+                    <TextField
+                        fullWidth
+                        value={parentData.parentAddress}
+                        className="text-field"
+                        InputProps={{ readOnly: true }}
+                    />
                     </Col>
                 </Row>
                 <Row>
@@ -53,11 +72,12 @@ export default function PreviewAgreement() {
                         <p className="text">με κινητό τηλέφωνο</p>
                     </Col>
                     <Col>
-                        <TextField
-                            fullWidth
-                            className="text-field"
-                            placeholder="+44 592 410 845 (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
-                        />
+                    <TextField
+                        fullWidth
+                        value={parentData.parentPhone}
+                        className="text-field"
+                        InputProps={{ readOnly: true }}
+                    />
                     </Col>
                 </Row>
                 <Row>
@@ -65,11 +85,12 @@ export default function PreviewAgreement() {
                         <p className="text">και email</p>
                     </Col>
                     <Col>
-                        <TextField
-                            fullWidth
-                            className="text-field"
-                            placeholder="panastasiou@gmail.com (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
-                        />
+                    <TextField
+                        fullWidth
+                        value={parentData.email}
+                        className="text-field"
+                        InputProps={{ readOnly: true }}
+                    />
                     </Col>
                 </Row>
                 <Row>
@@ -77,11 +98,12 @@ export default function PreviewAgreement() {
                         <p className="text">Θα ήθελα να ΣΥΝΕΡΓΑΣΤΩ με τον/την </p>
                     </Col>
                     <Col>
-                        <TextField
-                            fullWidth
-                            className="text-field"
-                            placeholder="ΜΑΡΙΑ ΜΩΜΜΟΥ  (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
-                        />
+                    <TextField
+                        fullWidth
+                        value={parentData.nannyName}
+                        className="text-field"
+                        InputProps={{ readOnly: true }}
+                    />
                     </Col>
                 </Row>
                 <Row>
@@ -89,27 +111,26 @@ export default function PreviewAgreement() {
                         <p className="text">που διαμένει στην</p>
                     </Col>
                     <Col>
-                        <TextField
-                            fullWidth
-                            className="text-field"
-                            placeholder="ΚΥΨΕΛΗ  (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
-                        />
+                    <TextField
+                        fullWidth
+                        value={parentData.nannyAddress}
+                        className="text-field"
+                        InputProps={{ readOnly: true }}
+                    />
                     </Col>
                 </Row>
-                <Row>
-                    <Col>
-                        <p className="text">και εργάζεται στην κατοικία μου</p>
-                    </Col>
-                    <Col>
-                        <input type="checkbox" className="checkbox" aria-label="Εργάζεται στην κατοικία μου" />
-                    </Col>
-                </Row>
+                
                 <Row>
                     <Col>
                         <p className="text">με</p>
                     </Col>
                     <Col>
-                        <TextField fullWidth className="text-field" placeholder="ΠΛΗΡΕΣ ΩΡΑΡΙΟ" />
+                    <TextField
+                        fullWidth
+                        value={parentData.nannyEmploymentTime}
+                        className="text-field"
+                        InputProps={{ readOnly: true }}
+                    />
                     </Col>
                 </Row>
                 <Row>
@@ -117,17 +138,17 @@ export default function PreviewAgreement() {
                         <p className="text">στις ώρες</p>
                     </Col>
                     <Col>
-                        <TimePicker
-                            label="Ώρα Έναρξης"
-                            value={startTime}
-                            onChange={(newValue) => setStartTime(newValue)}
-                            renderInput={(params) => <TextField {...params} />}
+                        <TextField
+                            fullWidth
+                            value={parentData.workHoursFrom}
+                            className="text-field"
+                            InputProps={{ readOnly: true }}
                         />
-                        <TimePicker
-                            label="Ώρα Λήξης"
-                            value={endTime}
-                            onChange={(newValue) => setEndTime(newValue)}
-                            renderInput={(params) => <TextField {...params} />}
+                        <TextField
+                            fullWidth
+                            value={parentData.workHoursTo}
+                            className="text-field"
+                            InputProps={{ readOnly: true }}
                         />
                     </Col>
                 </Row>
@@ -135,6 +156,9 @@ export default function PreviewAgreement() {
             <button type="button" className="button-apply" onClick={handleSubmit}>
                 Υποβολή
             </button>
+            <Snackbar open={snackbarOpen} autoHideDuration={4000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
+                            <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>{snackbarMessage}</Alert>
+                        </Snackbar>
             <Footer />
         </div>
     );

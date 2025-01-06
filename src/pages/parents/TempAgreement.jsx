@@ -15,8 +15,8 @@ import dayjs from 'dayjs';
 export default function TempAgreement() {
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
-    const [maxHours, setMaxHours] = useState(8); // Μέγιστες ώρες (default: 8)
-    const [employmentType, setEmploymentType] = useState(''); // Τύπος απασχόλησης
+    const [maxHours, setMaxHours] = useState(8); 
+    const [employmentType, setEmploymentType] = useState(''); 
     
     const [parentData, setParentData] = useState(()=>{
         const savedData = localStorage.getItem('tempAgreementData');
@@ -27,8 +27,9 @@ export default function TempAgreement() {
                 email: '',
                 nannyName: '',
                 nannyAddress: '',
+                workHours:'',
                 workHoursFrom: '',
-                workHoursTo: ''
+                nannyEmploymentTime: ''
         };
     });
 
@@ -174,10 +175,13 @@ export default function TempAgreement() {
     
             await addDoc(collection(db, 'interest'), formattedData);
     
-            setSnackbarMessage('Η αίτηση καταχωρήθηκε επιτυχώς.');
-            setSnackbarSeverity('success');
-            setSnackbarOpen(true);
+            
             localStorage.removeItem('tempAgreementData');
+
+
+            localStorage.setItem('previewData', JSON.stringify(formattedData)); // Αποθηκεύστε τα δεδομένα στην τοπική αποθήκη για πιθανή μελλοντική χρήση
+            navigate('/PreviewAgreement', { state: { formData: formattedData } });
+            
             navigate('/PreviewAgreement');
         } catch (error) {
             console.error('Σφάλμα κατά την καταχώρηση δεδομένων:', error);
