@@ -162,7 +162,13 @@ export default function NanniesProfile() {
     };
     
     const handleSendRequest =() =>{
-        navigate('/TempAgreement');
+        navigate('/TempAgreement', {
+            state: {
+                nannyName: `${nanny.name} ${nanny.surname}`,
+                nannyAddress: nanny.location,
+                nannyEmploymentTime: nanny.employmentTime,
+            },
+        });
     };
 
 
