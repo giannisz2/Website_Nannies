@@ -43,6 +43,9 @@ export default function AgreementExpiration() {
                 const userId = localStorage.getItem('userId');
                 if (!userId) {
                     console.error('User ID is not available');
+                    setSnackbarOpen(true);
+                    setSnackbarMessage("Δεν βρέθηκε αναγνωριστικό χρήστη.");
+                    setSnackbarSeverity("error");
                     setIsLoading(false);
                     return;
                 }
@@ -53,6 +56,8 @@ export default function AgreementExpiration() {
 
                 if (!userDoc.exists()) {
                     console.error('No such document!');
+                    setSnackbarMessage("Δεν βρέθηκαν δεδομένα για τον χρήστη.");
+                    setSnackbarSeverity("error");
                     setIsLoading(false);
                     return;
                 }
@@ -65,7 +70,7 @@ export default function AgreementExpiration() {
                     agreementsRef,
                    where('parentName','==', userData.name),
                    where('parentSurname','==', userData.surname),
-                    where('isenable', '==', true)
+                   where('isenable', '==', true)
                 );
                 
                 
@@ -74,6 +79,9 @@ export default function AgreementExpiration() {
                 
                 if (querySnapshot.empty) {
                     setShowAlert(true);
+                    setSnackbarOpen(true);
+                    setSnackbarMessage("Δεν υπάρχει ενεργό συμφωνητικό για τον χρήστη.");
+                    setSnackbarSeverity("error");
                     setIsLoading(false);
                     return;
                 }
@@ -124,6 +132,9 @@ export default function AgreementExpiration() {
                
             } catch (error) {
                 console.error('Error fetching data: ', error);
+                setSnackbarOpen(true);
+                setSnackbarMessage("Προέκυψε σφάλμα κατά την ανάκτηση δεδομένων.");
+                setSnackbarSeverity("error");
             } finally {
                 setIsLoading(false);
             }
@@ -135,9 +146,11 @@ export default function AgreementExpiration() {
 
     const handleSubmit = async () => {
         if (!isSureToTerminate) {
-            setShowAlert(true);
+            setSnackbarOpen(true);
+            setSnackbarMessage("Παρακαλώ επιβεβαιώστε ότι θέλετε να διακόψετε τη διαδικασία.");
+            setSnackbarSeverity("error");
         } else {
-            setShowAlert(false);
+            
     
             try {
                 
@@ -333,15 +346,7 @@ export default function AgreementExpiration() {
                     Παρακαλώ ελέγξτε αν είστε σίγουροι ότι θέλετε να διακόψετε την διαδικασία.
                 </Alert>
             )}
-            {showAlert && (
-                <Alert
-                    severity="error"
-                    className="alert"
-                    onClose={() => setShowAlert(false)}
-                >
-                    Δεν υπάρχει ενεργό συμφωνητικό για τον χρήστη.
-                </Alert>
-            )}
+            
             <button type="button" className="button-apply" onClick={handleSubmit}>
                 Υποβολή
             </button>
