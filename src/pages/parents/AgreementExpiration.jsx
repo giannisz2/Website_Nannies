@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../../providers/firebaseConfig';
 import NavBarParents from '../../components/layout/NavBarParents';
 import Footer from '../../components/layout/Footer';
 import HelpButton from '../../components/buttons/HelpButton';
 import { Row, Col } from 'react-bootstrap';
-import { TextField, Alert } from '@mui/material';
+import { TextField, Alert, Snackbar } from '@mui/material';
 import '../../styles/AgreementExpiration.css';
 
 export default function AgreementExpiration() {
@@ -15,6 +15,7 @@ export default function AgreementExpiration() {
         surname:'',
         address: '',
         phone: '',
+        email: '',
         colleagueName: '',
         colleagueAddress: '',
         workHours: ''
@@ -23,7 +24,7 @@ export default function AgreementExpiration() {
     const [isSureToTerminate, setIsSureToTerminate] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [email, setEmail] = useState('');
+    
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -36,28 +37,50 @@ export default function AgreementExpiration() {
                     return;
                 }
 
+                // Φόρτωση δεδομένων από το Parent collection
                 const userRef = doc(db, 'Parent', userId);
                 const userDoc = await getDoc(userRef);
 
-                if (userDoc.exists()) {
-                    const data = userDoc.data();
-
-                    // Adjusting data for display (e.g., date formatting)
-                    const formattedData = {
-                        name: `${data.name} ${data.surname}`,
-                        address: data.residence || '',
-                        phone: data.phone || '',
-                        colleagueName: data.colleagueName || 'ΜΑΡΙΑ ΜΩΜΜΟΥ',
-                        colleagueAddress: data.colleagueAddress || 'ΚΥΨΕΛΗ',
-                        workHours: data.workHours || 'ΠΛΗΡΕΣ ΩΡΑΡΙΟ'
-                    };
-
-                    setFormData(formattedData);
-                } else {
+                if (!userDoc.exists()) {
                     console.error('No such document!');
+                    setIsLoading(false);
+                    return;
                 }
+
+                const userData = userDoc.data();
+
+                // Έλεγχος για ενεργό συμφωνητικό
+                const agreementsRef = collection(db, 'agreements');
+                const activeAgreementQuery = query(
+                    agreementsRef,
+                   where('parentName','==', userData.name),
+                   where('parentSurname','==', userData.surname),
+                    where('isenable', '==', true)
+                );
+                const querySnapshot = await getDocs(activeAgreementQuery);
+
+                if (querySnapshot.empty) {
+                    setShowAlert(true);
+                    setIsLoading(false);
+                    return;
+                }
+
+                const activeAgreement = querySnapshot.docs[0].data();
+
+                // Συμπλήρωση των δεδομένων στη φόρμα
+                setFormData({
+                    name: `${userData.name} ${userData.surname}`,
+                    address: userData.residence || '',
+                    phone: userData.phone || '',
+                    email: activeAgreement.parentEmail || '',
+                    colleagueName: `${activeAgreement.nannyName} ${activeAgreement.nannySurName}`,
+                    colleagueAddress: activeAgreement.nannyAddress || '',
+                    workHours: activeAgreement.workHours || 'ΠΛΗΡΕΣ ΩΡΑΡΙΟ'
+                });
+
+               
             } catch (error) {
-                console.error('Error fetching user data: ', error);
+                console.error('Error fetching data: ', error);
             } finally {
                 setIsLoading(false);
             }
@@ -66,8 +89,9 @@ export default function AgreementExpiration() {
         fetchData();
     }, []);
 
+
     const handleSubmit = () => {
-        if (!isWorkingAtHome || !isSureToTerminate || !email.trim()) {
+        if (!isWorkingAtHome || !isSureToTerminate ) {
             setShowAlert(true);
         } else {
             setShowAlert(false);
@@ -94,7 +118,6 @@ export default function AgreementExpiration() {
                         fullWidth
                         className='text-field'
                         value={formData.name}
-                        placeholder="ΠΕΤΡΟΣ ΑΝΑΣΤΑΣΙΟΥ (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
                         InputProps={{ readOnly: true }}
                     />
                 </Col>
@@ -108,7 +131,6 @@ export default function AgreementExpiration() {
                         fullWidth
                         className='text-field'
                         value={formData.address}
-                        placeholder="ΠΑΠΑΓΡΗΓΟΡΙΟΥ 7, 11855, ΑΘΗΝΑ (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
                         InputProps={{ readOnly: true }}
                     />
                 </Col>
@@ -122,7 +144,6 @@ export default function AgreementExpiration() {
                         fullWidth
                         className='text-field'
                         value={formData.phone}
-                        placeholder="+44 592 410 845 (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
                         InputProps={{ readOnly: true }}
                     />
                 </Col>
@@ -135,9 +156,8 @@ export default function AgreementExpiration() {
                     <TextField
                         fullWidth
                         className='text-field'
-                        placeholder="Εισάγετε το email σας"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        value={formData.email}
+                        InputProps={{ readOnly: true }}
                     />
                 </Col>
             </Row>
@@ -150,7 +170,6 @@ export default function AgreementExpiration() {
                         fullWidth
                         className='text-field'
                         value={formData.colleagueName}
-                        placeholder="ΜΑΡΙΑ ΜΩΜΜΟΥ (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
                         InputProps={{ readOnly: true }}
                     />
                 </Col>
@@ -214,6 +233,15 @@ export default function AgreementExpiration() {
                     onClose={() => setShowAlert(false)}
                 >
                     Παρακαλώ ελέγξτε η νταντά αν εργάζεται στην κατοικία σας, αν είστε σίγουροι ότι θέλετε να διακόψετε την διαδικασία και αν έχετε εισάγει το email σας.
+                </Alert>
+            )}
+            {showAlert && (
+                <Alert
+                    severity="error"
+                    className="alert"
+                    onClose={() => setShowAlert(false)}
+                >
+                    Δεν υπάρχει ενεργό συμφωνητικό για τον χρήστη.
                 </Alert>
             )}
             <button type="button" className="button-apply" onClick={handleSubmit}>
