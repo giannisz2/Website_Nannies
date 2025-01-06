@@ -77,3 +77,24 @@
 .input{
     background-color: white;
 }
+
+.autocomplete-dropdown-sidebar {
+    width: max-content; 
+    min-width: 15%; 
+    max-width: 150px; 
+    border: 1px solid #ccc;
+    background: white;
+    position: absolute;
+    z-index: 1000;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.autocomplete-item-sidebar {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.autocomplete-item-sidebar:hover {
+    background-color: #f0f0f0;
+}

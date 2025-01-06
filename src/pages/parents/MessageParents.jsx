@@ -133,7 +133,9 @@ export default function MessageParents() {
                 <strong>Από:</strong> {currentItem.sender}
               </p>
             )}
-            <TextField fullWidth label="Απάντηση" type="text" className="popup_text" />
+            {currentType === 'message' && (
+              <TextField fullWidth label="Απάντηση" type="text" className="popup_text" />
+            )}
           </div>
         </div>
       )}
