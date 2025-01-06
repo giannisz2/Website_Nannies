@@ -4,15 +4,17 @@ import Footer from '../../components/layout/Footer';
 import { Row, Col } from 'react-bootstrap';
 import TextField from '@mui/material/TextField';
 import HelpButton from '../../components/buttons/HelpButton';
-import { Alert } from '@mui/material';
+import { Alert,Snackbar } from '@mui/material';
 import '../../styles/Agreement.css';
 import { db } from '../../providers/firebaseConfig.js';
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, query, where,getDocs } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import {  doc, getDoc } from 'firebase/firestore';
-
-import Snackbar from '@mui/material/Snackbar';
-
+import { TimePicker } from '@mui/x-date-pickers';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs from 'dayjs';
+import { DatePicker } from '@mui/x-date-pickers';
 
 export default function ParentsAgreement() {
     
@@ -21,12 +23,11 @@ export default function ParentsAgreement() {
         nannySurName: '',
         parentName:'',
         parentSurname: '',
-    
         parentEmail: '',
-        workHoursFrom: '9:30',
-        workHoursTo: '17:00',
-
-        startDate: new Date(),
+        workHoursFrom: dayjs('09:30', 'HH:mm'),
+        workHoursTo: dayjs('17:00', 'HH:mm'),
+        startDate: dayjs(),
+        isenable: true,
         
     });
     
@@ -49,6 +50,10 @@ export default function ParentsAgreement() {
         setSnackbarOpen(false);
     };
 
+
+    const handleTimeChange = (name, newValue) => {
+        setFormData((prev) => ({ ...prev, [name]: newValue }));
+    };
 
     useEffect(() => {
         const fetchParentData = async () => {
@@ -86,8 +91,7 @@ export default function ParentsAgreement() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        // Check for required fields
+    
         const errors = {};
         if (!formData.nannyName || !validateGreekUppercase(formData.nannyName)) {
             errors.nannyName = true;
@@ -101,7 +105,7 @@ export default function ParentsAgreement() {
         if (!isChecked) {
             errors.checkbox = true;
         }
-
+    
         if (Object.keys(errors).length > 0) {
             setFormErrors(errors);
             handleSnackbarOpen(
@@ -110,9 +114,34 @@ export default function ParentsAgreement() {
             );
             return;
         }
-
+    
         try {
-            const docRef = await addDoc(collection(db, 'agreements'), formData);
+            
+            const agreementsRef = collection(db, 'agreements');
+            const activeAgreementQuery = query(
+                agreementsRef,
+                where('parentEmail', '==', formData.parentEmail),
+                where('isenable', '==', true)
+            );
+            const querySnapshot = await getDocs(activeAgreementQuery);
+    
+            if (!querySnapshot.empty) {
+                handleSnackbarOpen(
+                    'Υπάρχει ήδη ενεργό συμφωνητικό για τον χρήστη. Δεν μπορείτε να δημιουργήσετε νέο.',
+                    'error'
+                );
+                return;
+            }
+    
+            
+            const formattedData = {
+                ...formData,
+                workHoursFrom: formData.workHoursFrom.format('HH:mm'), 
+                workHoursTo: formData.workHoursTo.format('HH:mm'), 
+                startDate: formData.startDate.toDate(), 
+                isenable: formData.isenable, 
+            };
+            const docRef = await addDoc(collection(db, 'agreements'), formattedData);
             console.log('Document written with ID: ', docRef.id);
             navigate('/ParentHomepage');
         } catch (e) {
@@ -123,6 +152,9 @@ export default function ParentsAgreement() {
             );
         }
     };
+    
+    
+    
     
     
     const handleInputChange = (e) => {
@@ -148,6 +180,7 @@ export default function ParentsAgreement() {
 
     
     return (
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
         <>
             <div className="nanny-agreement">
                 <NavBarParents />
@@ -180,10 +213,7 @@ export default function ParentsAgreement() {
                             }
                         />
                         </Col>
-                        
                         <p > </p>
-
-
                         <Col md={6} xs={12} className="d-flex flex-column align-items-center justify-content-center text-center">
                             
                         
@@ -220,38 +250,36 @@ export default function ParentsAgreement() {
                        
                     </Row>
                 </div>
+                <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
+    <Row className="align-items-start justify-content-center g-5 m-0 w-100">
+        <Col md={6} className="d-flex flex-column">
+        <p> Ωράριο Εργασίας:</p>
+            <TimePicker
+                label="Ώρα Από"
+                value={formData.workHoursFrom}
+                onChange={(newValue) => handleTimeChange('workHoursFrom', newValue)}
+                renderInput={(params) => <TextField {...params} className="mb-3" />}
+            />
+            <p></p>
+            <TimePicker
+                label="Ώρα Μέχρι"
+                value={formData.workHoursTo}
+                onChange={(newValue) => handleTimeChange('workHoursTo', newValue)}
+                renderInput={(params) => <TextField {...params} />}
+            />
+        </Col>
+                        <Col md={6}>
+                    <p>Έναρξη Εργασίας:</p>
+                    <DatePicker
+                        label="Επιλέξτε Ημερομηνία"
+                        value={formData.startDate}
+                        onChange={(newValue) => setFormData((prev) => ({ ...prev, startDate: newValue }))}
+                        renderInput={(params) => <TextField {...params} />}
+                    />
+                </Col>
+                </Row>
+            </div>
 
-                <div className="content flex-grow-1 d-flex align-items-center justify-content-center"> 
-                    <Row className="align-items-start justify-content-center g-5 m-0 w-100">
-                        <Col
-                            md={6}
-                            xs={12}
-                            className="d-flex flex-column align-items-center justify-content-center text-center"
-                        >
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                <p className="text-agreement2">Ωράριο:</p>
-                                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <span style={{ fontSize: '18px', color: 'blue', textDecoration: 'underline' }}>9:30</span>
-                                    <span style={{ fontSize: '18px', color: 'blue', textDecoration: 'underline' }}>17:00</span>
-                                </div>
-                            </div>
-                        </Col>
-                        <Col
-                            md={6}
-                            xs={12}
-                            className="d-flex flex-column align-items-center justify-content-center text-center"
-                        >
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                <p className="text-agreement2">Έναρξη εργασίας:</p>
-                                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                    <span style={{ fontSize: '18px', color: 'blue', textDecoration: 'underline' }}>
-                                        Παρασκευή 27 Δεκεμβρίου 2024
-                                    </span>
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
-                </div>
                 <div style={{ fontSize: '18px' }}>
                     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', marginTop: '100px' , marginBottom: '50px'}}>
                         <span style={{ marginRight: '10px' }}>
@@ -279,10 +307,10 @@ export default function ParentsAgreement() {
                 </button>
                 
                 <Snackbar
-                open={snackbarOpen}
-                autoHideDuration={4000}
-                onClose={handleSnackbarClose}
-            >
+                    open={snackbarOpen}
+                    autoHideDuration={4000}
+                    onClose={handleSnackbarClose}
+                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
                 <Alert
                     onClose={handleSnackbarClose}
                     severity={snackbarSeverity}
@@ -294,5 +322,6 @@ export default function ParentsAgreement() {
                 <Footer />
             </div>
         </>
+         </LocalizationProvider>
     );
 }
