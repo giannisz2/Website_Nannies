@@ -15,6 +15,9 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
+import { writeBatch } from 'firebase/firestore';
+
+
 
 export default function ParentsAgreement() {
     
@@ -57,21 +60,51 @@ export default function ParentsAgreement() {
 
     useEffect(() => {
         const fetchParentData = async () => {
-            const userId = localStorage.getItem("userId"); 
+            const userId = localStorage.getItem("userId");
             if (userId) {
-                const parentRef = doc(db, "Parent", userId);
-                const parentSnap = await getDoc(parentRef);
-                if (parentSnap.exists()) {
-                    const parentData = parentSnap.data();
-                    setFormData(prev => ({
-                        ...prev,
-                        parentName: parentData.name,
-                        parentSurname: parentData.surname,
-                        parentEmail: parentData.email,
-                    }));
-                } else {
-                    console.log("No parent data found");
+                try {
+                   
+                    const parentRef = doc(db, "Parent", userId);
+                    const parentSnap = await getDoc(parentRef);
+                    if (parentSnap.exists()) {
+                        const parentData = parentSnap.data();
+                        setFormData((prev) => ({
+                            ...prev,
+                            parentName: parentData.name,
+                            parentSurname: parentData.surname,
+                            parentEmail: parentData.email,
+                        }));
+    
+                        
+                        const agreementsRef = collection(db, "agreements");
+                        const activeAgreementQuery = query(
+                            agreementsRef,
+                            where("parentName", "==", parentData.name),
+                            where("parentSurname", "==", parentData.surname),
+                            where("isenable", "==", true)
+                        );
+    
+                        const querySnapshot = await getDocs(activeAgreementQuery);
+                        if (!querySnapshot.empty) {
+                            // Εμφάνιση μηνύματος σφάλματος εάν υπάρχει ενεργό συμφωνητικό
+                            handleSnackbarOpen(
+                                "Υπάρχει ήδη ενεργό συμφωνητικό για τον χρήστη.",
+                                "error"
+                            );
+                            setTimeout(() => navigate("/ParentHomepage"), 3000); // Μεταφορά στην Αρχική Σελίδα
+                            return;
+                        }
+                    } else {
+                        console.error("Δεν βρέθηκαν δεδομένα γονέα.");
+                        handleSnackbarOpen("Δεν βρέθηκαν δεδομένα για τον χρήστη.", "error");
+                    }
+                } catch (error) {
+                    console.error("Σφάλμα κατά την ανάκτηση δεδομένων γονέα: ", error);
+                    handleSnackbarOpen("Σφάλμα κατά την ανάκτηση δεδομένων.", "error");
                 }
+            } else {
+                console.error("Δεν υπάρχει συνδεδεμένος χρήστης.");
+                handleSnackbarOpen("Δεν υπάρχει συνδεδεμένος χρήστης.", "error");
             }
         };
         fetchParentData();
@@ -117,22 +150,82 @@ export default function ParentsAgreement() {
     
         try {
             
-            const agreementsRef = collection(db, 'agreements');
-            const activeAgreementQuery = query(
-                agreementsRef,
-                where('parentEmail', '==', formData.parentEmail),
-                where('isenable', '==', true)
+            const workHoursFrom = formData.workHoursFrom.hour() * 60 + formData.workHoursFrom.minute();
+        const workHoursTo = formData.workHoursTo.hour() * 60 + formData.workHoursTo.minute();
+        const totalMinutes = workHoursTo - workHoursFrom;
+
+        if (totalMinutes <= 0) {
+            handleSnackbarOpen(
+                "Η Ώρα Έναρξης πρέπει να είναι πριν την Ώρα Λήξης.",
+                "error"
             );
-            const querySnapshot = await getDocs(activeAgreementQuery);
+            return;
+        }
+
+        // Εύρεση νταντάς στο db users
+        const usersRef = collection(db, "users");
+        const nannyQuery = query(
+            usersRef,
+            where("name", "==", formData.nannyName),
+            where("surname", "==", formData.nannySurName)
+        );
+        const nannySnapshot = await getDocs(nannyQuery);
+
+        if (nannySnapshot.empty) {
+            handleSnackbarOpen(
+                "Η νταντά που καταχωρήσατε δεν υπάρχει στο σύστημα.",
+                "error"
+            );
+            return;
+        }
+
+        const nannyData = nannySnapshot.docs[0].data();
+        const employmentTime = nannyData.employmentTime;
+
+        // Έλεγχος ωρών εργασίας βάσει τύπου απασχόλησης
+        const maxMinutes = employmentTime === "Μερική" ? 360 : 480;
+        if (totalMinutes > maxMinutes) {
+            handleSnackbarOpen(
+                `Η μέγιστη διάρκεια για ${employmentTime === "Μερική" ? "Μερική" : "Πλήρη"} απασχόληση είναι ${maxMinutes / 60} ώρες.`,
+                "error"
+            );
+            return;
+        }
+
+
+
+            const agreementsRef = collection(db, 'agreements');
+            const existingAgreementQuery = query(
+                agreementsRef,
+                where("parentName", "==", formData.parentName),
+                where("parentSurname", "==", formData.parentSurname),
+                where("nannyName", "==", formData.nannyName),
+                where("nannySurName", "==", formData.nannySurName)
+            );
+            const existingAgreementSnapshot = await getDocs(existingAgreementQuery);
     
-            if (!querySnapshot.empty) {
+            if (!existingAgreementSnapshot.empty) {
                 handleSnackbarOpen(
-                    'Υπάρχει ήδη ενεργό συμφωνητικό για τον χρήστη. Δεν μπορείτε να δημιουργήσετε νέο.',
-                    'error'
+                    "Υπάρχει ήδη συμφωνητικό με τη συγκεκριμένη νταντά. Παρακαλώ μεταβείτε στην ανανέωση συμφωνητικού.",
+                    "error"
                 );
+                setTimeout(() => navigate("/AgreementRenewal"), 3000);
                 return;
             }
     
+            const otherAgreementsQuery = query(
+                agreementsRef,
+                where("parentName", "==", formData.parentName),
+                where("parentSurname", "==", formData.parentSurname)
+            );
+            const otherAgreementsSnapshot = await getDocs(otherAgreementsQuery);
+    
+            const batch = writeBatch(db); // Δημιουργία batch
+            otherAgreementsSnapshot.forEach((doc) => {
+                batch.delete(doc.ref);
+            });
+            await batch.commit();
+        
             
             const formattedData = {
                 ...formData,
@@ -143,6 +236,7 @@ export default function ParentsAgreement() {
             };
             const docRef = await addDoc(collection(db, 'agreements'), formattedData);
             console.log('Document written with ID: ', docRef.id);
+            handleSnackbarOpen("Το συμφωνητικό δημιουργήθηκε επιτυχώς.", "success");
             navigate('/ParentHomepage');
         } catch (e) {
             console.error('Error adding document: ', e);

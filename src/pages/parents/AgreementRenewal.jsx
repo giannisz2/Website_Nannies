@@ -83,6 +83,7 @@ export default function AgreementRenewal() {
                     setSnackbarOpen(true);
                     setSnackbarMessage("Δεν υπάρχει κάποιο προηγούμενο συμφωνητικό ή είναι ήδη ενεργό κάποιο συμφωνητικό.");
                     setSnackbarSeverity("error");
+                    setTimeout(() => navigate("/ParentHomepage"), 4000);
                     setIsLoading(false);
                     return;
                 }
@@ -255,7 +256,7 @@ export default function AgreementRenewal() {
                         fullWidth
                         className='text-field'
                         value={formData.name}
-                        placeholder="ΠΕΤΡΟΣ ΑΝΑΣΤΑΣΙΟΥ (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
+                        placeholder="(ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
                         InputProps={{ readOnly: true }}
                     />
                 </Col>
@@ -269,7 +270,7 @@ export default function AgreementRenewal() {
                         fullWidth
                         className='text-field'
                         value={formData.address}
-                        placeholder="ΠΑΠΑΓΡΗΓΟΡΙΟΥ 7, 11855, ΑΘΗΝΑ (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
+                        placeholder="(ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
                         InputProps={{ readOnly: true }}
                     />
                 </Col>
@@ -283,7 +284,7 @@ export default function AgreementRenewal() {
                         fullWidth
                         className='text-field'
                         value={formData.phone}
-                        placeholder="+44 592 410 845 (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
+                        placeholder="(ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
                         InputProps={{ readOnly: true }}
                     />
                 </Col>
@@ -293,13 +294,11 @@ export default function AgreementRenewal() {
                     <p className='text'>και email</p>
                 </Col>
                 <Col>
-                    <p className='text'>και email</p>
-                </Col>
-                <Col>
                     <TextField
                         fullWidth
                         className='text-field'
                         value={formData.email}
+                        placeholder="(ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
                         InputProps={{ readOnly: true }}
                     />
                 </Col>
@@ -313,7 +312,7 @@ export default function AgreementRenewal() {
                         fullWidth
                         className='text-field'
                         value={formData.colleagueName}
-                        placeholder="ΜΑΡΙΑ ΜΩΜΜΟΥ (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
+                        placeholder="(ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
                         InputProps={{ readOnly: true }}
                     />
                 </Col>
@@ -327,7 +326,7 @@ export default function AgreementRenewal() {
                         fullWidth
                         className='text-field'
                         value={formData.colleagueAddress}
-                        placeholder="ΚΥΨΕΛΗ (ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
+                        placeholder="(ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
                         InputProps={{ readOnly: true }}
                     />
                 </Col>
@@ -353,7 +352,7 @@ export default function AgreementRenewal() {
                         fullWidth
                         className='text-field'
                         value={formData.workHours}
-                        placeholder="ΠΛΗΡΕΣ ΩΡΑΡΙΟ"
+                        placeholder="(ΘΑ ΣΥΜΠΛΗΡΩΝΕΤΑΙ ΑΥΤΌΜΑΤΑ ΑΠΟ ΤΟ ΣΥΣΤΗΜΑ)"
                         InputProps={{ readOnly: true }}
                     />
                 </Col>
