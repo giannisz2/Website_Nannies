@@ -19,7 +19,7 @@ export default function FirstStep() {
     const { formData, setFormData } = useFormContext();
 
     const validateGreekUppercase = (value) => {
-        const greekUppercaseRegex = /^[Α-ΩΪΫ]+$/; // Ελέγχει μόνο κεφαλαία ελληνικά γράμματα
+        const greekUppercaseRegex = /^[Α-ΩΪΫ]+$/; 
         return greekUppercaseRegex.test(value);
     };
     
@@ -37,7 +37,7 @@ export default function FirstStep() {
         }
     
         setFormData((prev) => ({ ...prev, [name]: value }));
-        setFormErrors((prev) => ({ ...prev, [name]: !value })); // Ενημερώνει τα errors
+        setFormErrors((prev) => ({ ...prev, [name]: !value })); 
     };
 
     const [formErrors, setFormErrors] = useState({});

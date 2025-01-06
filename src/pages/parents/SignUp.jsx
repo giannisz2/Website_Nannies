@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // Εισαγωγή του useEffect
+import React, { useState, useEffect } from 'react'; 
 import Logo from '../../components/buttons/Logo.jsx';
 import Footer from '../../components/layout/Footer.jsx';
 import HelpButton from '../../components/buttons/HelpButton.jsx';
@@ -368,7 +368,7 @@ export default function SignUp() {
                             value={formData.phone || ''}
                             onChange={handleInputChange}
                             className="my-3"
-                            helperText={formErrors.phone && <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο είναι υποχρεωτικό</span>}
+                            helperText={formErrors.phone && <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Τηλέφωνο Επικοινωνίας είναι υποχρεωτικό</span>}
                         />
                         <FormControl fullWidth className="my-3">
                             <InputLabel>Αριθμός Παιδιών</InputLabel>
