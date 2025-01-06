@@ -10,27 +10,37 @@ import { useNavigate } from 'react-router-dom';
 import { doc, getDoc, collection, addDoc } from 'firebase/firestore';
 import { db } from '../../providers/firebaseConfig'; 
 import { useLocation } from 'react-router-dom';
+import dayjs from 'dayjs';
 
 export default function TempAgreement() {
     const [startTime, setStartTime] = useState(null);
     const [endTime, setEndTime] = useState(null);
     const [maxHours, setMaxHours] = useState(8); // Μέγιστες ώρες (default: 8)
     const [employmentType, setEmploymentType] = useState(''); // Τύπος απασχόλησης
-    const [parentData, setParentData] = useState({
-        parentName: '',
-        parentAddress: '',
-        parentPhone: '',
-        email: '',
-        nannyName: '',
-        nannyAddress: '',
-        workHoursFrom: '',
-        workHoursTo: ''
+    
+    const [parentData, setParentData] = useState(()=>{
+        const savedData = localStorage.getItem('tempAgreementData');
+        return savedData ? JSON.parse(savedData) : {
+                parentName: '',
+                parentAddress: '',
+                parentPhone: '',
+                email: '',
+                nannyName: '',
+                nannyAddress: '',
+                workHoursFrom: '',
+                workHoursTo: ''
+        };
     });
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState("");
     const [snackbarSeverity, setSnackbarSeverity] = useState("success");
     
+
+    const [formErrors, setFormErrors] = useState({
+        email: ''
+    });
+
     const handleSnackbarClose = () => {
         setSnackbarOpen(false);
     };
@@ -70,6 +80,17 @@ export default function TempAgreement() {
             } catch (error) {
                 console.error('Σφάλμα κατά την ανάκτηση δεδομένων:', error);
             }
+            const loadedData = localStorage.getItem('tempAgreementData');
+                if (loadedData) {
+                    const data = JSON.parse(loadedData);
+                    setParentData(data);
+                    if (data.startTime) {
+                        setStartTime(dayjs(data.startTime));
+                    }
+                    if (data.endTime) {
+                        setEndTime(dayjs(data.endTime));
+                    }
+                }
         };
 
         fetchData();
@@ -81,7 +102,36 @@ export default function TempAgreement() {
             ...prev,
             [name]: value,
         }));
+        if (name === 'email') {
+            if (!value) {
+                setFormErrors(prev => ({
+                    ...prev,
+                    email: 'Email is required'
+                }));
+            } else {
+                setFormErrors(prev => ({
+                    ...prev,
+                    email: ''
+                }));
+            }
+        }
     };
+
+
+    const handleTempSave = () => {
+        
+        const dataToSave = {
+            ...parentData,
+            startTime: startTime ? startTime.toISOString() : '', 
+            endTime: endTime ? endTime.toISOString() : '' 
+        };
+        localStorage.setItem('tempAgreementData', JSON.stringify(dataToSave));
+        setSnackbarMessage('Data saved temporarily!');
+        setSnackbarSeverity('info');
+        setSnackbarOpen(true);
+    };
+
+
 
     const handleSubmit = async () => {
         try {
@@ -92,6 +142,13 @@ export default function TempAgreement() {
                 return;
             }
     
+            if (!parentData.email) {
+                setSnackbarMessage('Email is required.');
+                setSnackbarSeverity('error');
+                setSnackbarOpen(true);
+                return;
+            }
+
             const startHours = startTime.hour();
             const startMinutes = startTime.minute();
             const endHours = endTime.hour();
@@ -102,7 +159,7 @@ export default function TempAgreement() {
             
             const maxMinutes = parentData.nannyEmploymentTime === "ΜΕΡΙΚΗ ΑΠΑΣΧΟΛΗΣΗ" ? 360 : 480; // 6 ώρες = 360 λεπτά, 8 ώρες = 480 λεπτά
     
-            if (totalMinutes >= maxMinutes) {
+            if (totalMinutes > maxMinutes) {
                 setSnackbarOpen(true);
                 setSnackbarMessage(`Δεν μπορείτε να δηλώσετε πάνω από ${maxMinutes / 60} ώρες εργασίας που θα ήθελε η νταντά.`);
                 setSnackbarSeverity("error");
@@ -120,7 +177,7 @@ export default function TempAgreement() {
             setSnackbarMessage('Η αίτηση καταχωρήθηκε επιτυχώς.');
             setSnackbarSeverity('success');
             setSnackbarOpen(true);
-    
+            localStorage.removeItem('tempAgreementData');
             navigate('/PreviewAgreement');
         } catch (error) {
             console.error('Σφάλμα κατά την καταχώρηση δεδομένων:', error);
@@ -189,7 +246,7 @@ export default function TempAgreement() {
                 </Row>
             </LocalizationProvider>
             <div className='buttonsTemp'>
-                <button type="submit" className="button-temp-5" onClick={handleSubmit}>Προσωρινή αποθήκευση</button>
+                <button type="submit" className="button-temp-5" onClick={handleTempSave}>Προσωρινή αποθήκευση</button>
                 <button type="submit" className="button-submit-5" onClick={handleSubmit}>Προεπισκόπηση</button>
             </div>
             <Snackbar open={snackbarOpen} autoHideDuration={4000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: "top", horizontal: "center" }}>
