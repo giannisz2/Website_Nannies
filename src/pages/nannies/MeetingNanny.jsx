@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css'; // Στυλ για το ημερολόγιο
 import NavBarNannies from '../../components/layout/NavbarNannies';
 import HelpButton from '../../components/buttons/HelpButton';
 import Footer from '../../components/layout/Footer';
-import { Row,Col } from 'react-bootstrap';
+import { Row, Col } from 'react-bootstrap';
 import TextField from '@mui/material/TextField';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../../providers/firebaseConfig';
+import 'react-calendar/dist/Calendar.css';
 import '../../styles/MeetingNanny.css';
 
 export default function MeetingNanny() {
@@ -14,33 +16,40 @@ export default function MeetingNanny() {
   const [appointmentInfo2, setAppointmentInfo2] = useState(''); 
   const [appointmentInfo3, setAppointmentInfo3] = useState(''); 
 
-  const appointments1 = {
-    '2024-12-20': 'Μαρία Παπαδοπούλου',
-    '2024-12-25': 'Ελένη Χατζηγιάννη',
-    '2024-12-30': 'Αποστόλης Γραμματόπουλος',
-  };
-  const appointments2 = {
-    '2024-12-20': 'Σάββατο 21-12-2024 18:00',
-    '2024-12-25': 'Πέμπτη 26-12-2024 8:00',
-    '2024-12-30': 'Τρίτη 31-12-2024 17:00',
-  };  const appointments3 = {
-    '2024-12-20': 'Παλαιολόγου 8, Αιγαίο',
-    '2024-12-25': 'Κίτρινο Σπίτι 5, Σύνταγμα',
-    '2024-12-30': 'link@link.com',
-  };
+  const [appointments, setAppointments] = useState({});
+
+  useEffect(() => {
+    const fetchAppointments = async () => {
+      try {
+        const docRef = doc(db, 'appointments', 'appointmentsCollectionId');
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          const data = docSnap.data();
+          setAppointments(data);
+        } else {
+          console.log('No appointments data found');
+        }
+      } catch (error) {
+        console.error('Error fetching appointments:', error);
+      }
+    };
+
+    fetchAppointments();
+  }, []);
 
   const handleDateClick = (date) => {
     const dateString = date.toISOString().split('T')[0]; 
     setSelectedDate(dateString); 
-    setAppointmentInfo1(appointments1[dateString] || ' ');
-    setAppointmentInfo2(appointments2[dateString] || ' ');
-    setAppointmentInfo3(appointments3[dateString] || ' ');
+    setAppointmentInfo1(appointments[dateString]?.info1 || '');
+    setAppointmentInfo2(appointments[dateString]?.info2 || '');
+    setAppointmentInfo3(appointments[dateString]?.info3 || '');
   };
 
   const tileContent = ({ date, view }) => {
     if (view === 'month') {
       const dateString = date.toISOString().split('T')[0]; 
-      if (appointments1[dateString]) {
+      if (appointments[dateString]) {
         return <div className="bullet"></div>; 
       }
     }
