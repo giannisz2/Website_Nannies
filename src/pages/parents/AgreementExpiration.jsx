@@ -8,6 +8,8 @@ import HelpButton from '../../components/buttons/HelpButton';
 import { Row, Col } from 'react-bootstrap';
 import { TextField, Alert, Snackbar } from '@mui/material';
 import '../../styles/AgreementExpiration.css';
+import { updateDoc } from "firebase/firestore";
+
 
 export default function AgreementExpiration() {
     const [formData, setFormData] = useState({
@@ -24,6 +26,14 @@ export default function AgreementExpiration() {
     const [isSureToTerminate, setIsSureToTerminate] = useState(false);
     const [showAlert, setShowAlert] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState("");
+    const [snackbarSeverity, setSnackbarSeverity] = useState("success");
+
+    const handleSnackbarClose = () => {
+        setSnackbarOpen(false);
+    };
+
     
     const navigate = useNavigate();
 
@@ -37,7 +47,7 @@ export default function AgreementExpiration() {
                     return;
                 }
 
-                // Φόρτωση δεδομένων από το Parent collection
+                
                 const userRef = doc(db, 'Parent', userId);
                 const userDoc = await getDoc(userRef);
 
@@ -49,7 +59,7 @@ export default function AgreementExpiration() {
 
                 const userData = userDoc.data();
 
-                // Έλεγχος για ενεργό συμφωνητικό
+                
                 const agreementsRef = collection(db, 'agreements');
                 const activeAgreementQuery = query(
                     agreementsRef,
@@ -57,8 +67,11 @@ export default function AgreementExpiration() {
                    where('parentSurname','==', userData.surname),
                     where('isenable', '==', true)
                 );
+                
+                
                 const querySnapshot = await getDocs(activeAgreementQuery);
-
+               
+                
                 if (querySnapshot.empty) {
                     setShowAlert(true);
                     setIsLoading(false);
@@ -66,16 +79,46 @@ export default function AgreementExpiration() {
                 }
 
                 const activeAgreement = querySnapshot.docs[0].data();
+                console.log('Active Agreement:', activeAgreement);
+                console.log('Checking active agreement:', userData.name, userData.surname);
+                console.log('Query Snapshot:', querySnapshot.docs.map(doc => doc.data()));
 
-                // Συμπλήρωση των δεδομένων στη φόρμα
+
+                
+                const usersRef = collection(db, 'users');
+                const nannyQuery = query(
+                    usersRef,
+                    where('name', '==', activeAgreement.nannyName),
+                    where('surname', '==', activeAgreement.nannySurName)
+                );
+                const nannySnapshot = await getDocs(nannyQuery);
+
+                let nannyLocation = 'Μη διαθέσιμη τοποθεσία';
+                if (!nannySnapshot.empty) {
+                    const nannyData = nannySnapshot.docs[0].data();
+                    nannyLocation = nannyData.location || nannyLocation;
+                }
+
+
+                const workHoursFrom = activeAgreement.workHoursFrom.split(':');
+                const workHoursTo = activeAgreement.workHoursTo.split(':');
+                const startTime = new Date();
+                const endTime = new Date();
+
+                startTime.setHours(parseInt(workHoursFrom[0]), parseInt(workHoursFrom[1]));
+                endTime.setHours(parseInt(workHoursTo[0]), parseInt(workHoursTo[1]));
+
+                const hoursDifference = (endTime - startTime) / (1000 * 60 * 60);
+
+                
                 setFormData({
                     name: `${userData.name} ${userData.surname}`,
                     address: userData.residence || '',
                     phone: userData.phone || '',
                     email: activeAgreement.parentEmail || '',
-                    colleagueName: `${activeAgreement.nannyName} ${activeAgreement.nannySurName}`,
-                    colleagueAddress: activeAgreement.nannyAddress || '',
-                    workHours: activeAgreement.workHours || 'ΠΛΗΡΕΣ ΩΡΑΡΙΟ'
+                    colleagueName: `${activeAgreement.nannyName} ${activeAgreement.nannySurName}` ,
+                    colleagueAddress: nannyLocation || '',
+                    workHours: hoursDifference >= 7 ? 'ΠΛΗΡΗΣ ΑΠΑΣΧΟΛΗΣΗ' : 'ΜΕΡΙΚΗ ΑΠΑΣΧΟΛΗΣΗ'
                 });
 
                
@@ -90,12 +133,67 @@ export default function AgreementExpiration() {
     }, []);
 
 
-    const handleSubmit = () => {
-        if (!isWorkingAtHome || !isSureToTerminate ) {
+    const handleSubmit = async () => {
+        if (!isSureToTerminate) {
             setShowAlert(true);
         } else {
             setShowAlert(false);
-            console.log('Form submitted:', formData);
+    
+            try {
+                
+                const userId = localStorage.getItem('userId');
+                if (!userId) {
+                    console.error('User ID is not available');
+                    setIsLoading(false);
+                    return;
+                }
+
+                
+                const userRef = doc(db, 'Parent', userId);
+                const userDoc = await getDoc(userRef);
+
+                if (!userDoc.exists()) {
+                    console.error('No such document!');
+                    setIsLoading(false);
+                    return;
+                }
+
+                const userData = userDoc.data();
+
+                
+                const agreementsRef = collection(db, 'agreements');
+                const activeAgreementQuery = query(
+                    agreementsRef,
+                   where('parentName','==', userData.name),
+                   where('parentSurname','==', userData.surname),
+                    where('isenable', '==', true)
+                );
+                
+    
+                const querySnapshot = await getDocs(activeAgreementQuery);
+    
+                if (!querySnapshot.empty) {
+                    
+                    const docRef = querySnapshot.docs[0].ref;
+                    await updateDoc(docRef, { isenable: false });
+    
+                    
+                    setShowAlert(false);
+                    setSnackbarOpen(true);
+                    setSnackbarMessage("Η λήξη του συμφωνητικού έγινε επιτυχώς.");
+                    setSnackbarSeverity("success");
+    
+                    
+                    setTimeout(() => navigate("/ParentHomepage"), 2000);
+                } else {
+                    setShowAlert(true);
+                }
+            } catch (error) {
+                console.error("Error updating agreement:", error);
+                setSnackbarOpen(true);
+                setSnackbarMessage("Σφάλμα κατά τη λήξη του συμφωνητικού.");
+                setSnackbarSeverity("error");
+            }
         }
     };
 
@@ -232,7 +330,7 @@ export default function AgreementExpiration() {
                     className="alert"
                     onClose={() => setShowAlert(false)}
                 >
-                    Παρακαλώ ελέγξτε η νταντά αν εργάζεται στην κατοικία σας, αν είστε σίγουροι ότι θέλετε να διακόψετε την διαδικασία και αν έχετε εισάγει το email σας.
+                    Παρακαλώ ελέγξτε αν είστε σίγουροι ότι θέλετε να διακόψετε την διαδικασία.
                 </Alert>
             )}
             {showAlert && (
@@ -254,6 +352,17 @@ export default function AgreementExpiration() {
             >
                 ΘΑ ΗΘΕΛΑ ΝΑ ΑΝΑΝΕΩΣΩ ΤΟ ΣΥΜΒΟΛΑΙΟ
             </p>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={4000}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+                <Alert onClose={handleSnackbarClose} severity={snackbarSeverity}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
+
             <Footer />
         </div>
     );
