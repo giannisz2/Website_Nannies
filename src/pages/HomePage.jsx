@@ -105,8 +105,8 @@ export default function HomePage() {
       <p id="how-it-works">Πως δουλεύει...</p>
       <Row className="align-items-center g-5 m-0 text-center">
         <Col
-          xs={12} /* Full width for small screens */
-          md={4} /* 4 columns wide for medium screens and above */
+          xs={12}
+          md={4} 
           className="d-flex flex-column align-items-center justify-content-center"
         >
           <img id="user-icon" src={userIcon} alt="User Icon" className="mb-3"></img>
@@ -118,8 +118,8 @@ export default function HomePage() {
           </p>
         </Col>
         <Col
-          xs={12} /* Full width for small screens */
-          md={4} /* 4 columns wide for medium screens and above */
+          xs={12} 
+          md={4} 
           className="d-flex flex-column align-items-center justify-content-center"
           id="col-2"
         >
@@ -131,8 +131,8 @@ export default function HomePage() {
           </p>
         </Col>
         <Col
-          xs={12} /* Full width for small screens */
-          md={4} /* 4 columns wide for medium screens and above */
+          xs={12} 
+          md={4} 
           className="d-flex flex-column align-items-center justify-content-center"
         >
           <img id="happy-face-icon" src={happyFaceIcon} alt="Happy Face" className="mb-3"></img>
