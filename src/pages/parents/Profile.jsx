@@ -196,6 +196,17 @@ export default function NanniesProfile() {
         link.click(); 
     };
 
+    const handleRateNanny = () => {
+        navigate('/RatesParents', {
+            state: {
+                nannyId: nanny.id,
+                nannyName: `${nanny.name} ${nanny.surname}`,
+                nannySurname: nanny.surname
+            }
+        });
+    };
+
+
 
     const handleBooking = async () => {
         if (!childrenCount.trim()) {
@@ -306,7 +317,7 @@ export default function NanniesProfile() {
                                                     </div>
                                                 </div>
                                             )}
-                                            <button className="rate-button">
+                                            <button className="rate-button" onClick={handleRateNanny}>
                                                 <span className="icon">⭐</span> Αξιολόγησε τη νταντά
                                             </button>
                                         </div>

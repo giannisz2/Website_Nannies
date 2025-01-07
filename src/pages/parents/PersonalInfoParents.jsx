@@ -96,6 +96,8 @@ export default function PersonalInfo() {
       fetchData();
       console.log(formData.residence)
   }, []);
+
+
   const handleInputChange = (event) => {
       const { name, value } = event.target;
       setFormData({ ...formData, [name]: value });
@@ -140,10 +142,12 @@ export default function PersonalInfo() {
           };
           const handleCloseWithoutSaving = () => {
               if (initialFormData) {
-                  setFormData(initialFormData); // Επαναφορά της αρχικής κατάστασης
+                  setFormData(initialFormData); 
               }
-              navigate('/ParentHomepage'); // Μετάβαση χωρίς αποθήκευση
+              navigate('/ParentHomepage'); 
           };
+
+          
           return (
               <LocalizationProvider dateAdapter={AdapterDayjs}>
                   <Box sx={{ padding: '20px', minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#f9f9f9' }}>
