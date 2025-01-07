@@ -1,5 +1,5 @@
 #homepage {
-  background-color: hsl(195, 53%, 89%);
+  background-color:hsl(195, 53%, 89%);
 }
 
 .this_text1 {
@@ -10,12 +10,12 @@
 }
 
 .location {
-  width: 100%; 
-  max-width: 600px; 
+  width: 100%;
+  max-width: 600px;
   height: 50px;
   padding-left: 25px;
-  padding-right: 50px; 
-  border-radius: 25px; 
+  padding-right: 50px;
+  border-radius: 25px;
   font-size: 1.5em;
   font-weight: 500;
   background-color: hsl(0, 0%, 90%);
@@ -44,7 +44,7 @@
 
 .search-icon {
   position: absolute;
-  right: 15px; /* Keeps icon inside the input box */
+  right: 15px;
   top: 50%;
   transform: translateY(-50%);
   height: 25px;
@@ -70,6 +70,7 @@
   text-align: center;
   padding: 10px;
   margin-top: 50px;
+  background-color: white;
 }
 
 #col-2 {
@@ -97,10 +98,10 @@
   }
 
   .location {
-    width: 90%; 
+    width: 90%;
     max-width: 100%;
-    font-size: 1.2em; 
-    padding-right: 40px; 
+    font-size: 1.2em;
+    padding-right: 40px;
   }
 
   .search-icon {
