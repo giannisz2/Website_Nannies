@@ -10,12 +10,12 @@
 }
 
 .location {
-  width: 100%; /* Full width of the container */
-  max-width: 600px; /* Max width to keep it proportionate */
+  width: 100%; 
+  max-width: 600px; 
   height: 50px;
   padding-left: 25px;
-  padding-right: 50px; /* Enough space for the icon without cutting off text */
-  border-radius: 25px; /* Rounded but not ball-shaped */
+  padding-right: 50px; 
+  border-radius: 25px; 
   font-size: 1.5em;
   font-weight: 500;
   background-color: hsl(0, 0%, 90%);
@@ -97,10 +97,10 @@
   }
 
   .location {
-    width: 90%; /* Ensures the search field fits well on smaller screens */
+    width: 90%; 
     max-width: 100%;
-    font-size: 1.2em; /* Adjust font size for smaller screens */
-    padding-right: 40px; /* Adjust space for the icon */
+    font-size: 1.2em; 
+    padding-right: 40px; 
   }
 
   .search-icon {
