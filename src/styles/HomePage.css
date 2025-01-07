@@ -106,5 +106,6 @@
 
   .search-icon {
     right: 15px;
+    cursor: pointer;
   }
 }

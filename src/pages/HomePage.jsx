@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import '../styles/HomePage.css';
 import userIcon from '../assets/images/user_icon.png';
 import calendarIcon from '../assets/images/calendar.png';
@@ -72,16 +74,28 @@ const citiesAndTowns = [
 ];
 
 export default function HomePage() {
+  const navigate = useNavigate();
+  const [selectedLocation, setSelectedLocation] = useState('');
+
+  const handleSearchIconClick = () => {
+    if (selectedLocation) {
+      navigate(`/SearchNannies?location=${selectedLocation}`);
+    }
+  };
+
   return (
     <div id="homepage">
       <NavBar />
       <HelpButton />
       <div className="search-field">
-      <Autocomplete
+        <Autocomplete
           freeSolo
           className="location-search"
           disableClearable
-          options={citiesAndTowns.map((option) => `${option.name} - ${option.region}`)}  // Concatenate name and region
+          options={citiesAndTowns.map((option) => `${option.name} - ${option.region}`)}
+          onChange={(event, newValue) => {
+            setSelectedLocation(newValue);
+          }}
           renderInput={(params) => (
             <TextField
               {...params}
@@ -89,7 +103,7 @@ export default function HomePage() {
               placeholder="Αναζητήστε περιοχή..."
               InputProps={{
                 ...params.InputProps,
-                startAdornment: <SearchIcon className="search-icon" />,
+                startAdornment: <SearchIcon className="search-icon" onClick={handleSearchIconClick} />,
               }}
               sx={{
                 "& .MuiOutlinedInput-root": {
@@ -147,3 +161,5 @@ export default function HomePage() {
     </div>
   );
 }
+
+
