@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import React, { useEffect} from 'react';
 import '../styles/HomePage.css';
 import userIcon from '../assets/images/user_icon.png';
 import calendarIcon from '../assets/images/calendar.png';
@@ -73,6 +74,27 @@ const citiesAndTowns = [
   { region: "ΕΠΤΑΝΗΣΑ", name: "ΚΕΦΑΛΟΝΙΑ" },
 ];
 
+  const [show, setShow] = useState(true); 
+  const [currentType, setCurrentType] = useState(''); 
+  const [selectedLocation, setSelectedLocation] = useState('Athens'); 
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (show && event.key === 'Enter') {
+        event.preventDefault();
+        navigate(`/SearchNannies?location=${selectedLocation}`);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [show, selectedLocation, navigate]);
+
 export default function HomePage() {
   const navigate = useNavigate();
   const [selectedLocation, setSelectedLocation] = useState('');
@@ -88,33 +110,45 @@ export default function HomePage() {
       <NavBar />
       <HelpButton />
       <div className="search-field">
-        <Autocomplete
-          freeSolo
-          className="location-search"
-          disableClearable
-          options={citiesAndTowns.map((option) => `${option.name} - ${option.region}`)}
-          onChange={(event, newValue) => {
-            setSelectedLocation(newValue);
+      <Autocomplete
+      freeSolo
+      className="location-search"
+      disableClearable
+      options={citiesAndTowns.map((option) => `${option.name} - ${option.region}`)}
+      onInputChange={(event, newValue) => {
+        setSelectedLocation(newValue); 
+      }}
+      onChange={(event, newValue) => {
+        setSelectedLocation(newValue);
+      }}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          className="location"
+          placeholder="Αναζητήστε περιοχή..."
+          onKeyDown={(event) => {
+            if (event.key === 'Enter') {
+              event.preventDefault();
+              const location = selectedLocation || params.inputProps.value; 
+              if (location) {
+                navigate(`/SearchNannies?location=${encodeURIComponent(location)}`);
+              }
+            }
           }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              className="location"
-              placeholder="Αναζητήστε περιοχή..."
-              InputProps={{
-                ...params.InputProps,
-                startAdornment: <SearchIcon className="search-icon" onClick={handleSearchIconClick} />,
-              }}
-              sx={{
-                "& .MuiOutlinedInput-root": {
-                  "& fieldset": {
-                    border: "none",
-                  },
-                },
-              }}
-            />
-          )}
+          InputProps={{
+            ...params.InputProps,
+            startAdornment: <SearchIcon className="search-icon" onClick={handleSearchIconClick} />,
+          }}
+          sx={{
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": {
+                border: "none",
+              },
+            },
+          }}
         />
+      )}
+    />
       </div>
       <p id="how-it-works">Πως δουλεύει...</p>
       <Row className="align-items-center g-5 m-0 text-center">
