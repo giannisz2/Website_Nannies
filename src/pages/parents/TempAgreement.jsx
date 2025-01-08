@@ -237,12 +237,6 @@ export default function TempAgreement() {
                                 <TimePicker value={endTime} onChange={setEndTime} renderInput={(params) => <TextField fullWidth {...params} />} />
                             </Col>
                         </Row>
-                        <Row>
-                            <Col><p className="text">Παρατηρήσεις:</p></Col>
-                            <Col>
-                                <TextField multiline rows={4} fullWidth name="notes" value={parentData.notes || ''} onChange={handleInputChange} />
-                            </Col>
-                        </Row>
                         <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '20px' }}>
                         <div className='buttonsTemp'>
                             <button type="submit" className="button-temp-5" onClick={handleTempSave}>Προσωρινή αποθήκευση</button>

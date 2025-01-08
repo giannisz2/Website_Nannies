@@ -301,7 +301,7 @@ export default function NanniesProfile() {
                                             </button>
                                             {show && (
                                                 <div className="popup-overlay">
-                                                    <div className="popup">
+                                                    <div className="popup-mila">
                                                         <button className="close-btn" onClick={togglePopUp}>
                                                             &times;
                                                         </button>
