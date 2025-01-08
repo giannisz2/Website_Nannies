@@ -44,15 +44,13 @@ export default function Rates() {
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
     const [snackbarSeverity, setSnackbarSeverity] = useState('error');
-      
+
 
     const handleCloseWithoutSaving = async() => {
         if (initialFormData) {
             setFormData(initialFormData); 
         }
-        
-                            
-        
+        navigate('/ParentHomepage');               
     };
 
     const handleSubmit = async () => {
