@@ -77,9 +77,15 @@ export default function HomePage() {
   const navigate = useNavigate();
   const [selectedLocation, setSelectedLocation] = useState('');
 
-  const handleSearchIconClick = () => {
+  const handleSearch = () => {
     if (selectedLocation) {
       navigate(`/SearchNannies?location=${selectedLocation}`);
+    }
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      handleSearch();
     }
   };
 
@@ -92,7 +98,7 @@ export default function HomePage() {
           freeSolo
           className="location-search"
           disableClearable
-          options={citiesAndTowns.map((option) => `${option.name} - ${option.region}`)}
+          options={citiesAndTowns.map((option) => `${option.name}:${option.region}`)}
           onChange={(event, newValue) => {
             setSelectedLocation(newValue);
           }}
@@ -101,9 +107,15 @@ export default function HomePage() {
               {...params}
               className="location"
               placeholder="Αναζητήστε περιοχή..."
+              onKeyDown={handleKeyDown}
               InputProps={{
                 ...params.InputProps,
-                startAdornment: <SearchIcon className="search-icon" onClick={handleSearchIconClick} />,
+                startAdornment: (
+                  <SearchIcon
+                    className="search-icon"
+                    onClick={handleSearch}
+                  />
+                ),
               }}
               sx={{
                 "& .MuiOutlinedInput-root": {
@@ -118,11 +130,7 @@ export default function HomePage() {
       </div>
       <p id="how-it-works">Πως δουλεύει...</p>
       <Row className="align-items-center g-5 m-0 text-center">
-        <Col
-          xs={12}
-          md={4} 
-          className="d-flex flex-column align-items-center justify-content-center"
-        >
+        <Col xs={12} md={4} className="d-flex flex-column align-items-center justify-content-center">
           <img id="user-icon" src={userIcon} alt="User Icon" className="mb-3"></img>
           <p className="this_text1">Βρες τον/την νταντά του παιδιού σου</p>
           <p id="p2">
@@ -131,12 +139,7 @@ export default function HomePage() {
             καλύτερο.
           </p>
         </Col>
-        <Col
-          xs={12} 
-          md={4} 
-          className="d-flex flex-column align-items-center justify-content-center"
-          id="col-2"
-        >
+        <Col xs={12} md={4} className="d-flex flex-column align-items-center justify-content-center" id="col-2">
           <img id="calendar-icon" src={calendarIcon} alt="Calendar Icon" className="mb-3"></img>
           <p className="this_text1">Επικοινώνησε μαζί του/της & πλήρωσε online</p>
           <p id="p4">
@@ -144,11 +147,7 @@ export default function HomePage() {
             voucher ηλεκτρονικά ώστε να απολαύσεις όλα τα προνόμια του ntantades.gov.
           </p>
         </Col>
-        <Col
-          xs={12} 
-          md={4} 
-          className="d-flex flex-column align-items-center justify-content-center"
-        >
+        <Col xs={12} md={4} className="d-flex flex-column align-items-center justify-content-center">
           <img id="happy-face-icon" src={happyFaceIcon} alt="Happy Face" className="mb-3"></img>
           <p className="this_text1">Το παιδάκι σου απασχολείται δημιουργικά όσο εσύ δουλεύεις</p>
           <p id="p6">
@@ -161,5 +160,6 @@ export default function HomePage() {
     </div>
   );
 }
+
 
 
