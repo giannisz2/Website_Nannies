@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+import React, { useEffect} from 'react';
 import '../styles/HomePage.css';
 import userIcon from '../assets/images/user_icon.png';
 import calendarIcon from '../assets/images/calendar.png';
@@ -72,6 +73,27 @@ const citiesAndTowns = [
   { region: "ΕΠΤΑΝΗΣΑ", name: "ΛΕΥΚΑΔΑ" },
   { region: "ΕΠΤΑΝΗΣΑ", name: "ΚΕΦΑΛΟΝΙΑ" },
 ];
+
+  const [show, setShow] = useState(true); 
+  const [currentType, setCurrentType] = useState(''); 
+  const [selectedLocation, setSelectedLocation] = useState('Athens'); 
+  const navigate = useNavigate();
+
+
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (show && event.key === 'Enter') {
+        event.preventDefault();
+        navigate(`/SearchNannies?location=${selectedLocation}`);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [show, selectedLocation, navigate]);
 
 export default function HomePage() {
   const navigate = useNavigate();
