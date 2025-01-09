@@ -118,6 +118,34 @@ export default function SidebarFilters({ onFilterChange }) {
                 <h4>ΦΙΛΤΡΑ</h4>
             </div>
             <div className="filters-list">
+            <div className="filter-item">
+                    <label>Περιοχή</label>
+                    <input
+                        className="input"
+                        type="text"
+                        value={locationInput}
+                        onChange={handleLocationChange}
+                        placeholder="Π.χ. Αθήνα"
+                    />
+                    {filteredLocations.length > 0 && (
+                        <ul className="autocomplete-dropdown-sidebar">
+                             <li
+                                key="no-selection"
+                                onClick={() => handleLocationSelect("")}
+                                className="autocomplete-item-sidebar">
+                                Καμία Επιλογή
+                            </li>
+                            {filteredLocations.map((location, index) => (
+                                <li
+                                    key={index}
+                                    onClick={() => handleLocationSelect(location)}
+                                    className="autocomplete-item-sidebar">
+                                    {location}
+                                </li>
+                            ))}
+                        </ul>
+                    )}                
+                </div>
                 <div className="filter-item">
                     <label>Ηλικία:</label>
                     <input
@@ -178,34 +206,7 @@ export default function SidebarFilters({ onFilterChange }) {
                         placeholder="Π.χ. Δευτεροβάθμια"
                     />
                 </div>
-                <div className="filter-item">
-                    <label>Τοποθεσία</label>
-                    <input
-                        className="input"
-                        type="text"
-                        value={locationInput}
-                        onChange={handleLocationChange}
-                        placeholder="Π.χ. Αθήνα"
-                    />
-                    {filteredLocations.length > 0 && (
-                        <ul className="autocomplete-dropdown-sidebar">
-                             <li
-                                key="no-selection"
-                                onClick={() => handleLocationSelect("")}
-                                className="autocomplete-item-sidebar">
-                                Καμία Επιλογή
-                            </li>
-                            {filteredLocations.map((location, index) => (
-                                <li
-                                    key={index}
-                                    onClick={() => handleLocationSelect(location)}
-                                    className="autocomplete-item-sidebar">
-                                    {location}
-                                </li>
-                            ))}
-                        </ul>
-                    )}                
-                </div>
+               
             </div>
         </div>
     );

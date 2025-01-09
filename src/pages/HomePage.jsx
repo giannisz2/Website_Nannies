@@ -79,7 +79,7 @@ export default function HomePage() {
 
   const handleSearch = () => {
     if (selectedLocation) {
-      navigate(`/SearchNannies?location=${selectedLocation}`);
+      navigate(`/SearchNanniesWithoutSignIn?location=${selectedLocation}`);
     }
   };
 
@@ -98,7 +98,7 @@ export default function HomePage() {
           freeSolo
           className="location-search"
           disableClearable
-          options={citiesAndTowns.map((option) => `${option.name}:${option.region}`)}
+          options={citiesAndTowns.map((option) => `${option.region}:${option.name}`)}
           onChange={(event, newValue) => {
             setSelectedLocation(newValue);
           }}
