@@ -119,33 +119,35 @@ export default function SidebarFilters({ onFilterChange }) {
             </div>
             <div className="filters-list">
             <div className="filter-item">
-                    <label>Περιοχή</label>
-                    <input
-                        className="input"
-                        type="text"
-                        value={locationInput}
-                        onChange={handleLocationChange}
-                        placeholder="Π.χ. Αθήνα"
-                    />
-                    {filteredLocations.length > 0 && (
-                        <ul className="autocomplete-dropdown-sidebar">
-                             <li
-                                key="no-selection"
-                                onClick={() => handleLocationSelect("")}
-                                className="autocomplete-item-sidebar">
-                                Καμία Επιλογή
+                <label>Περιοχή</label>
+                <input
+                    className="input"
+                    type="text"
+                    value={locationInput}
+                    onChange={handleLocationChange}
+                    placeholder="Π.χ. Αθήνα"
+                />
+                {filteredLocations.length > 0 && (
+                    <ul className="autocomplete-dropdown-sidebar">
+                        <li
+                            key="no-selection"
+                            onClick={() => handleLocationSelect("")}
+                            className="autocomplete-item-sidebar"
+                        >
+                            Καμία Επιλογή
+                        </li>
+                        {filteredLocations.map((location, index) => (
+                            <li
+                                key={index}
+                                onClick={() => handleLocationSelect(location)}
+                                className="autocomplete-item-sidebar"
+                            >
+                                {location}
                             </li>
-                            {filteredLocations.map((location, index) => (
-                                <li
-                                    key={index}
-                                    onClick={() => handleLocationSelect(location)}
-                                    className="autocomplete-item-sidebar">
-                                    {location}
-                                </li>
-                            ))}
-                        </ul>
-                    )}                
-                </div>
+                        ))}
+                    </ul>
+                )}
+            </div>
                 <div className="filter-item">
                     <label>Ηλικία:</label>
                     <input
