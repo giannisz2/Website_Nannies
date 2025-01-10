@@ -104,7 +104,8 @@ function NavBar() {
             onClick={handleLogoClick}
             style={{ cursor: 'pointer' }}
           >
-            Nannies GR
+            Νταντάδες.gr
+            <div className="fs-6 text-muted">Όπου η φροντίδα συναντά την εμπιστοσύνη..</div>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
