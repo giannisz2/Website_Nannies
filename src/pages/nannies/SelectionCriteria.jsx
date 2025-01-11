@@ -22,6 +22,7 @@ export default function SelectionCriteria() {
 
     return(<div id="SelectionCriteria">
                 <NavBar/>
+                <p className="criteria">ΚΡΙΤΗΡΙΑ ΕΠΙΛΕΞΙΜΟΤΗΤΑΣ</p>
                 <HelpButton />
                 <img id="nannyImage" src={NannyImage} alt="Nanny and kids"></img>
                 <div className='P'>
