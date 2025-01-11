@@ -187,9 +187,13 @@ export default function FirstStep() {
                 </div>
                 <div className="step">
                     <div className="circle">2</div>
+                    <div className="label">ΔΗΜΙΟΥΡΓΙΑ ΑΓΓΕΛΙΑΣ & ΟΡΙΣΤΙΚΗ ΥΠΟΒΟΛΗ</div>
+
                 </div>
                 <div className="step">
                     <div className="circle">3</div>
+                    <div className="label">ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΣΥΝΑΝΤΗΣΗΣ</div>
+
                 </div>
             </div>
 
