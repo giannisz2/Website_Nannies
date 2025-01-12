@@ -210,11 +210,12 @@ export default function PreviewPage() {
                                 disabled
                                 sx={{ width: '100%', marginTop: '16px' }}
                             />
-                         <button className="button-applypreviewpage" onClick={handleFinalSubmit}>
-                            Οριστική Υποβολή
-                        </button>
+                         
                     </Col>
                 </Row>
+                <button className="button-applypreviewpage" onClick={handleFinalSubmit}>
+                            Οριστική Υποβολή
+                        </button>
             </div>
             <Snackbar
                 open={snackbarOpen}

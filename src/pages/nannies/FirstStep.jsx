@@ -12,6 +12,11 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { useFormContext } from '../../context/FormContext.jsx';
 import { Timestamp } from "firebase/firestore";
+import {
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+} from '@mui/material';
 
 
 
@@ -182,9 +187,13 @@ export default function FirstStep() {
                 </div>
                 <div className="step">
                     <div className="circle">2</div>
+                    <div className="label">ΔΗΜΙΟΥΡΓΙΑ ΑΓΓΕΛΙΑΣ & ΟΡΙΣΤΙΚΗ ΥΠΟΒΟΛΗ</div>
+
                 </div>
                 <div className="step">
                     <div className="circle">3</div>
+                    <div className="label">ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΣΥΝΑΝΤΗΣΗΣ</div>
+
                 </div>
             </div>
 
@@ -221,23 +230,37 @@ export default function FirstStep() {
                             ) : null} 
                         />
                         <Col>
-                        <FormControl fullWidth className="my-3">
-                            <InputLabel>Φύλο</InputLabel>
-                            <Select
+                        <FormControl component="fieldset" fullWidth className="my-3">
+                            <InputLabel shrink>Φύλο</InputLabel>
+                            <RadioGroup
                                 name="gender"
                                 value={formData.gender}
                                 onChange={handleInputChange}
+                                row
                             >
-                                <MenuItem value="Άνδρας">Άνδρας</MenuItem>
-                                <MenuItem value="Γυναίκα">Γυναίκα</MenuItem>
-                                <MenuItem value="Άλλο">Άλλο</MenuItem>
-                            </Select>
+                                <FormControlLabel
+                                value="Αρσενικό"
+                                control={<Radio />}
+                                label="Άντρας"
+                                />
+                                <FormControlLabel
+                                value="Θυληκό"
+                                control={<Radio />}
+                                label="Γυναίκα"
+                                />
+                                <FormControlLabel
+                                value="Άλλο"
+                                control={<Radio />}
+                                label="Άλλο"
+                                />
+                            </RadioGroup>
+
                             {formErrors.gender && (
                                 <p style={{ color: 'red', fontSize: '12px' }}>
-                                    Το πεδίο Φύλο είναι υποχρεωτικό
+                                Το πεδίο Φύλο είναι υποχρεωτικό
                                 </p>
                             )}
-                        </FormControl>
+                            </FormControl>
 
                         </Col>
                         <Col>

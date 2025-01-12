@@ -3,8 +3,13 @@
     margin: 0 auto;
     padding: none; 
     text-align: center;
-    background-color: hsl(195, 53%, 89%);
+    background-color: white;
     align-items: center;
+}
+
+.criteria{
+    font-weight: bold;
+    font-size: xx-large;
 }
 
 #nannyImage {

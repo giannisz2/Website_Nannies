@@ -113,31 +113,98 @@ export default function SidebarFiltersAlt({ locationFromQuery, onFilterChange })
         <h4>ΦΙΛΤΡΑ</h4>
       </div>
       <div className="filters-list">
-        {/* Other filter items */}
+      <div className="filter-item">
+                <label>Περιοχή</label>
+                <input
+                    className="input"
+                    type="text"
+                    value={locationInput}
+                    onChange={handleLocationChange}
+                    placeholder="Π.χ. Αθήνα"
+                />
+                {filteredLocations.length > 0 && (
+                    <ul className="autocomplete-dropdown-sidebar">
+                        <li
+                            key="no-selection"
+                            onClick={() => handleLocationSelect("")}
+                            className="autocomplete-item-sidebar"
+                        >
+                            Καμία Επιλογή
+                        </li>
+                        {filteredLocations.map((location, index) => (
+                            <li
+                                key={index}
+                                onClick={() => handleLocationSelect(location)}
+                                className="autocomplete-item-sidebar"
+                            >
+                                {location}
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
+      <div className="filter-item">
+                    <label>Ηλικία:</label>
+                    <input
+                        className='input'
+                        type="text"
+                        value={filters.age}
+                        onChange={(e) => handleFilterChange('age', e.target.value)}
+                        placeholder="Π.χ. 25+"
+                    />
+                </div>
 
-        <div className="filter-item">
-          <label>Τοποθεσία</label>
-          <input
-            className="input"
-            type="text"
-            value={locationInput}
-            onChange={handleLocationChange}
-            placeholder="Π.χ. Αθήνα"
-          />
-          {filteredLocations.length > 0 && (
-            <ul className="autocomplete-dropdown-sidebar">
-              {filteredLocations.map((location, index) => (
-                <li
-                  key={index}
-                  onClick={() => handleLocationSelect(location)}
-                  className="autocomplete-item-sidebar"
-                >
-                  {location}
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+                <div className="filter-item">
+                    <label>Χρόνος Εμπειρίας:</label>
+                    <select
+                        className='input'
+                        value={filters.experienceYears}
+                        onChange={(e) => handleFilterChange('experienceYears', e.target.value)}>
+                        <option value="">Επιλογή</option>
+                        <option value="0">0 χρόνια</option>
+                        <option value="1">1 χρόνο</option>
+                        <option value="2">2 χρόνια</option>
+                        <option value="3">3 χρόνια</option>
+                        <option value="4+">4+ χρόνια</option>
+                    </select>
+                </div>
+
+                <div className="filter-item">
+                    <label>Χρόνος Απασχόλησης:</label>
+                    <select
+                        className='input'
+                        value={filters.employmentTime}
+                        onChange={(e) => handleFilterChange('employmentTime', e.target.value)}
+                    >
+                        <option value="">Επιλογή</option>
+                        <option value="Μερική">Μερική Απασχόληση</option>
+                        <option value="Πλήρης">Πλήρης Απασχόληση</option>
+                    </select>
+                </div>
+
+                <div className="filter-item">
+                    <label>Ειδίκευση:</label>
+                    <input
+                        className='input'
+                        type="text"
+                        value={filters.experience}
+                        onChange={(e) => handleFilterChange('experience', e.target.value)}
+                        placeholder="Π.χ. Ειδική Αγωγή"
+                    />
+                </div>
+
+                <div className="filter-item">
+                    <label>Επίπεδο εκαπίδευσης:</label>
+                    <input
+                        className='input'
+                        type="text"
+                        value={filters.educationLevel}
+                        onChange={(e) => handleFilterChange('educationLevel', e.target.value)}
+                        placeholder="Π.χ. Δευτεροβάθμια"
+                    />
+                </div>
+
+        
       </div>
     </div>
   );

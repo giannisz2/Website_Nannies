@@ -251,6 +251,7 @@ const handleSubmit = async (event) => {
             <div className="stepper">
                 <div className="step">
                     <div className="circle">1</div>
+                    <div className="label">ΣΤΟΙΧΕΙΑ</div>
                 </div>
                 <div className="step active">
                     <div className="circle">2</div>
@@ -258,6 +259,7 @@ const handleSubmit = async (event) => {
                 </div>
                 <div className="step">
                     <div className="circle">3</div>
+                    <div className="label">ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΣΥΝΑΝΤΗΣΗΣ</div>
                 </div>
             </div>
             <div className="content flex-grow-1 d-flex align-items-center justify-content-center">

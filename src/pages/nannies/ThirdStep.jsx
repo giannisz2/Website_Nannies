@@ -168,9 +168,11 @@ export default function ThirdStep() {
                 <div className="stepper">
                     <div className="step">
                         <div className="circle">1</div>
+                        <div className="label">ΣΤΟΙΧΕΙΑ</div>
                     </div>
                     <div className="step">
                         <div className="circle">2</div>
+                        <div className="label">ΔΗΜΙΟΥΡΓΙΑ ΑΓΓΕΛΙΑΣ & ΟΡΙΣΤΙΚΗ ΥΠΟΒΟΛΗ</div>
                     </div>
                     <div className="step active">
                         <div className="circle">3</div>

@@ -72,7 +72,8 @@ export default function NavBarNannies() {
       <Navbar className="nav" bg="light" expand="lg" variant="light">
         <Container fluid>
           <Navbar.Brand className="ms-4 fw-bolder fs-3" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
-            Nannies GR
+          Νταντάδες.gr
+          <div className="fs-6 text-muted">Όπου η φροντίδα συναντά την εμπιστοσύνη..</div>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
