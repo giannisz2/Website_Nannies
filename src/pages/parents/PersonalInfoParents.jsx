@@ -195,8 +195,8 @@ export default function PersonalInfo() {
                                           value={formData.gender}
                                           onChange={handleInputChange}
                                       >
-                                          <MenuItem value="Αρσενικό">Αρσενικό</MenuItem>
-                                          <MenuItem value="Θυληκό">Θυληκό</MenuItem>
+                                          <MenuItem value="Άνδρας">Άνδρας</MenuItem>
+                                          <MenuItem value="Γυναίκα">Γυναίκα</MenuItem>
                                           <MenuItem value="Άλλο">Άλλο</MenuItem>
                                       </Select>
                                       {formErrors.gender && (
