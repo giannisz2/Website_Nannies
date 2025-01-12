@@ -232,28 +232,16 @@ export default function FirstStep() {
                         <Col>
                         <FormControl component="fieldset" fullWidth className="my-3">
                             <InputLabel shrink>Φύλο</InputLabel>
-                            <RadioGroup
+                            <Select
                                 name="gender"
                                 value={formData.gender}
                                 onChange={handleInputChange}
                                 row
                             >
-                                <FormControlLabel
-                                value="Αρσενικό"
-                                control={<Radio />}
-                                label="Άντρας"
-                                />
-                                <FormControlLabel
-                                value="Θυληκό"
-                                control={<Radio />}
-                                label="Γυναίκα"
-                                />
-                                <FormControlLabel
-                                value="Άλλο"
-                                control={<Radio />}
-                                label="Άλλο"
-                                />
-                            </RadioGroup>
+                                 <MenuItem value="Άνδρας">Άνδρας</MenuItem>
+                                    <MenuItem value="Γυναίκα">Γυναίκα</MenuItem>
+                                    <MenuItem value="Άλλο">Άλλο</MenuItem>
+                                </Select>
 
                             {formErrors.gender && (
                                 <p style={{ color: 'red', fontSize: '12px' }}>
