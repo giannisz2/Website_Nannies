@@ -1,6 +1,6 @@
 import { Container, Navbar, Nav, Button, Dropdown } from 'react-bootstrap';
 import '../../styles/NavBarNannies.css';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import IconButton from '@mui/material/IconButton';
 import Snackbar from '@mui/material/Snackbar';
@@ -9,6 +9,7 @@ import React, { useState } from 'react';
 
 export default function NavBarNannies() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
@@ -27,81 +28,50 @@ export default function NavBarNannies() {
     navigate('/'); // Home page from logo
   };
 
-  const goToAgreementHistory = () => {
-    navigate('/AgreementHistory');
-  };
+  const menuItems = [
+    { label: 'Αξιολογήσεις', path: '/Rates', onClick: () => navigate('/Rates') },
+    { label: 'Ειδοποιήσεις', path: '/Message', onClick: () => navigate('/Message') },
+    { label: 'Συνάντηση', path: '/MeetingNanny', onClick: () => navigate('/MeetingNanny') },
+    { label: 'Συμφωνητικό', path: '/Agreement', onClick: () => navigate('/Agreement') },
+    { label: 'Voucher', path: '/Voucher', onClick: () => navigate('/Voucher') },
+  ];
 
-  const handleProfileEdit = () => {
-    navigate('/PersonalInfo'); 
-  };
-
-  const handleDeactivateAccount = () => {
-    handleSnackbarOpen('Ο λογαριασμός αποσυνδέθηκε!', 'info');
-    setTimeout(() => {
-      navigate('/'); 
-    }, 2000); 
-  };
-
-  const contract = () => {
-    navigate('/Agreement');
-  };
-
-  const voucher = () => {
-    navigate('/Voucher');
-  };
-
-  const rates = () => {
-    navigate('/Rates');
-  };
-
-  const MeetingNanny = () => {
-    navigate('/MeetingNanny');
-  };
-
-
-  const TransactionHistory = () => {
-    navigate('/TransactionHistory');
-  };
-
-  const gotoMessage = () => {
-    navigate('/Message');
-  };
+  const isActive = (path) => location.pathname === path;
 
   return (
     <>
       <Navbar className="nav" bg="light" expand="lg" variant="light">
         <Container fluid>
           <Navbar.Brand className="ms-4 fw-bolder fs-3" onClick={handleLogoClick} style={{ cursor: 'pointer' }}>
-          Νταντάδες.gr
-          <div className="fs-6 text-muted">Όπου η φροντίδα συναντά την εμπιστοσύνη..</div>
+            Νταντάδες.gr
+            <div className="fs-6 text-muted">Όπου η φροντίδα συναντά την εμπιστοσύνη..</div>
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Button className="button" variant="primary" onClick={rates}>
-                Αξιολογήσεις
-              </Button>
+              {menuItems.map((item) => (
+                <Button
+                  key={item.label}
+                  className={`button mx-2 ${isActive(item.path) ? 'active' : ''}`}
+                  variant="primary"
+                  onClick={item.onClick}
+                >
+                  {item.label}
+                </Button>
+              ))}
               <Dropdown className="d-inline mx-2">
                 <Dropdown.Toggle variant="primary" className="button">
                   Ιστορικό
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item href="#/Πληρωμών"onClick={TransactionHistory}>Πληρωμών</Dropdown.Item>
-                  <Dropdown.Item onClick={goToAgreementHistory}>Συμφωνητικών</Dropdown.Item>
+                  <Dropdown.Item href="#/Πληρωμών" onClick={() => navigate('/TransactionHistory')}>
+                    Πληρωμών
+                  </Dropdown.Item>
+                  <Dropdown.Item onClick={() => navigate('/AgreementHistory')}>
+                    Συμφωνητικών
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <Button className="button mx-2" variant="primary"onClick={gotoMessage}>
-                Ειδοποιήσεις
-              </Button>
-              <Button className="button mx-2" onClick={MeetingNanny} variant="primary">
-                Συνάντηση
-              </Button>
-              <Button className="button mx-2" onClick={contract} variant="primary">
-                Συμφωνητικό
-              </Button>
-              <Button className="button mx-2" onClick={voucher} variant="primary">
-                Voucher
-              </Button>
             </Nav>
             <Nav>
               <Dropdown>
@@ -109,8 +79,17 @@ export default function NavBarNannies() {
                   <AccountCircleIcon />
                 </Dropdown.Toggle>
                 <Dropdown.Menu align="end">
-                  <Dropdown.Item onClick={handleProfileEdit}>Επεξεργασία Προφίλ</Dropdown.Item>
-                  <Dropdown.Item onClick={handleDeactivateAccount}>Αποσύνδεση</Dropdown.Item>
+                  <Dropdown.Item onClick={() => navigate('/PersonalInfo')}>Επεξεργασία Προφίλ</Dropdown.Item>
+                  <Dropdown.Item
+                    onClick={() => {
+                      handleSnackbarOpen('Ο λογαριασμός αποσυνδέθηκε!', 'info');
+                      setTimeout(() => {
+                        navigate('/');
+                      }, 2000);
+                    }}
+                  >
+                    Αποσύνδεση
+                  </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
             </Nav>

@@ -43,12 +43,34 @@
   
 
 .navbar-collapse {
-  justify-content: space-between;  /* Εξασφαλίζει ότι το Nav με το AccountCircleIcon θα πηγαίνει στο τέλος */
+  justify-content: space-between;
 }
 
 .icon-button {
-  margin-left: auto;  /* Ωθεί το IconButton δεξιά */
+  margin-left: auto;
 }
 
 
 }
+
+.button.active {
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+.button.active,
+.dropdown-item.active {
+  text-decoration: underline;
+  font-weight: bold;
+  color: black !important;
+  background-color: transparent !important;
+  border-color: transparent !important;
+}
+
+.button.active:hover,
+.dropdown-item.active:hover {
+  color: black !important;
+  background-color: transparent !important;
+  text-decoration: underline;
+}
+
