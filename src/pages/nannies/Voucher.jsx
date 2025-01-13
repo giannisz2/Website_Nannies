@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import QR__CODE from '../../assets/images/qr_code.jpg';
 import HelpButton from '../../components/buttons/HelpButton';
 import Alert from '@mui/material/Alert';
+import { Breadcrumb } from 'react-bootstrap';
+import { Link } from "react-router-dom";
 
 export default function Voucher() {
     const [isChecked, setIsChecked] = useState(false);
@@ -106,7 +108,29 @@ export default function Voucher() {
             <div className="nanny-voucher">
                 <NavBarNannies />
                 <HelpButton />
-                <p className="this_text">Voucher</p>
+                <Breadcrumb
+                    style={{
+                        fontSize: '20px', 
+                        marginTop: '20px', 
+                        marginBottom: '10px', 
+                        marginLeft: '40px',
+                    }}
+                >
+                <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/NannyHomepage" }}>
+                    Αρχική
+                </Breadcrumb.Item>
+                <Breadcrumb.Item
+                    active
+                    style={{
+                    textDecoration: 'underline',
+                    fontWeight: 'bold', 
+                    color:'blue',
+                    }}
+                >
+                    Voucher
+                </Breadcrumb.Item>
+                </Breadcrumb>
+                <p className='this_text'>Voucher</p>  
                 <p className="this_text-voucher" style={{ display: 'inline-block', marginRight: '10px' }}>Το ποσό που σου αντιστοιχεί είναι: </p>
                 <p className="text-voucher2" style={{ display: 'inline-block' }}>800 € </p>
                 <p className="text-voucher1">Μπορείς να λάβεις τα χρήματα είτε γράφοντας το IBAN σου και να περιμένεις 5 εργάσιμες μέρες
