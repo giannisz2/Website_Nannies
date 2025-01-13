@@ -119,7 +119,7 @@ export default function SidebarFilters({ onFilterChange }) {
             </div>
             <div className="filters-list">
             <div className="filter-item">
-                <label>Περιοχή</label>
+                <label>Τοποθεσία</label>
                 <input
                     className="input"
                     type="text"
