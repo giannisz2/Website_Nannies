@@ -23,20 +23,22 @@ export default function SearchNannies() {
                 const querySnapshot = await getDocs(collection(db, "users"));
                 const fetchedNannies = querySnapshot.docs.map((doc) => {
                     const data = doc.data();
-
+        
                     let birthdate;
                     if (data.birthdate?.toDate) {
                         birthdate = data.birthdate.toDate();
                     } else if (typeof data.birthdate === "string") {
                         birthdate = new Date(data.birthdate);
-                    } else {
+                    } else if (data.birthdate instanceof Date) {
                         birthdate = data.birthdate;
+                    } else {
+                        birthdate = null;
                     }
-
-                    const age = birthdate
+        
+                    const age = birthdate instanceof Date && !isNaN(birthdate)
                         ? new Date().getFullYear() - birthdate.getFullYear()
                         : null;
-
+        
                     return {
                         id: doc.id,
                         ...data,
@@ -44,7 +46,7 @@ export default function SearchNannies() {
                         surname: data.surname || "Χωρίς Επώνυμο",
                     };
                 });
-
+        
                 console.log("Fetched nannies:", fetchedNannies);
                 setNannies(fetchedNannies);
                 setLoading(false);

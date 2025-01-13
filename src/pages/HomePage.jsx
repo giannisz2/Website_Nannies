@@ -106,7 +106,7 @@ export default function HomePage() {
             <TextField
               {...params}
               className="location"
-              placeholder="Αναζητήστε περιοχή..."
+              placeholder="Αναζητήστε τοποθεσία..."
               onKeyDown={handleKeyDown}
               InputProps={{
                 ...params.InputProps,
