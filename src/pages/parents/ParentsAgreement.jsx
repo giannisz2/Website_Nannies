@@ -212,6 +212,27 @@ export default function ParentsAgreement() {
                 setTimeout(() => navigate("/AgreementRenewal"), 3000);
                 return;
             }
+
+
+            
+        const activeAgreementQuery = query(
+            agreementsRef,
+            where("nannyName", "==", formData.nannyName),
+            where("nannySurName", "==", formData.nannySurName),
+            where("isenable", "==", true)
+        );
+
+        const activeAgreementSnapshot = await getDocs(activeAgreementQuery);
+        if (!activeAgreementSnapshot.empty) {
+            handleSnackbarOpen(
+                "Η νταντά έχει ήδη ενεργό συμφωνητικό με άλλον γονέα.",
+                "error"
+            );
+            return;
+        }
+
+
+
     
             const otherAgreementsQuery = query(
                 agreementsRef,
