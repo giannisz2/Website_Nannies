@@ -18,6 +18,14 @@ export default function SearchNannies() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
+        const queryParams = new URLSearchParams(location.search);
+        const locationParam = queryParams.get('location');
+        if (locationParam) {
+          setSearchLocation(locationParam);
+        }
+      }, [location]);
+      
+    useEffect(() => {
         const fetchNannies = async () => {
             try {
                 const querySnapshot = await getDocs(collection(db, "users"));
