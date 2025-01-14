@@ -100,7 +100,7 @@ export default function NewPayment() {
         const workHoursTo = parseFloat(agreement.workHoursTo || '0');
         const totalHours = workHoursTo - workHoursFrom;
 
-        return totalHours <= 6 ? 600 : 800;
+        return totalHours <= 3600 ? 600 : 800;
     };
 
     const completePayment = async () => {

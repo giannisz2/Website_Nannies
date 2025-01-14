@@ -5,7 +5,7 @@ import "../../styles/PaymentDone.css"
 
 export default function PaymentDone() {
     const handleReturnHome = () => {
-        window.location.href = "/"; 
+        window.location.href = "/ParentHomepage"; 
     };
 
     return (
