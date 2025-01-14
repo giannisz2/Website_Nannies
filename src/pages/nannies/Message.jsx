@@ -7,11 +7,18 @@ import TextField from "@mui/material/TextField";
 import '../../styles/AgreementHistory.css';
 import '../../styles/Message.css';
 import '../../styles/PopUp.css';
+import { db } from '../../providers/firebaseConfig';
+import {  collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+
+
 
 export default function Message() {
   const [show, setShow] = useState(false);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [currentType, setCurrentType] = useState(''); 
+  const [agreementsNotifications, setAgreementsNotifications] = useState([]);
+  const [interestNotifications, setInterestNotifications] = useState([]);
+
 
   const messages = [
     {
@@ -51,37 +58,74 @@ export default function Message() {
   };
 
   const handleNextItem = () => {
-    const list = currentType === 'message' ? messages : notifications;
+    const list = currentType === 'message' ? messages : agreementsNotifications;
     setCurrentItemIndex((prevIndex) => (prevIndex + 1) % list.length);
   };
 
   const handlePreviousItem = () => {
-    const list = currentType === 'message' ? messages : notifications;
+    const list = currentType === 'message' ? messages : agreementsNotifications;
     setCurrentItemIndex((prevIndex) => (prevIndex - 1 + list.length) % list.length);
   };
 
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (show) {
-        if (event.key === 'ArrowRight') {
-          event.preventDefault();
-          handleNextItem();
-        } else if (event.key === 'ArrowLeft') {
-          event.preventDefault();
-          handlePreviousItem();
+    const fetchAgreements = async () => {
+      try {
+        const userId = localStorage.getItem('userId'); // Αναγνωριστικό της νταντάς
+        if (!userId) {
+          console.error('Δεν βρέθηκε userId στο localStorage.');
+          return;
         }
+
+        // Ανάκτηση δεδομένων της νταντάς από τη βάση `users`
+        const nannyRef = doc(db, 'users', userId);
+        const nannySnap = await getDoc(nannyRef);
+
+        if (!nannySnap.exists()) {
+          console.error('Δεν βρέθηκαν δεδομένα για τη νταντά.');
+          return;
+        }
+
+        const nannyData = nannySnap.data();
+        const { name: nannyName, surname: nannySurName } = nannyData;
+
+        // Query στη βάση `agreements` για να βρούμε συμφωνίες με βάση το `nannyName` και `nannySurname`
+        const agreementsRef = collection(db, 'agreements');
+        const agreementsQuery = query(
+          agreementsRef,
+          where('nannyName', '==', nannyName),
+          where('nannySurName', '==', nannySurName)
+        );
+
+        const agreementsSnapshot = await getDocs(agreementsQuery);
+
+        const notifications = [];
+        agreementsSnapshot.forEach((doc) => {
+          const data = doc.data();
+          const status = data.isenable
+            ? `Έχετε ενεργό συμφωνητικό με τον/την ${data.parentName} ${data.parentSurname}.`
+            : `Η συνεργασία σας με τον/την ${data.parentName} ${data.parentSurname} έχει λήξει.`;
+          notifications.push({
+            title: data.isenable ? 'Ενεργό Συμφωνητικό' : 'Λήξη Συνεργασίας',
+            content: status,
+            date: new Date(data.startDate.seconds * 1000).toLocaleDateString(),
+          });
+        });
+
+        setAgreementsNotifications(notifications);
+      } catch (error) {
+        console.error('Σφάλμα κατά την ανάκτηση των συμφωνητικών:', error);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
+    fetchAgreements();
+  }, []);
 
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [show, currentType]);
+  
 
-  const currentItem =
-    currentType === 'message' ? messages[currentItemIndex] : notifications[currentItemIndex];
+
+
+  const currentItem = agreementsNotifications[currentItemIndex];
+
 
   return (
     <div id="Message">
@@ -102,18 +146,23 @@ export default function Message() {
           ))}
         </Col>
         <Col md={6}>
-          <div className="this_text_message">ΕΙΔΟΠΟΙΗΣΕΙΣ</div>
-          {notifications.map((notification, index) => (
-            <div
-              key={index}
-              className="messageBox"
-              onClick={() => togglePopUp('notification', index)}
-            >
-              <p className="header-message">{notification.title}</p>
-              <p className="text-message">{notification.date}</p>
-            </div>
-          ))}
-        </Col>
+            <div className="this_text_message">ΕΙΔΟΠΟΙΗΣΕΙΣ</div>
+            {agreementsNotifications.length > 0 ? (
+              agreementsNotifications.map((notification, index) => (
+                <div
+                  key={index}
+                  className="messageBox"
+                  onClick={() => togglePopUp('notification', index)}
+                >
+                  <p className="header-message">{notification.title}</p>
+                  <p className="text-message">{notification.date}</p>
+                </div>
+              ))
+            ) : (
+              <p className="text-message">Δεν υπάρχουν ειδοποιήσεις.</p>
+            )}
+          </Col>
+
       </Row>
       {show && (
         <div className="popup-overlay">
