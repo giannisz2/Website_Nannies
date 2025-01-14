@@ -64,9 +64,10 @@ export default function NewPayment() {
                     const agreementData = agreementsSnapshot.docs[0].data();
                     setAgreement(agreementData);
                     setFormData({
-                        parentName: `${agreementData.parentName} ${agreementData.parentSurname}`,
+                        parentName: `${name} ${surname}`,
                         nannyName: `${agreementData.nannyName} ${agreementData.nannySurName}`,
                         email: agreementData.parentEmail,
+                        nannyPay: false,
                     });
                 } else {
                     console.error('No active agreement found');
