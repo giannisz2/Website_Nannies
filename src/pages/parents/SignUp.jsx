@@ -10,7 +10,12 @@ import { db } from '../../providers/firebaseConfig.js';
 import { collection, addDoc } from 'firebase/firestore';
 import { Autocomplete } from '@mui/material';
 import '../../styles/PersonalInfoParents.css';
-
+import {
+    RadioGroup,
+    FormControlLabel,
+    Radio,
+  } from '@mui/material';
+  
 
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
@@ -343,19 +348,21 @@ export default function SignUp() {
                                 <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Όνομα είναι υποχρεωτικό</span>
                             ) : null}
                         />
-                        <FormControl fullWidth className="my-3">
-                                <InputLabel>Φύλο</InputLabel>
-                                <Select
+                        <FormControl component="fieldset" className="my-3">
+                                <InputLabel shrink>Φύλο</InputLabel>
+                                <RadioGroup
+                                    row
+                                    aria-label="gender"
                                     name="gender"
-                                    value={formData.gender}
+                                    value={formData.gender || ''}
                                     onChange={handleInputChange}
                                 >
-                                    <MenuItem value="Άνδρας">Άνδρας</MenuItem>
-                                    <MenuItem value="Γυναίκα">Γυναίκα</MenuItem>
-                                    <MenuItem value="Άλλο">Άλλο</MenuItem>
-                                </Select>
+                                    <FormControlLabel value="Άνδρας" control={<Radio />} label="Άνδρας" />
+                                    <FormControlLabel value="Γυναίκα" control={<Radio />} label="Γυναίκα" />
+                                    <FormControlLabel value="Άλλο" control={<Radio />} label="Άλλο" />
+                                </RadioGroup>
                                 {formErrors.gender && (
-                                    <p style={{ color: 'red', fontSize: '12px' , textAlign:'left'}}>
+                                    <p style={{ color: 'red', fontSize: '12px' }}>
                                         Το πεδίο Φύλο είναι υποχρεωτικό
                                     </p>
                                 )}

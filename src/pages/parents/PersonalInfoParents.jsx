@@ -12,6 +12,12 @@ import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import {
+    RadioGroup,
+    FormControlLabel,
+    Radio,
+  } from '@mui/material';
+  
 
 
 export default function PersonalInfo() {
@@ -42,7 +48,7 @@ export default function PersonalInfo() {
       const errors = {};
       let isValid = true;
   
-      // Έλεγχος για όλα τα πεδία που απαιτούνται
+      
       ['gender', 'phone', 'residence', 'childrenCount', 'pets', 'childrenUnder2', 'nannyChildrenCount'].forEach(field => {
           if (typeof formData[field] === 'string' ? !formData[field]?.trim() : !formData[field]) {
               errors[field] = true;
@@ -50,7 +56,7 @@ export default function PersonalInfo() {
           }
       });
   
-      // Ειδικός έλεγχος για την ημερομηνία γέννησης
+      
       if (!formData.birthdate || !dayjs(formData.birthdate, 'DD/MM/YYYY', true).isValid()) {
           errors.birthdate = true;
           isValid = false;
@@ -150,7 +156,12 @@ export default function PersonalInfo() {
           
           return (
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                  <Box sx={{ padding: '20px', minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#f9f9f9' }}>
+                  <Box sx={{ padding: '20px',
+                    minHeight: '100vh',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    backgroundColor: '#f9f9f9',
+                    marginTop: '100px', }}>
                   <HelpButton />
                       <Logo />
                       <Box
@@ -188,23 +199,25 @@ export default function PersonalInfo() {
                                       InputProps={{ readOnly: true }}
                                       className="my-3"
                                   />
-                                  <FormControl fullWidth className="my-3">
-                                      <InputLabel>Φύλο</InputLabel>
-                                      <Select
-                                          name="gender"
-                                          value={formData.gender}
-                                          onChange={handleInputChange}
-                                      >
-                                          <MenuItem value="Άνδρας">Άνδρας</MenuItem>
-                                          <MenuItem value="Γυναίκα">Γυναίκα</MenuItem>
-                                          <MenuItem value="Άλλο">Άλλο</MenuItem>
-                                      </Select>
-                                      {formErrors.gender && (
-                                          <p style={{ color: 'red', fontSize: '12px' }}>
-                                              Το πεδίο Φύλο είναι υποχρεωτικό
-                                          </p>
-                                      )}
-                                  </FormControl>
+                                  <FormControl component="fieldset" className="my-3">
+                                        <InputLabel shrink>Φύλο</InputLabel>
+                                        <RadioGroup
+                                            row
+                                            aria-label="gender"
+                                            name="gender"
+                                            value={formData.gender}
+                                            onChange={handleInputChange}
+                                        >
+                                            <FormControlLabel value="Άνδρας" control={<Radio />} label="Άνδρας" />
+                                            <FormControlLabel value="Γυναίκα" control={<Radio />} label="Γυναίκα" />
+                                            <FormControlLabel value="Άλλο" control={<Radio />} label="Άλλο" />
+                                        </RadioGroup>
+                                        {formErrors.gender && (
+                                            <p style={{ color: 'red', fontSize: '12px' }}>
+                                                Το πεδίο Φύλο είναι υποχρεωτικό
+                                            </p>
+                                        )}
+                                    </FormControl>
                                   <TextField
                                       fullWidth
                                       label="Τηλέφωνο Επικοινωνίας"

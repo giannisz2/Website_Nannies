@@ -11,7 +11,12 @@ import { TextField } from '@mui/material';
 import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
-
+import {
+    RadioGroup,
+    FormControlLabel,
+    Radio,
+  } from '@mui/material';
+  
 
 
 export default function PersonalInfoDone() {
@@ -103,7 +108,7 @@ export default function PersonalInfoDone() {
     
         if (!saveChanges) {
             try {
-                // Επαναφορά δεδομένων από το localStorage
+                
                 const initialData = JSON.parse(localStorage.getItem('initialFormData'));
                 if (initialData) {
                     const userId = localStorage.getItem('userId');
@@ -113,14 +118,14 @@ export default function PersonalInfoDone() {
                     }
     
                     const userRef = doc(db, 'users', userId);
-                    await updateDoc(userRef, initialData); // Ενημέρωση της βάσης δεδομένων με τα αρχικά δεδομένα
+                    await updateDoc(userRef, initialData);  
                 }
             } catch (error) {
                 console.error('Error restoring initial data: ', error);
             }
-            navigate('/NannyHomepage'); // Έξοδος χωρίς αποθήκευση
+            navigate('/NannyHomepage'); 
         } else {
-            handleFinalSubmit(); // Αποθήκευση και έξοδος
+            handleFinalSubmit(); 
         }
     };
     
@@ -132,7 +137,12 @@ export default function PersonalInfoDone() {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <Box sx={{ padding: '20px', minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#f9f9f9' }}>
+        <Box sx={{padding: '20px',
+                    minHeight: '100vh',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    backgroundColor: '#f9f9f9',
+                    marginTop: '100px',}}>
             <HelpButton />
             <Logo />
             <Box
@@ -169,14 +179,31 @@ export default function PersonalInfoDone() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
-                        <TextField
-                            fullWidth
-                            label="Φύλο"
-                            type="text"
-                            value={formData.gender || ''}
-                            InputProps={{ readOnly: true }}
-                            className="my-3"
-                        />
+                        <Typography variant="body1" sx={{ marginBottom: '8px', fontWeight: 'bold' }}>
+                                Φύλο
+                            </Typography>
+                            <RadioGroup
+                                row
+                                aria-label="gender"
+                                name="gender"
+                                value={formData.gender || ''}
+                            >
+                                <FormControlLabel
+                                    value="Άνδρας"
+                                    control={<Radio disabled />}
+                                    label="Άνδρας"
+                                />
+                                <FormControlLabel
+                                    value="Γυναίκα"
+                                    control={<Radio disabled />}
+                                    label="Γυναίκα"
+                                />
+                                <FormControlLabel
+                                    value="Άλλο"
+                                    control={<Radio disabled />}
+                                    label="Άλλο"
+                                />
+                            </RadioGroup>
                         <TextField
                             fullWidth
                             label="Χρόνος Απασχόλησης"

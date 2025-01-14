@@ -230,32 +230,32 @@ export default function FirstStep() {
                             ) : null} 
                         />
                         <Col>
-                        <FormControl component="fieldset" fullWidth className="my-3">
+                        <FormControl component="fieldset" className="my-3">
                             <InputLabel shrink>Φύλο</InputLabel>
-                            <Select
-                                name="gender"
-                                value={formData.gender}
-                                onChange={handleInputChange}
+                            <RadioGroup
                                 row
+                                aria-label="gender"
+                                name="gender"
+                                value={formData.gender || ''}
+                                onChange={handleInputChange}
                             >
-                                 <MenuItem value="Άνδρας">Άνδρας</MenuItem>
-                                    <MenuItem value="Γυναίκα">Γυναίκα</MenuItem>
-                                    <MenuItem value="Άλλο">Άλλο</MenuItem>
-                                </Select>
-
+                                <FormControlLabel value="Άνδρας" control={<Radio />} label="Άνδρας" />
+                                <FormControlLabel value="Γυναίκα" control={<Radio />} label="Γυναίκα" />
+                                <FormControlLabel value="Άλλο" control={<Radio />} label="Άλλο" />
+                            </RadioGroup>
                             {formErrors.gender && (
                                 <p style={{ color: 'red', fontSize: '12px' }}>
-                                Το πεδίο Φύλο είναι υποχρεωτικό
+                                    Το πεδίο Φύλο είναι υποχρεωτικό
                                 </p>
                             )}
-                            </FormControl>
+                        </FormControl>
+                    </Col>
 
-                        </Col>
                         <Col>
                             <TextField fullWidth label="Ημερομηνία γέννησης" type="date" name="birthdate" value={formData.birthdate || ''}
                                 onChange={(e) => handleDateChange(e.target.value)} className="my-3"
                                 InputLabelProps={{
-                                    shrink: true, // Κάνει την ετικέτα να εμφανίζεται πάνω από το πεδίο
+                                    shrink: true, 
                                 }}
                                 helperText={formErrors.birthdate ? (
                                     <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Ημερομηνία γέννησης είναι υποχρεωτικό</span>
