@@ -138,7 +138,9 @@ export default function NewPayment() {
             setSnackbarMessage(`Η πληρωμή των ${paymentAmount}€ για τον μήνα ${getPreviousMonth()} πραγματοποιήθηκε με επιτυχία!`);
             setShowSnackbar(true);
 
-            navigate('/PaymentDone');
+            setTimeout(() => {
+                navigate('/NannyHomepage'); 
+            }, 2000);
         } catch (error) {
             console.error('Error completing payment: ', error);
             setSnackbarMessage('Προέκυψε σφάλμα κατά την ολοκλήρωση της πληρωμής.');
