@@ -77,6 +77,7 @@ export default function PersonalInfoParentsDone() {
 
                 if (userDoc.exists()) {
                     const data = userDoc.data();
+                    console.log('Preview Data:', data);
                     setFormData(data);
                     setInitialFormData(data);
                     
@@ -171,7 +172,7 @@ export default function PersonalInfoParentsDone() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
-                         <Typography variant="body1" sx={{ marginBottom: '8px', fontWeight: 'bold' }}>
+                         <Typography variant="body1" sx={{ marginBottom: '8px' }}>
                                 Φύλο
                             </Typography>
                             <RadioGroup
@@ -243,17 +244,34 @@ export default function PersonalInfoParentsDone() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
+                        <Typography variant="body1" sx={{ marginBottom: '8px' }}>
+                            Έχετε κατοικίδια
+                        </Typography>
+                        <RadioGroup
+                            row
+                            aria-label="pets"
+                            name="pets"
+                            value={formData.pets || ''} 
+                        >
+                            <FormControlLabel
+                                value="ΝΑΙ"
+                                control={<Radio disabled />}
+                                label="ΝΑΙ"
+                            />
+                            <FormControlLabel
+                                value="ΟΧΙ"
+                                control={<Radio disabled />}
+                                label="ΟΧΙ"
+                            />
+                        </RadioGroup>
+
+
+
+                        
                         <TextField
                             fullWidth
-                            label="Έχετε κατοικίδια στο σπίτι"
-                            value={formData.pets || ''}
-                            InputProps={{ readOnly: true }}
-                            className="my-3"
-                        />
-                        <TextField
-                            fullWidth
-                            label="Έχετε κατοικίδια στο σπίτι"
-                            value={formData.pets || ''}
+                            label="Πόσα παιδιά θέλετε να αναλάβει η ντάντα;"
+                            value={formData.nannyChildrenCount || ''}
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />

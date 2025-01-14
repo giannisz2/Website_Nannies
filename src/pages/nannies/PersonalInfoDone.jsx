@@ -179,7 +179,7 @@ export default function PersonalInfoDone() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
-                        <Typography variant="body1" sx={{ marginBottom: '8px', fontWeight: 'bold' }}>
+                        <Typography variant="body1" sx={{ marginBottom: '8px' }}>
                                 Φύλο
                             </Typography>
                             <RadioGroup

@@ -88,6 +88,7 @@ export default function PersonalInfo() {
                   if (data.birthdate && data.birthdate.toDate) {
                       data.birthdate = dayjs(data.birthdate.toDate()).format('DD/MM/YYYY');
                   }
+                  console.log('Fetched data:', data);
                   setFormData(data);
                   setInitialFormData(data);
               } else {
@@ -125,9 +126,10 @@ export default function PersonalInfo() {
               return;
           }
           const userRef = doc(db, 'Parent', userId);
+          console.log('Saving data:', formData);
           await updateDoc(userRef, formData);
           localStorage.setItem('initialFormData', JSON.stringify(initialFormData));
-          navigate('/PersonalInfoParentsDone'); // Μετάβαση στη σελίδα PersonalInfoDone
+          navigate('/PersonalInfoParentsDone'); 
       } catch (error) {
           console.error('Error updating document: ', error);
           alert('Σφάλμα κατά την ενημέρωση των στοιχείων.');
@@ -298,22 +300,26 @@ export default function PersonalInfo() {
                                           <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Τόπος Κατοικίας είναι υποχρεωτικό</span>
                                       ) : null} 
                                   />
-                                  <FormControl fullWidth className="my-3">
-                                      <InputLabel>Έχετε κατοικίδια στο σπίτι</InputLabel>
-                                      <Select
-                                          name="pets"
-                                          value={formData.pets}
-                                          onChange={handleInputChange}
-                                      >
-                                          <MenuItem value="ΝΑΙ">ΝΑΙ</MenuItem>
-                                          <MenuItem value="ΟΧΙ">ΟΧΙ</MenuItem>
-                                      </Select>
-                                      {formErrors.pets && (
-                                              <p style={{ color: 'red', fontSize: '12px', textAlign:'left' }}>
-                                                  Το πεδίο Έχετε κατοικίδια στο σπίτι είναι υποχρεωτικό
-                                              </p>
-                                          )}
-                                  </FormControl>
+                                 <FormControl fullWidth className="my-3">
+                                    <InputLabel shrink>Έχετε κατοικίδια</InputLabel>
+                                        <RadioGroup
+                                                row
+                                                aria-label="pets"
+                                                name="pets"
+                                                value={formData.pets || ''}
+                                                onChange={handleInputChange}
+                                            >
+                                                <FormControlLabel value="ΝΑΙ" control={<Radio />} label="ΝΑΙ" />
+                                                <FormControlLabel value="ΟΧΙ" control={<Radio />} label="ΟΧΙ" />
+                                                
+                                            </RadioGroup>
+                                        
+                                        {formErrors.pets && (
+                                                <p style={{ color: 'red', fontSize: '12px', textAlign:'left' }}>
+                                                    Το πεδίο Έχετε κατοικίδια στο σπίτι είναι υποχρεωτικό
+                                                </p>
+                                            )}
+                                    </FormControl>
                                   <FormControl fullWidth className="my-3">
                                       <InputLabel>Πόσα παιδιά θέλετε να αναλάβει η ντάντα;</InputLabel>
                                       <Select
