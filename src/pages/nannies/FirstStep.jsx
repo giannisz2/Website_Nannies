@@ -281,18 +281,30 @@ export default function FirstStep() {
                             )}
                         </FormControl>
 
-                        <TextField 
-                            fullWidth 
-                            label="Εμπειρία (Τι αφορούν οι σπουδές σας)" 
-                            name="experience" 
-                            value={formData.experience} 
-                            onChange={handleInputChange} 
-                            className="my-3"
-                            helperText={
-                                formErrors.experience && 
-                                <span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Εμπειρία είναι υποχρεωτικό</span>
-                            }
-                        />
+                        <FormControl component="fieldset" fullWidth className="my-3">
+                            <InputLabel shrink>Ειδίκευση</InputLabel>
+                            <Select
+                                name="experience"
+                                value={formData.experience}
+                                onChange={handleInputChange}
+                                row
+                            >
+                                 <MenuItem value="Δασκάλος/α">Δάσκαλος/α</MenuItem>
+                                    <MenuItem value="Ειδική Αγωγή">Ειδική Αγωγή</MenuItem>
+                                    <MenuItem value="Νηπιαγωγός">Νηπιαγωγός</MenuItem>
+                                    <MenuItem value="Παιδαγωγός">Παιδαγωγός</MenuItem>
+                                    <MenuItem value="Άλλο">Άλλο</MenuItem>
+                                </Select>
+
+                            {formErrors.experience && (
+                                <p style={{ color: 'red', fontSize: '12px' }}>
+                                Το πεδίο Ειδίκευση είναι υποχρεωτικό
+                                </p>
+                            )}
+                            </FormControl>
+    
+
+                        
                         <FormControl fullWidth className="my-3" error={formErrors.recommendationLetters}>
                             <InputLabel shrink htmlFor="recommendationLettersUpload">
                                 Συστατικές επιστολές~
