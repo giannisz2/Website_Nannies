@@ -280,7 +280,37 @@ export default function SignUp() {
                 setFormErrors({ ...formErrors, birthdate: true });
                 return;
             }
+
+            if (!formData.pets) { 
+                setFormErrors({ ...formErrors, pets: true });
+                return;
+            }
+
+            if (!formData.phone) {
+                setFormErrors({ ...formErrors, phone: true });
+                return;
+            }
             
+            if (!formData.childrenCount) {
+                setFormErrors({ ...formErrors, childrenCount: true });
+                return;
+            }
+
+            if( !formData.childrenUnder2){
+                setFormErrors({ ...formErrors, childrenUnder2: true });
+                return;
+            }
+
+            if( !formData.residence){
+                setFormErrors({ ...formErrors, residence: true });
+                return;
+            }
+
+            if( !formData.nannyChildrenCount){
+                setFormErrors({ ...formErrors, nannyChildrenCount: true });
+                return;
+            }
+
             if (checkFormValidity()) {
                 try {
                     const preparedData = {
@@ -439,8 +469,8 @@ export default function SignUp() {
 
                             <Autocomplete
                                 fullWidth
-                                options={citiesAndTowns.map((city) => `${city.region}:${city.name}`)} // Combine region and name
-                                getOptionLabel={(option) => option} // The label to display in the dropdown
+                                options={citiesAndTowns.map((city) => `${city.region}:${city.name}`)} 
+                                getOptionLabel={(option) => option} 
                                 renderInput={(params) => (
                                     <TextField
                                         {...params}
@@ -453,22 +483,26 @@ export default function SignUp() {
                                 )}
                                 value={formData.residence}
                                 onChange={(event, newValue) => {
-                                    setFormData({ ...formData, residence: newValue || '' }); // Update formData with the selected value
-                                    setFormErrors({ ...formErrors, residence: !newValue }); // Set error if empty
+                                    setFormData({ ...formData, residence: newValue || '' }); 
+                                    setFormErrors({ ...formErrors, residence: !newValue }); 
                                 }}
                                 filterSelectedOptions
                             />
                         
                         <FormControl fullWidth className="my-3">
-                            <InputLabel>Έχετε κατοικίδια στο σπίτι</InputLabel>
-                            <Select
-                                name="pets"
-                                value={formData.pets}
-                                onChange={handleInputChange}
-                            >
-                                <MenuItem value="ΝΑΙ">ΝΑΙ</MenuItem>
-                                <MenuItem value="ΟΧΙ">ΟΧΙ</MenuItem>
-                            </Select>
+                        <InputLabel shrink>Έχετε κατοικίδια</InputLabel>
+                            <RadioGroup
+                                    row
+                                    aria-label="pets"
+                                    name="pets"
+                                    value={formData.pets || ''}
+                                    onChange={handleInputChange}
+                                >
+                                    <FormControlLabel value="ΝΑΙ" control={<Radio />} label="ΝΑΙ" />
+                                    <FormControlLabel value="ΟΧΙ" control={<Radio />} label="ΟΧΙ" />
+                                    
+                                </RadioGroup>
+                               
                             {formErrors.pets && (
                                     <p style={{ color: 'red', fontSize: '12px', textAlign:'left' }}>
                                         Το πεδίο Έχετε κατοικίδια στο σπίτι είναι υποχρεωτικό
@@ -493,8 +527,13 @@ export default function SignUp() {
                                     </p>
                                 )}
                         </FormControl>
+                        
                     </Col>
                 </Row>
+                <p>   </p>
+                        <p style={{ color: 'red', fontSize: '14px', marginBottom: '20px' }}>
+                            * Όλα τα πεδία είναι υποχρεωτικά
+                        </p>
             </div>
             <div className='buttons-su'>
                             <button className="button-temp-su" onClick={handleTemporarySave} >Προσωρινή Αποθήκευση</button>

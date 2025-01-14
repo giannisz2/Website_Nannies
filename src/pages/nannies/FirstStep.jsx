@@ -91,10 +91,10 @@ export default function FirstStep() {
     const isOver18 = (birthdate) => {
         const today = new Date();
         const birthDate = new Date(birthdate);
-        let age = today.getFullYear() - birthDate.getFullYear();  // Χρήση let αντί για const
+        let age = today.getFullYear() - birthDate.getFullYear();  
         const m = today.getMonth() - birthDate.getMonth();
         if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;  // Εδώ είναι εντάξει να μειώσουμε το age επειδή τώρα είναι let
+            age--;  
         }
         return age >= 18;
     };
@@ -153,7 +153,7 @@ export default function FirstStep() {
         if (file) {
             setFormData((prev) => ({
                 ...prev,
-                recommendationLetters: file.name, // Αποθηκεύει μόνο το όνομα του αρχείου
+                recommendationLetters: file.name, 
             }));
         }
     };
