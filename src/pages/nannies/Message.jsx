@@ -54,13 +54,13 @@ export default function Message() {
   useEffect(() => {
     const fetchNotifications = async () => {
       try {
-        const userId = localStorage.getItem('userId'); // Αναγνωριστικό της νταντάς
+        const userId = localStorage.getItem('userId'); 
         if (!userId) {
           console.error('Δεν βρέθηκε userId στο localStorage.');
           return;
         }
 
-        // Ανάκτηση δεδομένων της νταντάς από τη βάση `users`
+        
         const nannyRef = doc(db, 'users', userId);
         const nannySnap = await getDoc(nannyRef);
 
@@ -72,7 +72,7 @@ export default function Message() {
         const nannyData = nannySnap.data();
         const { name: nannyName, surname: nannySurName } = nannyData;
 
-        // Query στη βάση `agreements` για να βρούμε συμφωνίες με βάση το `nannyName` και `nannySurname`
+        
         const agreementsRef = collection(db, 'agreements');
         const agreementsQuery = query(
           agreementsRef,
@@ -98,7 +98,7 @@ export default function Message() {
         
 
 
-        // Ανάκτηση αιτήσεων ενδιαφέροντος
+        
         const nannyFullName = `${nannyData.name} ${nannyData.surname}`;
         console.log('Nanny Full Name:', nannyFullName);
 
