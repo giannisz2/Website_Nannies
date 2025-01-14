@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SidebarFilters from "../../components/layout/SidebarFilters";
+
 import { useLocation } from 'react-router-dom';
 import SidebarFiltersAlt from "../../components/layout/SidebarFiltersAlt.jsx";
 import NavBar from "../../components/layout/Navbar";
@@ -19,11 +19,11 @@ export default function SearchNanniesWithoutSignIn() {
     const queryParams = new URLSearchParams(location.search);
     const locationFromQuery = queryParams.get('location');
     const decodedLocation = locationFromQuery
-      ? decodeURIComponent(locationFromQuery).replace(' - ', ':').replace(/\s+/g, '')
-      : '';
+    ? decodeURIComponent(locationFromQuery)
+    : "";
    
     const [nannies, setNannies] = useState([]);
-    const [filterCriteria, setFilterCriteria] = useState({});
+    const [filterCriteria, setFilterCriteria] = useState({ location: decodedLocation });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -33,19 +33,15 @@ export default function SearchNanniesWithoutSignIn() {
                 const querySnapshot = await getDocs(collection(db, "users"));
                 const fetchedNannies = querySnapshot.docs.map((doc) => {
                     const data = doc.data();
-                    let birthdate;
-                    if (data.birthdate?.toDate) {
-                        birthdate = data.birthdate.toDate();
-                    } else if (typeof data.birthdate === "string") {
-                        birthdate = new Date(data.birthdate);
-                    } else if (data.birthdate instanceof Date) {
-                        birthdate = data.birthdate;
-                    } else {
-                        birthdate = null;
-                    }
+                    const birthdate = data.birthdate?.toDate
+                      ? data.birthdate.toDate()
+                      : new Date(data.birthdate || null);
                     const age = birthdate instanceof Date && !isNaN(birthdate)
-                        ? new Date().getFullYear() - birthdate.getFullYear()
-                        : null;
+                      ? new Date().getFullYear() - birthdate.getFullYear()
+                      : null;
+
+
+                    
                     return {
                         id: doc.id,
                         ...data,
@@ -100,11 +96,9 @@ export default function SearchNanniesWithoutSignIn() {
                 return false;
             }
     
-            if (filterCriteria.location) {
-                if (nanny.location !== filterCriteria.location) {
-                    return false;
-                }
-            }
+            if (filterCriteria.location && nanny.location !== filterCriteria.location) {
+                return false;
+              }
             return true; 
         });
     };
@@ -125,6 +119,11 @@ export default function SearchNanniesWithoutSignIn() {
     setIsPopupOpen(false); 
     setSelectedNanny(null); 
     };
+
+    if (error) {
+        return <div>{error}</div>;
+      }
+    
 
   return (
       <div className="page-container">
@@ -160,7 +159,7 @@ export default function SearchNanniesWithoutSignIn() {
                       <button className="close-btn" onClick={handleClosePopup}>
                           X
                       </button>
-                      <p><strong>Πρέπει να συνδεθείς για να μπεις στο προφίλ της νταντάς</strong></p>
+                      <p><strong>Πρέπει να συνδεθείς ή να δημιουργήσεις λογαριασμό, για να μπεις στο προφίλ της νταντάς</strong></p>
                   </div>
               </div>
           )}
