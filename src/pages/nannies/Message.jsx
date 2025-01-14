@@ -8,17 +8,14 @@ import '../../styles/AgreementHistory.css';
 import '../../styles/Message.css';
 import '../../styles/PopUp.css';
 import { db } from '../../providers/firebaseConfig';
-import {  collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
-
-
+import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
 
 export default function Message() {
   const [show, setShow] = useState(false);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
-  const [currentType, setCurrentType] = useState(''); 
+  const [currentType, setCurrentType] = useState('');
   const [agreementsNotifications, setAgreementsNotifications] = useState([]);
   const [interestNotifications, setInterestNotifications] = useState([]);
-
 
   const messages = [
     {
@@ -38,19 +35,6 @@ export default function Message() {
     }
   ];
 
-  const notifications = [
-    {
-      title: 'Η πληρωμή έγινε με επιτυχία',
-      content: 'Η πληρωμή σας στις 14/3/2018 με τον Αποστόλη Γραμματόπουλο ολοκληρώθηκε.',
-      date: '14/3/2018'
-    },
-    {
-      title: 'Η πληρωμή έγινε με επιτυχία',
-      content: 'Η πληρωμή σας στις 14/2/2018 με τον Αποστόλη Γραμματόπουλο ολοκληρώθηκε.',
-      date: '14/2/2018'
-    }
-  ];
-
   const togglePopUp = (type, index) => {
     setCurrentType(type);
     setCurrentItemIndex(index);
@@ -58,17 +42,17 @@ export default function Message() {
   };
 
   const handleNextItem = () => {
-    const list = currentType === 'message' ? messages : agreementsNotifications;
+    const list = currentType === 'message' ? messages : agreementsNotifications.concat(interestNotifications);
     setCurrentItemIndex((prevIndex) => (prevIndex + 1) % list.length);
   };
 
   const handlePreviousItem = () => {
-    const list = currentType === 'message' ? messages : agreementsNotifications;
+    const list = currentType === 'message' ? messages : agreementsNotifications.concat(interestNotifications);
     setCurrentItemIndex((prevIndex) => (prevIndex - 1 + list.length) % list.length);
   };
 
   useEffect(() => {
-    const fetchAgreements = async () => {
+    const fetchNotifications = async () => {
       try {
         const userId = localStorage.getItem('userId'); // Αναγνωριστικό της νταντάς
         if (!userId) {
@@ -111,21 +95,51 @@ export default function Message() {
           });
         });
 
-        setAgreementsNotifications(notifications);
+        
+
+
+        // Ανάκτηση αιτήσεων ενδιαφέροντος
+        const nannyFullName = `${nannyData.name} ${nannyData.surname}`;
+        console.log('Nanny Full Name:', nannyFullName);
+
+        const interestRef = collection(db, 'interest');
+        const interestQuery = query(
+          interestRef,
+          where('nannyName', '==', nannyFullName)
+        );
+  
+        const interestSnapshot = await getDocs(interestQuery);
+        console.log('Interest Snapshot Size:', interestSnapshot.size);
+  
+        const interestNotifications = [];
+        interestSnapshot.forEach((doc) => {
+          const data = doc.data();
+          console.log('Interest Data:', data);
+          interestNotifications.push({
+            title: 'Νέο Ενδιαφέρον',
+            content: `Ο/Η ${data.parentName} έδειξε ενδιαφέρον για συνεργασία.`,
+            date: new Date().toLocaleDateString(),
+          });
+        });
+  
+        setInterestNotifications(interestNotifications);
+        console.log('Interest Notifications:', interestNotifications);
       } catch (error) {
-        console.error('Σφάλμα κατά την ανάκτηση των συμφωνητικών:', error);
+        console.error('Σφάλμα κατά την ανάκτηση των ειδοποιήσεων:', error);
       }
     };
+  
 
-    fetchAgreements();
+    fetchNotifications();
   }, []);
-
   
 
 
 
-  const currentItem = agreementsNotifications[currentItemIndex];
-
+  const currentItem =
+    currentType === 'message'
+      ? messages[currentItemIndex]
+      : agreementsNotifications.concat(interestNotifications)[currentItemIndex];
 
   return (
     <div id="Message">
@@ -146,27 +160,36 @@ export default function Message() {
           ))}
         </Col>
         <Col md={6}>
-            <div className="this_text_message">ΕΙΔΟΠΟΙΗΣΕΙΣ</div>
-            {agreementsNotifications.length > 0 ? (
-              agreementsNotifications.map((notification, index) => (
-                <div
-                  key={index}
-                  className="messageBox"
-                  onClick={() => togglePopUp('notification', index)}
-                >
-                  <p className="header-message">{notification.title}</p>
-                  <p className="text-message">{notification.date}</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-message">Δεν υπάρχουν ειδοποιήσεις.</p>
-            )}
-          </Col>
-
+          <div className="this_text_message">Ειδοποιήσεις</div>
+          {agreementsNotifications.length > 0 ? (
+            agreementsNotifications.map((notification, index) => (
+              <div key={index} className="messageBox">
+                <p className="header-message">{notification.title}</p>
+                <p className="text-message">{notification.content}</p>
+                <p className="date-message">{notification.date}</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-message">Δεν υπάρχουν ειδοποιήσεις συμφωνητικών.</p>
+          )}
+        
+          <div className="this_text_message"></div>
+          {interestNotifications.length > 0 ? (
+            interestNotifications.map((notification, index) => (
+              <div key={index} className="messageBox">
+                <p className="header-message">{notification.title}</p>
+                <p className="text-message">{notification.content}</p>
+                <p className="date-message">{notification.date}</p>
+              </div>
+            ))
+          ) : (
+            <p className="text-message">Δεν υπάρχουν αιτήσεις ενδιαφέροντος.</p>
+          )}
+        </Col>
       </Row>
       {show && (
         <div className="popup-overlay">
-          <div className={`popup ${show ? 'popup-active' : ''}`} >
+          <div className={`popup ${show ? 'popup-active' : ''}`}>
             <button className="close-btn" onClick={() => setShow(false)}>
               &times;
             </button>
@@ -176,16 +199,8 @@ export default function Message() {
             <button className="arrow-btn right-arrow" onClick={handleNextItem}>
               &rarr;
             </button>
-            <h2 className='header-message'>{currentItem.title}</h2>
+            <h2 className="header-message">{currentItem.title}</h2>
             <p>{currentItem.content}</p>
-            {currentType === 'message' && (
-              <p>
-                <strong>Από:</strong> {currentItem.sender}
-              </p>
-            )}
-            {currentType === 'message' && (
-              <TextField fullWidth label="Απάντηση" type="text" className="popup_text" />
-            )}
           </div>
         </div>
       )}
