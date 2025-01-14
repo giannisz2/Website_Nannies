@@ -172,6 +172,27 @@ export default function TempAgreement() {
         navigate('/ParentHomepage');
     };
 
+    const checkFormValidity = () => {
+        const errors = {};
+        let isValid = true;
+
+        ['email'].forEach((field) => {
+            if (!formData[field] || formData[field].trim() === '') {
+                errors[field] = true;
+                isValid = false;
+            }
+        });
+
+        if (!isChecked) {
+            errors.checkbox = 'Πρέπει να συμπληρώσετε το email σας.'; 
+            isValid = false;
+        }
+
+        setFormErrors(errors);
+        return isValid;
+    };
+
+
     return (
         <div>
             <NavBarParents />
@@ -204,7 +225,9 @@ export default function TempAgreement() {
                         <Row>
                             <Col><p className="text">και email</p></Col>
                             <Col>
-                                <TextField fullWidth className="text-field" name="email" value={parentData.email} onChange={handleInputChange} />
+                                <TextField fullWidth className="text-field" name="email" value={parentData.email} onChange={handleInputChange}  error={formErrors.email}
+                                helperText={formErrors.beneficiary ? 'Το πεδίο email είναι υποχρεωτικό' : ''}/>
+                               
                             </Col>
                         </Row>
                         <Row>
@@ -247,7 +270,7 @@ export default function TempAgreement() {
                 </Box>
             </LocalizationProvider>
             <Footer />
-            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose}>
+            <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleSnackbarClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
                 <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
                     {snackbarMessage}
                 </Alert>
