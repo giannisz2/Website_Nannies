@@ -18,6 +18,7 @@ export default function NewPayment() {
         nannyName: '',
         nannySurname: '',
         email: '',
+        nannyPay: false,
     });
 
     const [isChecked, setIsChecked] = useState(false);
@@ -139,7 +140,7 @@ export default function NewPayment() {
             setShowSnackbar(true);
 
             setTimeout(() => {
-                navigate('/NannyHomepage'); 
+                navigate('/ParentHomepage'); 
             }, 2000);
         } catch (error) {
             console.error('Error completing payment: ', error);
