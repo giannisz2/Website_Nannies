@@ -189,24 +189,33 @@ export default function SidebarFilters({ onFilterChange }) {
 
                 <div className="filter-item">
                     <label>Ειδίκευση:</label>
-                    <input
+                    <select
                         className='input'
-                        type="text"
                         value={filters.experience}
-                        onChange={(e) => handleFilterChange('experience', e.target.value)}
-                        placeholder="Π.χ. Ειδική Αγωγή"
-                    />
+                        onChange={(e) => handleFilterChange('experience', e.target.value)}>
+                        <option value="">Επιλογή</option>
+                        <option value="Δασκάλος/α">Δάσκαλος/α</option>
+                        <option value="Ειδική Αγωγή">Ειδική Αγωγή</option>
+                        <option value="Νηπιαγωγός">Νηπιαγωγός</option>
+                        <option value="Παιδαγωγός">Παιδαγωγός</option>
+                        <option value="Άλλο">Άλλο</option>
+                        
+                    </select>
                 </div>
 
                 <div className="filter-item">
                     <label>Επίπεδο εκαπίδευσης:</label>
-                    <input
+                    <select
                         className='input'
-                        type="text"
                         value={filters.educationLevel}
-                        onChange={(e) => handleFilterChange('educationLevel', e.target.value)}
-                        placeholder="Π.χ. Δευτεροβάθμια"
-                    />
+                        onChange={(e) => handleFilterChange('educationLevel', e.target.value)}>
+                        <option value="">Επιλογή</option>
+                        <option value="Τριτοβάθμια εκπαίδευση">Τριτοβάθμια εκπαίδευση</option>
+                        <option value="Δευτεροβάθμια εκπαίδευση">Δευτεροβάθμια εκπαίδευση</option>
+                        <option value="Πρωτοβάθμια εκπαίδευση">Πρωτοβάθμια εκπαίδευση</option>
+                        <option value="Άλλο">Άλλο</option>
+                        
+                    </select>
                 </div>
                
             </div>
