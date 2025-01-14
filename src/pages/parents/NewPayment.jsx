@@ -132,6 +132,9 @@ export default function NewPayment() {
             await setDoc(doc(paymentRef), {
                 parentEmail: formData.email,
                 nannyName: formData.nannyName,
+                parentName: formData.parentName.split(' ')[0], 
+                parentSurname: formData.parentName.split(' ')[1], // Ανάκτηση επωνύμου
+  
                 amount: paymentAmount, 
                 date: new Date(),
                 month: currentMonth,
