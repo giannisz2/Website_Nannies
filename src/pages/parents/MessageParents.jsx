@@ -70,7 +70,7 @@ export default function MessageParents() {
           return;
         }
 
-        // Retrieve parent data
+        
         const parentRef = doc(db, 'Parent', userId);
         const parentSnap = await getDoc(parentRef);
 
@@ -82,7 +82,7 @@ export default function MessageParents() {
         const parentData = parentSnap.data();
         const { name: parentName, surname: parentSurname } = parentData;
 
-        // Check for active agreements
+        
         const agreementsRef = collection(db, 'agreements');
         const agreementsQuery = query(
           agreementsRef,
@@ -103,7 +103,7 @@ export default function MessageParents() {
         const activeAgreement = agreementsSnapshot.docs[0].data();
         const currentMonth = new Date().getMonth();
 
-        // Check if payment has been made for the current month
+        
         const paymentsRef = collection(db, 'payments');
         const paymentsQuery = query(
           paymentsRef,
@@ -131,6 +131,26 @@ export default function MessageParents() {
   }, []);
 
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (show) {
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          handleNextItem();
+        } else if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          handlePreviousItem();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [show, currentType]);
+  
 
   const currentItem =
     currentType === 'message' ? messages[currentItemIndex] : notifications[currentItemIndex];
