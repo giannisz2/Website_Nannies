@@ -80,7 +80,10 @@ export default function Message() {
           where('nannySurName', '==', nannySurName)
         );
 
+        console.log('Nanny Name:', nannyName);
+        console.log('Nanny Surname:', nannySurName);
         const agreementsSnapshot = await getDocs(agreementsQuery);
+        console.log('Agreements Snapshot:', agreementsSnapshot.docs.map(doc => doc.data()));
 
         const notifications = [];
         agreementsSnapshot.forEach((doc) => {
@@ -95,7 +98,7 @@ export default function Message() {
           });
         });
 
-        
+        setAgreementsNotifications(notifications);
 
 
         
