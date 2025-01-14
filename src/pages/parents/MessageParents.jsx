@@ -7,13 +7,21 @@ import TextField from "@mui/material/TextField";
 import '../../styles/AgreementHistory.css';
 import '../../styles/Message.css';
 import '../../styles/PopUp.css';
+import { db } from '../../providers/firebaseConfig';
+import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
+
+
+
+
+
 
 export default function MessageParents() {
   const [show, setShow] = useState(false);
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [currentType, setCurrentType] = useState(''); 
 
-  const messages = [
+  
+  const [messages, setMessages] = useState([
     {
       title: 'Θέμα: Θα ήθελα συνάντηση',
       sender: 'Κατερίνα Νικολάου',
@@ -30,19 +38,10 @@ export default function MessageParents() {
       sender: 'Δήμητρα Σταθοπούλου',
       content: `Θα θέλαμε να συζητήσουμε το ενδεχόμενο συνεργασίας. Παρακαλώ επικοινωνήστε μαζί μας.`,
     },
-  ];
+  ]);
 
-  const notifications = [
-    {
-      title: 'Η πληρωμή έγινε με επιτυχία!',
-      content: `Το voucher για τον μήνα Δεκέμβριο έχει ληφθεί`,
-    },
-    {
-      title: 'Η πληρωμή έγινε με επιτυχία!',
-      content: `Το voucher για τον μήνα Νοέμβριο έχει ληφθεί`,
-    },
-  ];
-
+  const [notifications, setNotifications] = useState([]);
+  
   const togglePopUp = (type, index) => {
     setCurrentType(type);
     setCurrentItemIndex(index);
@@ -59,25 +58,79 @@ export default function MessageParents() {
     setCurrentItemIndex((prevIndex) => (prevIndex - 1 + list.length) % list.length);
   };
 
+
+
+
   useEffect(() => {
-    const handleKeyDown = (event) => {
-      if (show) {
-        if (event.key === 'ArrowRight') {
-          event.preventDefault();
-          handleNextItem();
-        } else if (event.key === 'ArrowLeft') {
-          event.preventDefault();
-          handlePreviousItem();
+    const fetchNotifications = async () => {
+      try {
+        const userId = localStorage.getItem('userId'); 
+        if (!userId) {
+          console.error('User ID not found in localStorage.');
+          return;
         }
+
+        // Retrieve parent data
+        const parentRef = doc(db, 'Parent', userId);
+        const parentSnap = await getDoc(parentRef);
+
+        if (!parentSnap.exists()) {
+          console.error('Parent data not found.');
+          return;
+        }
+
+        const parentData = parentSnap.data();
+        const { name: parentName, surname: parentSurname } = parentData;
+
+        // Check for active agreements
+        const agreementsRef = collection(db, 'agreements');
+        const agreementsQuery = query(
+          agreementsRef,
+          where('parentName', '==', parentData.name),
+          where('parentSurname', '==', parentData.surname),
+          where('isenable', '==', true)
+        );
+        const agreementsSnapshot = await getDocs(agreementsQuery);
+
+        if (agreementsSnapshot.empty) {
+          setNotifications((prev) => [
+            ...prev,
+            { title: 'Δεν υπάρχει ενεργό συμφωνητικό.', content: 'Παρακαλώ δημιουργήστε ένα νέο συμφωνητικό.' },
+          ]);
+          return;
+        }
+
+        const activeAgreement = agreementsSnapshot.docs[0].data();
+        const currentMonth = new Date().getMonth();
+
+        // Check if payment has been made for the current month
+        const paymentsRef = collection(db, 'payments');
+        const paymentsQuery = query(
+          paymentsRef,
+          where('parentName', '==', parentData.name),
+          where('parentSurname', '==', parentData.surname),
+          where('month', '==', currentMonth)
+        );
+        const paymentsSnapshot = await getDocs(paymentsQuery);
+
+        if (!paymentsSnapshot.empty) {
+          setNotifications([
+            { title: 'Η πληρωμή έγινε με επιτυχία!', content: `Το voucher για τον μήνα ${new Date().toLocaleString('default', { month: 'long' })} έχει ληφθεί.` },
+          ]);
+        } else {
+          setNotifications([
+            { title: 'Η πληρωμή δεν έχει γίνει.', content: `Δεν έχει ολοκληρωθεί η πληρωμή για τον μήνα ${new Date().toLocaleString('default', { month: 'long' })}.` },
+          ]);
+        }
+      } catch (error) {
+        console.error('Error fetching notifications:', error);
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
+    fetchNotifications();
+  }, []);
 
-    return () => {
-      window.removeEventListener('keydown', handleKeyDown);
-    };
-  }, [show, currentType]);
+
 
   const currentItem =
     currentType === 'message' ? messages[currentItemIndex] : notifications[currentItemIndex];
@@ -102,12 +155,8 @@ export default function MessageParents() {
         </Col>
         <Col md={6}>
           <div className="this_text_message">ΕΙΔΟΠΟΙΗΣΕΙΣ</div>
-          {notifications.map((notification, index) => (
-            <div
-              key={index}
-              className="messageBox"
-              onClick={() => togglePopUp('notification', index)}
-            >
+           {notifications.map((notification, index) => (
+            <div key={index} className="messageBox">
               <p className="header-message">{notification.title}</p>
               <p className="text-message">{notification.content}</p>
             </div>
