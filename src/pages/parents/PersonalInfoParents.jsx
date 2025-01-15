@@ -176,7 +176,7 @@ export default function PersonalInfo() {
 
     setFormData((prev) => {
         const updatedFormData = { ...prev, [name]: value };
-        // Save updated data to localStorage
+        
         
         return updatedFormData;
     });
