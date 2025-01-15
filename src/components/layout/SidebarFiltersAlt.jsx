@@ -171,17 +171,30 @@ export default function SidebarFiltersAlt({ locationFromQuery, onFilterChange })
 
                 <div className="filter-item">
                     <label>Χρόνος Απασχόλησης:</label>
-                    <select
-                        className='input'
-                        value={filters.employmentTime}
-                        onChange={(e) => handleFilterChange('employmentTime', e.target.value)}
-                    >
-                        <option value="">Επιλογή</option>
-                        <option value="Μερική">Μερική Απασχόληση</option>
-                        <option value="Πλήρης">Πλήρης Απασχόληση</option>
-                    </select>
+                    <div className="radio-group">
+                        <label>
+                            <input
+                                type="radio"
+                                name="employmentTime"
+                                value="Μερική"
+                                checked={filters.employmentTime === "Μερική"}
+                                onChange={(e) => handleFilterChange('employmentTime', e.target.value)}
+                            />
+                            Μερική Απασχόληση
+                        </label>
+                        <label>
+                            <input
+                                type="radio"
+                                name="employmentTime"
+                                value="Πλήρης"
+                                checked={filters.employmentTime === "Πλήρης"}
+                                onChange={(e) => handleFilterChange('employmentTime', e.target.value)}
+                            />
+                            Πλήρης Απασχόληση
+                        </label>
+                    </div>
                 </div>
-
+                
                 <div className="filter-item">
                     <label>Ειδίκευση:</label>
                     <select
