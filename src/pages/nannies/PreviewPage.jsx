@@ -12,8 +12,14 @@ import { useNavigate } from 'react-router-dom';
 import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import "../../styles/PreviewPage.css"
+import {  Typography } from '@mui/material';
 import dayjs from 'dayjs';
-
+import {
+    RadioGroup,
+    FormControlLabel,
+    Radio,
+  } from '@mui/material';
+  
 
 export default function PreviewPage() {
     const { formData } = useFormContext();
@@ -68,14 +74,28 @@ export default function PreviewPage() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
-                        <TextField
-                            fullWidth
-                            label="Χρόνος Απασχόλησης"
-                            type="text"
-                            value={formData.employmentTime || ''}
-                            InputProps={{ readOnly: true }}
-                            className="my-3"
-                        />
+                        <Typography variant="body1" sx={{ marginBottom: '8px' }}>
+                            Χρόνος Απασχόλησης
+                            </Typography>
+                            <RadioGroup
+                                row
+                                aria-label="employmentTime"
+                                name="employmentTime"
+                                value={formData.employmentTime || ''}
+                            >
+                                <FormControlLabel
+                                    value="Μερική"
+                                    control={<Radio disabled />}
+                                    label=" Μερική Απασχόληση"
+                                />
+                                <FormControlLabel
+                                    value="Πλήρης"
+                                    control={<Radio disabled />}
+                                    label=" Πλήρης Απασχόληση"
+                                />
+                                
+                            </RadioGroup>
+                        
                         <TextField
                             fullWidth
                             label="Συστατικές Επιστολές"

@@ -284,22 +284,37 @@ const handleSubmit = async (event) => {
                     {formErrors.availability && <p className="error-text"><span style={{ color: 'red', fontSize: '12px' }}>Το πεδίο Διαθεσιμότητα είναι υποχρεωτικό </span></p>}
                    
                    
-                    <FormControl fullWidth className="my-3">
-                        <InputLabel>Χρόνος Απασχόλησης</InputLabel>
-                        <Select name="employmentTime"
-                                value={formData.employmentTime}
-                                onChange={handleInputChange}
-                                defaultValue=""
-                            >
-                            <MenuItem value="Μερική">Μερική</MenuItem>
-                            <MenuItem value="Πλήρης">Πλήρης</MenuItem>
-                        </Select>
+                    <FormControl component="fieldset" fullWidth className="my-3">
+                        <p>Χρόνος Απασχόλησης:</p>
+                        <div style={{ display: 'flex', gap: '10px' }}>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="employmentTime"
+                                    value="Μερική"
+                                    checked={formData.employmentTime === "Μερική"}
+                                    onChange={handleInputChange}
+                                />
+                                Μερική Απασχόληση
+                            </label>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="employmentTime"
+                                    value="Πλήρης"
+                                    checked={formData.employmentTime === "Πλήρης"}
+                                    onChange={handleInputChange}
+                                />
+                                Πλήρης Απασχόληση
+                            </label>
+                        </div>
                         {formErrors.employmentTime && (
-                                <span style={{ color: 'red', fontSize: '12px' }}>
+                            <span style={{ color: 'red', fontSize: '12px' }}>
                                 Το πεδίο Χρόνος Απασχόλησης είναι υποχρεωτικό
-                                </span>
-                            )}
+                            </span>
+                        )}
                     </FormControl>
+
                     <Autocomplete
                         fullWidth
                         options={citiesAndTowns.map((city) => `${city.region}:${city.name}`)} 
