@@ -183,6 +183,7 @@ export default function ThirdStep() {
                     <Row className="row">
                         <TextField
                             fullWidth
+                            
                             label="Κινητό Τηλέφωνο"
                             type="text"
                             name="phone"
@@ -209,7 +210,7 @@ export default function ThirdStep() {
                             value={null}
                             minDate={dayjs()}
                             onChange={handleDateChange}
-                            className="my-3"
+                            className="date-picker-small"
                         />
 
                         <ul>
@@ -229,13 +230,15 @@ export default function ThirdStep() {
                         <TimePicker
                             value={formData.availableTimeFrom ? dayjs(formData.availableTimeFrom) : null}
                             onChange={(time) => handleTimeChange('availableTimeFrom', time)}
+                            className="time-picker-small"
                         />
                         {formErrors.availableTimeFrom && <p style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>Το πεδίο είναι υποχρεωτικό</p>}
-
+                            <p></p>
                         Μέχρι:
                         <TimePicker
                             value={formData.availableTimeTo ? dayjs(formData.availableTimeTo) : null}
                             onChange={(time) => handleTimeChange('availableTimeTo', time)}
+                            className="time-picker-small"
                         />
                         {formErrors.availableTimeTo && <p style={{ color: 'red', fontSize: '12px', marginTop: '4px' }}>Η ώρα λήξης πρέπει να είναι μεγαλύτερη από την ώρα έναρξης</p>}
 

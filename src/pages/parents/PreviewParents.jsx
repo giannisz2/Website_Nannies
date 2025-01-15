@@ -13,7 +13,14 @@ import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-picker
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { useNavigate } from 'react-router-dom';
+import {  Typography } from '@mui/material';
 
+import {
+    RadioGroup,
+    FormControlLabel,
+    Radio,
+  } from '@mui/material';
+  
 
 export default function PersonalInfoPreview() {
     const [formData, setFormData] = useState({
@@ -94,13 +101,34 @@ export default function PersonalInfoPreview() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
-                        <TextField
-                            fullWidth
-                            label="Φύλο"
-                            value={formData.gender || ''}
-                            InputProps={{ readOnly: true }}
-                            className="my-3"
-                        />
+                        <Typography variant="body1" sx={{ marginBottom: '8px' }}>
+                                Φύλο
+                            </Typography>
+                            <RadioGroup
+                                row
+                                aria-label="gender"
+                                name="gender"
+                                value={formData.gender || ''}
+                            >
+                                <FormControlLabel
+                                    value="Άνδρας"
+                                    control={<Radio disabled />}
+                                    label="Άνδρας"
+                                />
+                                <FormControlLabel
+                                    value="Γυναίκα"
+                                    control={<Radio disabled />}
+                                    label="Γυναίκα"
+                                />
+                                <FormControlLabel
+                                    value="Άλλο"
+                                    control={<Radio disabled />}
+                                    label="Άλλο"
+                                />
+                            </RadioGroup>
+
+
+
                         <TextField
                             fullWidth
                             label="Τηλέφωνο Επικοινωνίας"
@@ -146,6 +174,33 @@ export default function PersonalInfoPreview() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
+
+
+                        <Typography variant="body1" sx={{ marginBottom: '8px' }}>
+                                Έχετε κατοικίδια
+                            </Typography>
+                            <RadioGroup
+                                row
+                                aria-label="pets"
+                                name="pets"
+                                value={formData.pets || ''}
+                            >
+                                <FormControlLabel
+                                    value="NAI"
+                                    control={<Radio disabled />}
+                                    label="NAI"
+                                />
+                                <FormControlLabel
+                                    value="OXI"
+                                    control={<Radio disabled />}
+                                    label="OXI"
+                                />
+                                <FormControlLabel
+                                    value="Άλλο"
+                                    control={<Radio disabled />}
+                                    label="Άλλο"
+                                />
+                            </RadioGroup>
                         <TextField
                             fullWidth
                             label="Έχετε κατοικίδια στο σπίτι"

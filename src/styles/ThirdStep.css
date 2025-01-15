@@ -96,3 +96,19 @@
 .button-apply3:hover {
     background-color: #333; 
 }
+
+
+.small-input {
+    max-width: 300px; 
+    margin: 10px 0; 
+}
+
+.date-picker-small {
+    max-width: 300px;
+    margin: 10px 0;
+}
+
+.time-picker-small {
+    max-width: 150px;
+    margin: 10px 5px;
+}

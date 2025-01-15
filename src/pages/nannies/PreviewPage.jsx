@@ -58,14 +58,31 @@ export default function PreviewPage() {
                             InputProps={{ readOnly: true }}
                             className="my-3"
                         />
-                        <TextField
-                            fullWidth
-                            label="Φύλο"
-                            type="text"
-                            value={formData.gender || ''}
-                            InputProps={{ readOnly: true }}
-                            className="my-3"
-                        />
+                        <Typography variant="body1" sx={{ marginBottom: '8px' }}>
+                                Φύλο
+                            </Typography>
+                            <RadioGroup
+                                row
+                                aria-label="gender"
+                                name="gender"
+                                value={formData.gender || ''}
+                            >
+                                <FormControlLabel
+                                    value="Άνδρας"
+                                    control={<Radio disabled />}
+                                    label="Άνδρας"
+                                />
+                                <FormControlLabel
+                                    value="Γυναίκα"
+                                    control={<Radio disabled />}
+                                    label="Γυναίκα"
+                                />
+                                <FormControlLabel
+                                    value="Άλλο"
+                                    control={<Radio disabled />}
+                                    label="Άλλο"
+                                />
+                            </RadioGroup>
                         <TextField
                             fullWidth
                             label="Εκπαίδευση"
