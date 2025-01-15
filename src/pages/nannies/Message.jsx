@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import NavBar from '../../components/layout/NavBarNannies';
+import NavBarNannies from '../../components/layout/NavBarNannies';
 import HelpButton from '../../components/buttons/HelpButton';
 import Footer from '../../components/layout/Footer';
 import { Row, Col } from 'react-bootstrap';
@@ -9,6 +9,7 @@ import '../../styles/Message.css';
 import '../../styles/PopUp.css';
 import { db } from '../../providers/firebaseConfig';
 import { collection, query, where, getDocs, doc, getDoc } from 'firebase/firestore';
+import Breadcrumb from '../../components/layout/Breadcrumb'
 
 export default function Message() {
   const [show, setShow] = useState(false);
@@ -146,7 +147,8 @@ export default function Message() {
 
   return (
     <div id="Message">
-      <NavBar />
+      <NavBarNannies/>
+      <div><Breadcrumb label="Ειδποποιήσεις"/></div>
       <HelpButton />
       <Row>
         <Col md={6}>
