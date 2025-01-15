@@ -11,7 +11,7 @@ import "../../styles/SearchNannies.css";
 import "../../styles/PopUp.css"
 import { db } from "../../providers/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
-import Breadcrumb from '../../components/layout/Breadcrumb';
+import Breadcrumb from '../../components/layout/BreadcrumbH';
 import dayjs from "dayjs";
 
 export default function SearchNanniesWithoutSignIn() {
