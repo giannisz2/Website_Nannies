@@ -44,6 +44,8 @@ export default function PersonalInfo() {
   const validatePhoneNumber = (phone) => {
       return /^\d{10}$/.test(phone); 
   };
+
+
   const validateForm = () => {
       const errors = {};
       let isValid = true;
@@ -67,7 +69,49 @@ export default function PersonalInfo() {
           handleSnackbarOpen('Ο αριθμός τηλεφώνου πρέπει να έχει 10 ψηφία.', 'error');
           return false;
       }
-  
+      
+      if (!formData.residence) {
+        errors.residence = true;
+        isValid = false;
+    }
+    if (!formData.childrenCount) {
+        errors.childrenCount = true;
+        isValid = false;
+    }
+    if (!formData.pets) {
+        errors.pets = true;
+        isValid = false;
+    }
+    if (!formData.childrenUnder2) {
+        errors.childrenUnder2 = true;
+        isValid = false;
+    }
+    if (!formData.nannyChildrenCount) {
+        errors.nannyChildrenCount = true;
+        isValid = false;
+    }
+
+
+    if (parseInt(formData.childrenUnder2) > parseInt(formData.childrenCount)) {
+        errors.childrenUnder2 = true;
+        handleSnackbarOpen('Ο αριθμός παιδιών σε ηλικίες από 6 μηνών έως 2.5 ετών δεν μπορεί να είναι μεγαλύτερος από το συνολικό αριθμό παιδιών.', 'error');
+        isValid = false;
+    }
+    
+
+    if (parseInt(formData.nannyChildrenCount) > parseInt(formData.childrenUnder2)) {
+        errors.nannyChildrenCount = true;
+        handleSnackbarOpen('Ο αριθμός παιδιών που θέλετε να αναλάβει η νταντά δεν μπορεί να είναι μεγαλύτερος από τον αριθμό παιδιών σε ηλικίες από 6 μηνών έως 2.5 ετών.', 'error');
+        isValid = false;
+    }
+    
+    setFormErrors(errors);
+    
+
+
+
+    
+    
       return isValid;
   };
   
@@ -107,7 +151,38 @@ export default function PersonalInfo() {
 
   const handleInputChange = (event) => {
       const { name, value } = event.target;
-      setFormData({ ...formData, [name]: value });
+      if (name === "childrenUnder2") {
+        if (parseInt(value) > parseInt(formData.childrenCount)) {
+            handleSnackbarOpen('Ο αριθμός παιδιών σε ηλικίες από 6 μηνών έως 2.5 ετών δεν μπορεί να είναι μεγαλύτερος από το συνολικό αριθμό παιδιών.', 'error');
+            setFormErrors((prev) => ({ ...prev, [name]: true }));
+            return;
+        } else {
+            setFormErrors((prev) => ({ ...prev, [name]: false }));
+        }
+    }
+
+
+    if (name === "nannyChildrenCount") {
+        if (parseInt(value) > parseInt(formData.childrenUnder2)) {
+            handleSnackbarOpen('Ο αριθμός παιδιών που θέλετε να αναλάβει η νταντά δεν μπορεί να είναι μεγαλύτερος από τον αριθμό παιδιών σε ηλικίες από 6 μηνών έως 2.5 ετών.', 'error');
+            setFormErrors((prev) => ({ ...prev, [name]: true }));
+            return;
+        } else {
+            setFormErrors((prev) => ({ ...prev, [name]: false }));
+        }
+    }
+
+    setFormData({ ...formData, [name]: value });
+
+    setFormData((prev) => {
+        const updatedFormData = { ...prev, [name]: value };
+        // Save updated data to localStorage
+        
+        return updatedFormData;
+    });
+
+
+    setFormErrors({ ...formErrors, [name]: !value });
   };
   
   
@@ -334,7 +409,7 @@ export default function PersonalInfo() {
                                       </Select>
                                       {formErrors.nannyChildrenCount && (
                                               <p style={{ color: 'red', fontSize: '12px' , textAlign:'left' }}>
-                                                  Το πεδίο Έχετε κατοικίδια στο σπίτι είναι υποχρεωτικό
+                                                  Το πεδίο Πόσα παιδιά θέλετε να αναλάβει η ντάντα είναι υποχρεωτικό
                                               </p>
                                           )}
                                   </FormControl>
