@@ -5,7 +5,7 @@ import { Row, Col } from 'react-bootstrap';
 import '../../styles/Agreement.css';
 import TextField from '@mui/material/TextField';
 import HelpButton from '../../components/buttons/HelpButton';
-import { Breadcrumb } from 'react-bootstrap';
+import Breadcrumb from '../../components/layout/Breadcrumb';
 import { Link } from "react-router-dom";
 
 
@@ -31,28 +31,7 @@ export default function Agreement() {
         <>
             <div className="nanny-agreement">
                 <NavBarNannies />
-                <Breadcrumb
-                    style={{
-                        fontSize: '20px', 
-                        marginTop: '20px', 
-                        marginBottom: '10px', 
-                        marginLeft: '40px',
-                    }}
-                >
-                <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/NannyHomepage" }}>
-                    Αρχική
-                </Breadcrumb.Item>
-                <Breadcrumb.Item
-                    active
-                    style={{
-                    textDecoration: 'underline',
-                    fontWeight: 'bold', 
-                    color:'blue',
-                    }}
-                >
-                    Συμφωνητικό
-                </Breadcrumb.Item>
-                </Breadcrumb>
+                <Breadcrumb label="Συμφωνητικό"/>
                 <p className="this_text">Συμφωνητικό</p>
                 <div className="centered-container">
                     <TextField

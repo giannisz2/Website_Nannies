@@ -11,6 +11,8 @@ import { LocalizationProvider, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import '../../styles/AgreementRenewal.css';
 import{updateDoc} from "firebase/firestore"
+import Breadcrumb from '../../components/layout/Breadcrumb2';
+
 
 
 
@@ -244,6 +246,7 @@ export default function AgreementRenewal() {
     return (
         <div>
             <NavBarParents />
+            <Breadcrumb label="Ανανέωση συμφωνητικού"/>
             <p className='top-text'>Ανανέωση Συμφωνητικού</p>
             <HelpButton />
 

@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom';
 import CloseIcon from '@mui/icons-material/Close';
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import Breadcrumb from '../../components/layout/Breadcrumb2.jsx';
 import {
     RadioGroup,
     FormControlLabel,
@@ -233,6 +234,7 @@ export default function PersonalInfo() {
           
           return (
               <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <Breadcrumb label="Επεξεργασία προφίλ"/>
                   <Box sx={{ padding: '20px',
                     minHeight: '100vh',
                     display: 'flex',

@@ -8,7 +8,7 @@ import '../../styles/Breadcrumb.css';
 function CustomSeparator({ label = null }) {
   const handleClick = (event) => {
     event.preventDefault();
-    window.location.href = '/NannyHomepage';
+    window.location.href = '/ParentHomepage';
   };
 
   const breadcrumbs = [

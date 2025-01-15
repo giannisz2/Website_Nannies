@@ -9,6 +9,8 @@ import { Row, Col } from 'react-bootstrap';
 import { TextField, Alert, Snackbar } from '@mui/material';
 import '../../styles/AgreementExpiration.css';
 import { updateDoc } from "firebase/firestore";
+import Breadcrumb from '../../components/layout/Breadcrumb2';
+
 
 
 export default function AgreementExpiration() {
@@ -217,6 +219,7 @@ export default function AgreementExpiration() {
     return (
         <div>
             <NavBarParents />
+            <Breadcrumb label="Λήξη συμφωνητικού"/>
             <p className='top-text'>Λήξη Συμφωνητικού</p>
             <HelpButton />
 
