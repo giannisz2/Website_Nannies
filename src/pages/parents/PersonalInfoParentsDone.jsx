@@ -129,6 +129,7 @@ export default function PersonalInfoParentsDone() {
     }
 
     return (
+        <div className='hyper-div2'>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Box sx={{ padding: '20px',
                     minHeight: '100vh',
@@ -311,5 +312,6 @@ export default function PersonalInfoParentsDone() {
             </Box>
         </Box>
         </LocalizationProvider>
+        </div>
     );
 }

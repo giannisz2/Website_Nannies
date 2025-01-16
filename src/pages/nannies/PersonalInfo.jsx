@@ -197,6 +197,7 @@ export default function PersonalInfo() {
     };
 
     return (
+        <div className='hyper-div'>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
             <Breadcrumb label="Επεξεργασία προφίλ"/>
             <Box sx={{
@@ -512,5 +513,6 @@ export default function PersonalInfo() {
                 </Snackbar>
             </Box>
         </LocalizationProvider>
+        </div>
     );
 }

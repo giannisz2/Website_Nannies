@@ -332,7 +332,7 @@ export default function ParentsAgreement() {
                         />
                         </Col>
                         <p > </p>
-                        <Col md={6} xs={12} className="d-flex flex-column align-items-center justify-content-center text-center">
+                        <Col md={3} xs={12} className="d-flex flex-column align-items-center justify-content-center text-center">
                             
                         
                             
@@ -350,7 +350,7 @@ export default function ParentsAgreement() {
                             }
                         />
                         </Col>
-                        <Col md={6} xs={12} className="d-flex flex-column align-items-center justify-content-center text-center">
+                        <Col md={3} xs={12} className="d-flex flex-column align-items-center justify-content-center text-center">
                         <TextField
                             fullWidth
                             label="Επώνυμο Νταντάς (ΜΕ ΚΕΦΑΛΑΙΑ)"
@@ -370,7 +370,7 @@ export default function ParentsAgreement() {
                 </div>
                 <div className="content flex-grow-1 d-flex align-items-center justify-content-center">
     <Row className="align-items-start justify-content-center g-5 m-0 w-100">
-        <Col md={6} className="d-flex flex-column">
+        <Col md={2} className="d-flex flex-column">
         <p> Ωράριο Εργασίας:</p>
             <TimePicker
                 label="Ώρα Από"
@@ -386,7 +386,7 @@ export default function ParentsAgreement() {
                 renderInput={(params) => <TextField {...params} />}
             />
         </Col>
-                        <Col md={6}>
+                        <Col md={2}>
                     <p>Έναρξη Εργασίας:</p>
                     <DatePicker
                         label="Επιλέξτε Ημερομηνία"

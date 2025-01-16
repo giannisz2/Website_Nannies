@@ -17,7 +17,8 @@
 
 .side-button{
     position: absolute;
-    bottom: -1400px;
+    bottom: -1600px;
+    margin-right: 50px;
     right: 10px;
     font-weight: 500;
     text-decoration: underline;

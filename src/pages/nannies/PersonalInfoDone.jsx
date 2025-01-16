@@ -10,6 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { TextField } from '@mui/material';
 import { LocalizationProvider, DatePicker, TimePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import '../../styles/PersonalInfo.css'
 import dayjs from 'dayjs';
 import {
     RadioGroup,
@@ -136,6 +137,7 @@ export default function PersonalInfoDone() {
     }
 
     return (
+        <div className='hyper-div'>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
         <Box sx={{padding: '20px',
                     minHeight: '100vh',
@@ -373,5 +375,6 @@ export default function PersonalInfoDone() {
             </Box>
         </Box>
         </LocalizationProvider>
+        </div>
     );
 }
