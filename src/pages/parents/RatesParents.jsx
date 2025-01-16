@@ -119,9 +119,7 @@ export default function Rates() {
                                 <Stars />
                         </div>
                     </Col>
-                    <Col> </Col>
-                    <Col> </Col>
-                    <Col> </Col>
+                    <Col md={2}></Col>
                     <Col md={6}>
                         <b className="textp">Αγάπη για τα παιδιά</b>
                         <div className="star-ratingp">
