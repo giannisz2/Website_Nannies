@@ -61,8 +61,9 @@ export default function MeetingNanny() {
   return (
     <div className="MeetingNanny">
       <NavBarNannies className="nav-bar-nannies" />
-      <HelpButton />
       <Breadcrumb label="Συνάντηση"/>
+      <p className="title-meeting-nanny">Συνάντηση</p>
+      <HelpButton />
       <p className="text3"> Πατήστε στις κουκκίδες για να δείτε τα στοιχεία του ραντεβού </p>
       <Row className="row">
         <Col

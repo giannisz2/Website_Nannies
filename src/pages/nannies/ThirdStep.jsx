@@ -176,7 +176,7 @@ export default function ThirdStep() {
                     </div>
                     <div className="step active">
                         <div className="circle">3</div>
-                        <div className="label">ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΣΥΝΑΝΤΗΣΗΣ</div>
+                        <div className="label">ΔΙΑΘΕΣΙΜΟΤΗΤΑ</div>
                     </div>
                 </div>
                 <div className="content flex-grow-1 d-flex align-items-center justify-content-center">

@@ -192,7 +192,7 @@ export default function FirstStep() {
                 </div>
                 <div className="step">
                     <div className="circle">3</div>
-                    <div className="label">ΠΡΟΓΡΑΜΜΑΤΙΣΜΟΣ ΣΥΝΑΝΤΗΣΗΣ</div>
+                    <div className="label">ΔΙΑΘΕΣΙΜΟΤΗΤΑ</div>
 
                 </div>
             </div>

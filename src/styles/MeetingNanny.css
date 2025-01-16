@@ -25,7 +25,14 @@
     padding: 70px;
 }
 
-  
+.title-meeting-nanny{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: x-large;
+    font-weight: bold;
+    margin-top: 90px;
+    margin-left: 100px;
+}
+
 .text3 {
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-size: medium;

@@ -165,7 +165,7 @@ export default function Message() {
           ))}
         </Col>
         <Col md={6}>
-          <div className="this_text_message">Ειδοποιήσεις</div>
+          <div className="this_text_message">ΕΙΔΟΠΟΙΗΣΕΙΣ</div>
           {agreementsNotifications.length > 0 ? (
             agreementsNotifications.map((notification, index) => (
               <div key={index} className="messageBox">

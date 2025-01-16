@@ -470,7 +470,7 @@ export default function PersonalInfo() {
                                                         {formData.availableDate?.map((date, index) => (
                                                             <li key={index}>
                                                                 {dayjs(date).format('DD/MM/YYYY')}
-                                                                <button type="button" onClick={() => removeDate(index)}>
+                                                                <button className='delete-button' type="button" onClick={() => removeDate(index)}>
                                                                     Διαγραφή
                                                                 </button>
                                                             </li>

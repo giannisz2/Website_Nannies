@@ -25,6 +25,11 @@
   background-color: black; 
 }
 
+.delete-button{
+  background-color: black;
+  margin-left: 20px;
+}
+
 
 
 .button-apply-pi:hover {

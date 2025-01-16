@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import NavBarNannies from '../../components/layout/NavbarNannies';
 import Footer from '../../components/layout/Footer';
-import '../../styles/Voucher.css';
+import '../../styles/Voucher2.css';
 import { Row, Col } from 'react-bootstrap';
 import HelpButton from '../../components/buttons/HelpButton'
 import { useNavigate } from 'react-router-dom';
