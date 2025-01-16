@@ -9,6 +9,8 @@ import '../../styles/Message.css';
 import '../../styles/PopUp.css';
 import { db } from '../../providers/firebaseConfig';
 import { doc, getDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import Breadcrumb from '../../components/layout/Breadcrumb2';
+
 
 
 
@@ -158,6 +160,7 @@ export default function MessageParents() {
   return (
     <div id="Message">
       <NavBarParents />
+      <Breadcrumb label="Ειδοποιήσεις"/>
       <HelpButton />
       <Row>
         <Col md={6}>

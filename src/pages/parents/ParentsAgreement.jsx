@@ -16,6 +16,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import dayjs from 'dayjs';
 import { DatePicker } from '@mui/x-date-pickers';
 import { writeBatch } from 'firebase/firestore';
+import Breadcrumb from '../../components/layout/Breadcrumb2';
+
 
 
 
@@ -299,6 +301,7 @@ export default function ParentsAgreement() {
         <>
             <div className="nanny-agreement">
                 <NavBarParents />
+                <Breadcrumb label="Νέο συμφωνητικό"/>
                 <HelpButton />
                 <div className="centered-container"> 
                 <TextField

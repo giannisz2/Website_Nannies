@@ -9,6 +9,7 @@ import "../../styles/SearchNannies.css";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { db } from "../../providers/firebaseConfig";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
+import Breadcrumb from '../../components/layout/Breadcrumb2';
 import dayjs from "dayjs";
 
 export default function SearchNannies() {
@@ -121,6 +122,7 @@ export default function SearchNannies() {
     return (
         <div className="page-container">
             <NavBarParents className="navbar" />
+            <Breadcrumb label="Αναζήτηση"/>
             <HelpButton />
             <main className="content">
                 <div className="search-nannies-container">

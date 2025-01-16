@@ -11,6 +11,7 @@ import "../../styles/SearchNannies.css";
 import "../../styles/PopUp.css"
 import { db } from "../../providers/firebaseConfig";
 import { collection, getDocs } from "firebase/firestore";
+import Breadcrumb from '../../components/layout/BreadcrumbH';
 import dayjs from "dayjs";
 
 export default function SearchNanniesWithoutSignIn() {
@@ -128,6 +129,7 @@ export default function SearchNanniesWithoutSignIn() {
   return (
       <div className="page-container">
           <NavBar className="navbar" />
+          <Breadcrumb label="Αναζήτηση"/>
           <HelpButton />
           <main className="content">
               <div className="search-nannies-container">

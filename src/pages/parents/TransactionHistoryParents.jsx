@@ -2,7 +2,7 @@ import * as React from 'react';
 import NavBarParents from '../../components/layout/NavBarParents';
 import HelpButton from '../../components/buttons/HelpButton';
 import Footer from '../../components/layout/Footer'
-import Breadcrumb from '../../components/layout/Breadcrumb';
+import Breadcrumb from '../../components/layout/Breadcrumb2';
 import '../../styles/TransactionHistoryParents.css'
 
 export default function TransactionHistoryParents(){

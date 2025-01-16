@@ -9,7 +9,7 @@ import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../../providers/firebaseConfig';
 import 'react-calendar/dist/Calendar.css';
 import '../../styles/MeetingNanny.css';
-import { Breadcrumb } from 'react-bootstrap';
+import Breadcrumb from '../../components/layout/Breadcrumb';
 import { Link } from "react-router-dom";
 
 export default function MeetingNanny() {
@@ -62,28 +62,7 @@ export default function MeetingNanny() {
     <div className="MeetingNanny">
       <NavBarNannies className="nav-bar-nannies" />
       <HelpButton />
-      <Breadcrumb
-          style={{
-              fontSize: '20px', 
-              marginTop: '20px', 
-              marginBottom: '10px', 
-              marginLeft: '40px',
-          }}
-      >
-      <Breadcrumb.Item linkAs={Link} linkProps={{ to: "/NannyHomepage" }}>
-          Αρχική
-      </Breadcrumb.Item>
-      <Breadcrumb.Item
-          active
-          style={{
-          textDecoration: 'underline',
-          fontWeight: 'bold', 
-          color:'blue',
-          }}
-      >
-          Συνάντηση
-      </Breadcrumb.Item>
-      </Breadcrumb>
+      <Breadcrumb label="Συνάντηση"/>
       <p className="text3"> Πατήστε στις κουκκίδες για να δείτε τα στοιχεία του ραντεβού </p>
       <Row className="row">
         <Col

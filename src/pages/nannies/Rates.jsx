@@ -4,6 +4,7 @@ import Footer from '../../components/layout/Footer';
 import '../../styles/Rates.css';
 import TextField from '@mui/material/TextField';
 import HelpButton from '../../components/buttons/HelpButton'
+import Breadcrumb from '../../components/layout/Breadcrumb'
 
 export default function Rates() {
     const [showMore, setShowMore] = useState(false);
@@ -14,6 +15,7 @@ export default function Rates() {
         <>
             <div className="nanny-rates">
                 <NavBarNannies />
+                <Breadcrumb label="Αξιολογήσεις"/>
                 <HelpButton/>
                 <p className="this_text">Αξιολογήσεις</p>
                 <div className="rating-container">

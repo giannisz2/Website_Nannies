@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import HelpButton from '../../components/buttons/HelpButton';
 import { doc, getDoc, setDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import { db } from '../../providers/firebaseConfig';
+import Breadcrumb from '../../components/layout/Breadcrumb2';
 import '../../styles/NewPayment.css';
 
 export default function NewPayment() {
@@ -154,7 +155,9 @@ export default function NewPayment() {
     };
 
     return (
-        <div className="new-payment">
+        <div className='super-div'>
+            <Breadcrumb label="Νέα πληρωμή"/>
+            <div className="new-payment">
             <NavBarParents className="navbar"/>
             
             <HelpButton />
@@ -216,7 +219,9 @@ export default function NewPayment() {
                 message={snackbarMessage}
             />
             <Footer />
+            </div>
         </div>
+
         
     );
 
