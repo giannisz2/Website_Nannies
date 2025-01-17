@@ -138,6 +138,25 @@ export default function Message() {
   }, []);
   
 
+  useEffect(() => {
+    const handleKeyDown = (event) => {
+      if (show) {
+        if (event.key === 'ArrowRight') {
+          event.preventDefault();
+          handleNextItem();
+        } else if (event.key === 'ArrowLeft') {
+          event.preventDefault();
+          handlePreviousItem();
+        }
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [show, currentType]);
 
 
   const currentItem =
@@ -148,7 +167,7 @@ export default function Message() {
   return (
     <div id="Message">
       <NavBarNannies/>
-      <div><Breadcrumb label="Ειδποποιήσεις"/></div>
+      <div><Breadcrumb label="Ειδοποιήσεις"/></div>
       <HelpButton />
       <Row>
         <Col md={6}>
@@ -194,7 +213,7 @@ export default function Message() {
       </Row>
       {show && (
         <div className="popup-overlay">
-          <div className={`popup ${show ? 'popup-active' : ''}`}>
+          <div className={`popup ${show ? 'popup-active' : ''}`} >
             <button className="close-btn" onClick={() => setShow(false)}>
               &times;
             </button>
@@ -204,8 +223,16 @@ export default function Message() {
             <button className="arrow-btn right-arrow" onClick={handleNextItem}>
               &rarr;
             </button>
-            <h2 className="header-message">{currentItem.title}</h2>
+            <h2 className='header-message'>{currentItem.title}</h2>
             <p>{currentItem.content}</p>
+            {currentType === 'message' && (
+              <p>
+                <strong>Από:</strong> {currentItem.sender}
+              </p>
+            )}
+            {currentType === 'message' && (
+              <TextField fullWidth label="Απάντηση" type="text" className="popup_text" />
+            )}
           </div>
         </div>
       )}
