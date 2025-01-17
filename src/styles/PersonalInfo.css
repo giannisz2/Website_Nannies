@@ -30,8 +30,10 @@
 }
 
 .delete-button{
-  background-color: black;
+  background-color: white;
   margin-left: 20px;
+  color: black;
+
 }
 
 
