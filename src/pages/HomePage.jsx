@@ -94,7 +94,6 @@ export default function HomePage() {
       <NavBar />
       <HelpButton />
       <div className="search-field">
-        <p className='title'>Ελάτε να βρείτε την κατάλληλη νταντά</p>
         <p className='sub-title'>Βρείτε την κατάλληλη νταντά για το παιδί σας</p>
         <Autocomplete
           freeSolo
@@ -108,7 +107,7 @@ export default function HomePage() {
             <TextField
               {...params}
               className="location"
-              placeholder="Αναζητήστε περιοχή..."
+              placeholder="Αναζητήστε τοποθεσία..."
               onKeyDown={handleKeyDown}
               InputProps={{
                 ...params.InputProps,
