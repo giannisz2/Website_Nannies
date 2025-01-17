@@ -19,7 +19,7 @@ export default function Rates() {
     const [initialFormData, setInitialFormData] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
-    const { nannyName, nannyId,nannySurname } = location.state || {};
+    const { nannyName, nannyId } = location.state || {};
     
     const [ratings, setRatings] = useState({
         timeliness: 0,
@@ -54,26 +54,27 @@ export default function Rates() {
     };
 
     const handleSubmit = async () => {
-        if (canSubmit) {
-            try {
-                await addDoc(collection(db, 'rates'), {
-                    nannyId,
-                    ratings,
-                    comment,
-                    timestamp: new Date()
-                });
-                navigate('/RatesSubmits');
-            } catch (error) {
-                console.error('Error saving the rates:', error);
-            }
-        } else {
-            alert('Please complete all ratings before submitting.');
+        if (comment.trim() === '') {
+            handleSnackbarOpen('Παρακαλώ προσθέστε ένα σχόλιο πριν την υποβολή.', 'error');
+            return;
+        }
+
+        try {
+            await addDoc(collection(db, 'rates'), {
+                nannyId,
+                comment,
+                timestamp: new Date(),
+            });
+            handleSnackbarOpen('Η αξιολόγηση υποβλήθηκε με επιτυχία!', 'success');
+            setTimeout(() => navigate('/RatesSubmits'), 2000);
+        } catch (error) {
+            console.error('Error saving the comment:', error);
+            handleSnackbarOpen('Σφάλμα κατά την αποθήκευση της αξιολόγησης.', 'error');
         }
     };
 
-    const updateRating = (category, value) => {
-        setRatings(prev => ({ ...prev, [category]: value }));
-    };
+   
+
 
     
 
@@ -96,7 +97,7 @@ export default function Rates() {
                         top: '10px',
                         right: '10px',
                     }}
-                    onClick={handleCloseWithoutSaving}
+                    onClick={() => navigate('/ParentHomepage')}
                 >
                     <CloseIcon />
                 </IconButton>
@@ -132,23 +133,28 @@ export default function Rates() {
                     </Col>
                 </Row>
                 <div className="container-textp">
-                    <TextField fullWidth={false} label="Σχόλια" type="textp" className="nanny_rates_text" />
+                    <TextField 
+                    fullWidth={false} 
+                    label="Σχόλια" 
+                    type="textp" 
+                    onChange={(e) => setComment(e.target.value)}
+                    className="nanny_rates_text" />
                 </div>
                 <div className="buttons-rates">
                     <button className='button-apply-rates' onClick={handleSubmit}>Υποβολή</button>
                 </div>
             </div>
             </Box>
-                <Snackbar
-                    open={snackbarOpen}
-                    autoHideDuration={4000}
-                    onClose={handleSnackbarClose}
-                    anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                >
-                    <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
-                        {snackbarMessage}
-                    </Alert>
-                </Snackbar>
+            <Snackbar
+                open={snackbarOpen}
+                autoHideDuration={4000}
+                onClose={handleSnackbarClose}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert onClose={handleSnackbarClose} severity={snackbarSeverity} sx={{ width: '100%' }}>
+                    {snackbarMessage}
+                </Alert>
+            </Snackbar>
             </Box>
         
     );

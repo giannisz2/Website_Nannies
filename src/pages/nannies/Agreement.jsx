@@ -39,7 +39,7 @@ export default function Agreement() {
                         label="Συμφωνητικό"
                         type="text"
                         className="text-agreement1"
-                        value="Θέλω να έρθω σε συμφωνία με τους:"
+                        value="Συμφωνώ να έρθω σε συμφωνία με τους:"
                         disabled
                     />
                 </div>
