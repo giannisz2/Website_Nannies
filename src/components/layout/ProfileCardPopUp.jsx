@@ -19,7 +19,7 @@ export default function ProfileCard({ nanny, onCardClick }) {
                     <p><strong>Ειδίκευση:</strong> {nanny.experience}</p>
                     <p><strong>Εμπειρία:</strong> {nanny.experienceYears}</p>
                     <p><strong>Σπουδές:</strong> {nanny.educationLevel}</p>
-                    <p><strong>Χρόνος Απασχόλησης:</strong> {nanny.employmentTime === 'full-time' ? 'Πλήρης Απασχόληση' : 'Μερική Απασχόληση'}</p>
+                    <p><strong>Χρόνος Απασχόλησης:</strong> {nanny.employmentTime === 'Πλήρης' ? 'Πλήρης Απασχόληση' : 'Μερική Απασχόληση'}</p>
                     <p>{nanny.bio}</p>
                 </div>
             </div>
