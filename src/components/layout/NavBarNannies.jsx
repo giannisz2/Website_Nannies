@@ -25,7 +25,7 @@ export default function NavBarNannies() {
   };
 
   const handleLogoClick = () => {
-    navigate('/NannyHomepage'); // Home page from logo
+    navigate('/'); // Home page from logo
   };
 
   const menuItems = [

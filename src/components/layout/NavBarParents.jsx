@@ -26,7 +26,7 @@ export default function NavBarParents() {
   };
 
   const handleLogoClick = () => {
-    navigate('/ParentHomepage'); // Home page from logo
+    navigate('/'); // Home page from logo
   };
 
   const menuItems = [
