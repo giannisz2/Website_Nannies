@@ -45,7 +45,7 @@
     "globals": "^15.12.0",
     "lint-staged": "^15.2.10",
     "prettier": "^3.4.2",
-    "vite": "^6.0.5"
+    "vite": "^6.2.1"
   },
   "lint-staged": {
     "*.{jsx,css}": [
